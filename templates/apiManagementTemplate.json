@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "api_CarsAPI_name": {
+      "type": "string"
+    },
+    "api_CarsAPI_urlSuffix3": {
+      "type": "string"
+    },
+    "api_CarsAPI_serviceName": {
+      "type": "string"
+    },
+    "apim_at-apim-carsapi-dev_name": {
+      "type": "string"
+    },
+    "apim_at-apim-carsapi-dev_LocationId": {
+      "type": "string"
+    },
+    "apim_at-apim-carsapi-dev_email": {
+      "type": "string"
+    },
+    "apim_at-apim-carsapi-dev_orgName": {
+      "type": "string"
+    },
+    "apim_at-apim-carsapi-dev_tier": {
+      "type": "string"
+    },
+    "apim_at-apim-carsapi-dev_capacity": {
+      "type": "int"
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2019-12-01",
+      "type": "Microsoft.ApiManagement/service/apis",
+      "properties": {
+        "protocols": [
+          "https"
+        ],
+        "displayName": "[parameters('api_CarsAPI_name')]",
+        "path": "[parameters('api_CarsAPI_urlSuffix3')]"
+      },
+      "name": "[concat(parameters('api_CarsAPI_serviceName'),'/', parameters('api_CarsAPI_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.ApiManagement/service', parameters('apim_at-apim-carsapi-dev_name'))]"
+      ]
+    },
+    {
+      "apiVersion": "2019-01-01",
+      "type": "Microsoft.ApiManagement/service",
+      "properties": {
+        "publisherEmail": "[parameters('apim_at-apim-carsapi-dev_email')]",
+        "publisherName": "[parameters('apim_at-apim-carsapi-dev_orgName')]"
+      },
+      "name": "[parameters('apim_at-apim-carsapi-dev_name')]",
+      "location": "[parameters('apim_at-apim-carsapi-dev_LocationId')]",
+      "sku": {
+        "name": "[parameters('apim_at-apim-carsapi-dev_tier')]",
+        "capacity": "[parameters('apim_at-apim-carsapi-dev_capacity')]"
+      }
+    }
+  ]
+}

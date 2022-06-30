@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarsAPI", "CarsAPI.csproj", "{34503B0F-F4B4-4BC5-9A04-4B043EAB4278}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{87DEF9F1-3303-4254-99CB-107FE3DEA93B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.csproj", "{AF21EE59-8DF9-4102-B313-F97461973EC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{7724E945-4E70-47B6-8DE5-99A503ABE8BA}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\templates\1AppServicePlan.json = ..\..\templates\1AppServicePlan.json
+		..\..\templates\1AppServicePlan.parameters.json = ..\..\templates\1AppServicePlan.parameters.json
+		..\..\templates\2AppService.json = ..\..\templates\2AppService.json
+		..\..\templates\2AppService.parameters.json = ..\..\templates\2AppService.parameters.json
+		..\..\templates\3SQLServer.json = ..\..\templates\3SQLServer.json
+		..\..\templates\3SQLServer.parameters.json = ..\..\templates\3SQLServer.parameters.json
+		..\..\templates\4SQLDb.json = ..\..\templates\4SQLDb.json
+		..\..\templates\4SQLDb.parameters.json = ..\..\templates\4SQLDb.parameters.json
+		..\..\templates\5AppServiceMang.json = ..\..\templates\5AppServiceMang.json
+		..\..\templates\5AppServiceMang.parameters.json = ..\..\templates\5AppServiceMang.parameters.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34503B0F-F4B4-4BC5-9A04-4B043EAB4278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34503B0F-F4B4-4BC5-9A04-4B043EAB4278}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34503B0F-F4B4-4BC5-9A04-4B043EAB4278}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34503B0F-F4B4-4BC5-9A04-4B043EAB4278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF21EE59-8DF9-4102-B313-F97461973EC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF21EE59-8DF9-4102-B313-F97461973EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF21EE59-8DF9-4102-B313-F97461973EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF21EE59-8DF9-4102-B313-F97461973EC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{34503B0F-F4B4-4BC5-9A04-4B043EAB4278} = {87DEF9F1-3303-4254-99CB-107FE3DEA93B}
+		{AF21EE59-8DF9-4102-B313-F97461973EC0} = {87DEF9F1-3303-4254-99CB-107FE3DEA93B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB1EA95E-DBF3-466D-9AD8-F737DD805FB8}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:17267",
+      "sslPort": 44324
+    }
+  },
+  "profiles": {
+    "CarsAPI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_USERNAME": "Alikan.Tunali@codit.eu",
+        "VaultUri": "https://kv-at-carsapi-dev.vault.azure.net/"
+      },
+      "applicationUrl": "https://localhost:7075;http://localhost:5075",
+      "dotnetRunMessages": true
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_USERNAME": "Alikan.Tunali@codit.eu",
+        "VaultUri": "https://kv-at-carsapi-dev.vault.azure.net/"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "AZURE_USERNAME": "Alikan.Tunali@codit.eu",
+        "VaultUri": "https://kv-at-carsapi-dev.vault.azure.net/"
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  }
+}

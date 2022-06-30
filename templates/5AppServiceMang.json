@@ -1,0 +1,1401 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "service_at_carsapi_man_svc_name": {
+            "defaultValue": "at-carsapi-man-svc",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[parameters('service_at_carsapi_man_svc_name')]",
+            "location": "West Europe",
+            "sku": {
+                "name": "Consumption",
+                "capacity": 0
+            },
+            "properties": {
+                "publisherEmail": "Alikan.Tunali@codit.eu",
+                "publisherName": "Alikan Tunali",
+                "notificationSenderEmail": "apimgmt-noreply@mail.windowsazure.com",
+                "hostnameConfigurations": [
+                    {
+                        "type": "Proxy",
+                        "hostName": "[concat(parameters('service_at_carsapi_man_svc_name'), '.azure-api.net')]",
+                        "negotiateClientCertificate": false,
+                        "defaultSslBinding": true,
+                        "certificateSource": "BuiltIn"
+                    }
+                ],
+                "customProperties": {
+                    "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10": "False",
+                    "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11": "False",
+                    "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10": "False",
+                    "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11": "False",
+                    "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30": "False",
+                    "Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2": "False"
+                },
+                "virtualNetworkType": "None",
+                "apiVersionConstraint": {},
+                "publicNetworkAccess": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "CarsAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "apiRevision": "1",
+                "subscriptionRequired": true,
+                "serviceUrl": "https://as-at-carsapi-dev.azurewebsites.net",
+                "path": "at-carsapi-dev.coditmalta.com",
+                "protocols": [
+                    "https"
+                ],
+                "isCurrent": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/atcasapi')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "atcasapi",
+                "apiRevision": "1",
+                "subscriptionRequired": true,
+                "path": "atcarsapidev.coditmalta.com",
+                "protocols": [
+                    "https"
+                ],
+                "isCurrent": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/policies",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "value": "<!--\r\n    IMPORTANT:\r\n    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.\r\n    - Only the <forward-request> policy element can appear within the <backend> section element.\r\n    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.\r\n    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.\r\n    - To add a policy position the cursor at the desired insertion point and click on the round button associated with the policy.\r\n    - To remove a policy, delete the corresponding policy statement from the policy document.\r\n    - Policies are applied in the order of their appearance, from the top down.\r\n-->\r\n<policies>\r\n  <inbound></inbound>\r\n  <backend>\r\n    <forward-request />\r\n  </backend>\r\n  <outbound></outbound>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/subscriptions",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/master')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "scope": "[concat(resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name')), '/')]",
+                "displayName": "Built-in all-access subscription",
+                "state": "active",
+                "allowTracing": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/Car')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "Car"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/CarControllerDb')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "CarControllerDb"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/delete-carsdbapi-deletecarfromdb-id')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/CarsDbAPI/DeleteCarFromDb/{id} - DELETE",
+                "method": "DELETE",
+                "urlTemplate": "/CarsDbAPI/DeleteCarFromDb/{id}",
+                "templateParameters": [
+                    {
+                        "name": "id",
+                        "description": "Format - int32.",
+                        "type": "integer",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/delete-staticcarsapi-deletecar-id')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/StaticCarsAPI/DeleteCar/{id} - DELETE",
+                "method": "DELETE",
+                "urlTemplate": "/StaticCarsAPI/DeleteCar/{id}",
+                "templateParameters": [
+                    {
+                        "name": "id",
+                        "description": "Format - int32.",
+                        "type": "integer",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/get-carsdbapi-getcarfromdb-id')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/CarsDbAPI/GetCarFromDB/{id} - GET",
+                "method": "GET",
+                "urlTemplate": "/CarsDbAPI/GetCarFromDB/{id}",
+                "templateParameters": [
+                    {
+                        "name": "id",
+                        "description": "Format - int32.",
+                        "type": "integer",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/get-carsdbapi-getcarsfromdb')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/CarsDbAPI/GetCarsFromDb - GET",
+                "method": "GET",
+                "urlTemplate": "/CarsDbAPI/GetCarsFromDb",
+                "templateParameters": [],
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/get-staticcarsapi-getcarbyid-id')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/StaticCarsAPI/GetCarById/{id} - GET",
+                "method": "GET",
+                "urlTemplate": "/StaticCarsAPI/GetCarById/{id}",
+                "templateParameters": [
+                    {
+                        "name": "id",
+                        "description": "Format - int32.",
+                        "type": "integer",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/get-staticcarsapi-listcars')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/StaticCarsAPI/ListCars - GET",
+                "method": "GET",
+                "urlTemplate": "/StaticCarsAPI/ListCars",
+                "templateParameters": [],
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/post-carsdbapi-addcartodb')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/CarsDbAPI/AddCarToDB - POST",
+                "method": "POST",
+                "urlTemplate": "/CarsDbAPI/AddCarToDB",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "text/json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/*+json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "text/xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/*+xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/post-staticcarsapi-addcar')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/StaticCarsAPI/AddCar - POST",
+                "method": "POST",
+                "urlTemplate": "/StaticCarsAPI/AddCar",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "text/json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/*+json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "text/xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/*+xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/put-carsdbapi-updateexistingcar')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/CarsDbAPI/UpdateExistingCar - PUT",
+                "method": "PUT",
+                "urlTemplate": "/CarsDbAPI/UpdateExistingCar",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "text/json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/*+json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "text/xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/*+xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/put-staticcarsapi-updatecar')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "displayName": "/StaticCarsAPI/UpdateCar - PUT",
+                "method": "PUT",
+                "urlTemplate": "/StaticCarsAPI/UpdateCar",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "text/json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/*+json",
+                            "examples": {
+                                "default": {
+                                    "value": {}
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "text/xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        },
+                        {
+                            "contentType": "application/*+xml",
+                            "examples": {
+                                "default": {
+                                    "value": "<Car>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</Car>"
+                                }
+                            },
+                            "schemaId": "62b4e0f8fffee309645ac972",
+                            "typeName": "Car"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Success",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "examples": {
+                                    "default": {}
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "examples": {
+                                    "default": {
+                                        "value": [
+                                            {
+                                                "id": 0,
+                                                "brandName": "string",
+                                                "manufactureYear": "string",
+                                                "model": "string"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "application/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            },
+                            {
+                                "contentType": "text/xml",
+                                "examples": {
+                                    "default": {
+                                        "value": "<CarArray>\r\n  <id>0</id>\r\n  <brandName>string</brandName>\r\n  <manufactureYear>string</manufactureYear>\r\n  <model>string</model>\r\n</CarArray>"
+                                    }
+                                },
+                                "schemaId": "62b4e0f8fffee309645ac972",
+                                "typeName": "CarArray"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/schemas",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/62b4e0f8fffee309645ac972')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ],
+            "properties": {
+                "contentType": "application/vnd.ms-azure-apim.swagger.definitions+json"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/delete-staticcarsapi-deletecar-id/Car')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'delete-staticcarsapi-deletecar-id')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/get-staticcarsapi-getcarbyid-id/Car')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'get-staticcarsapi-getcarbyid-id')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/get-staticcarsapi-listcars/Car')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'get-staticcarsapi-listcars')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/post-staticcarsapi-addcar/Car')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'post-staticcarsapi-addcar')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/put-staticcarsapi-updatecar/Car')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'put-staticcarsapi-updatecar')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/delete-carsdbapi-deletecarfromdb-id/CarControllerDb')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'delete-carsdbapi-deletecarfromdb-id')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/get-carsdbapi-getcarfromdb-id/CarControllerDb')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'get-carsdbapi-getcarfromdb-id')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/get-carsdbapi-getcarsfromdb/CarControllerDb')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'get-carsdbapi-getcarsfromdb')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/post-carsdbapi-addcartodb/CarControllerDb')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'post-carsdbapi-addcartodb')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('service_at_carsapi_man_svc_name'), '/at-carsapi-dev/put-carsdbapi-updateexistingcar/CarControllerDb')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev', 'put-carsdbapi-updateexistingcar')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('service_at_carsapi_man_svc_name'), 'at-carsapi-dev')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('service_at_carsapi_man_svc_name'))]"
+            ]
+        }
+    ]
+}
