@@ -28,5 +28,6 @@ namespace Common.Models
                   Model = "M5"
               }
           };
+
     }
 }

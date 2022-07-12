@@ -1,6 +1,6 @@
 ﻿using Common.Entities;
 
-namespace Common.Services.CarDbListService
+namespace Common.Repositories.CarDbListService
 {
     public interface IDbCarInfoRepository
     {

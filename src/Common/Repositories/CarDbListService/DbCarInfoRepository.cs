@@ -4,7 +4,7 @@ using Common.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Common.Services.CarDbListService
+namespace Common.Repositories.CarDbListService
 {
     public class DbCarInfoRepository : IDbCarInfoRepository
     {
@@ -20,12 +20,12 @@ namespace Common.Services.CarDbListService
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<Car?> GetCarByIdFromDbAsync(int carId)
+        public async Task<Car> GetCarByIdFromDbAsync(int carId)
         {
             if (carId <= 0)
             {
                 _logger.LogInformation($"given id {carId} is not in range ");
-                //throw new ArgumentOutOfRangeException(nameof(carId));
+                throw new ArgumentOutOfRangeException(nameof(carId));
             }
 
             var dbCar = await _context.Cars.FindAsync(carId);
@@ -33,7 +33,8 @@ namespace Common.Services.CarDbListService
             {
                 return dbCar;
             }
-            throw new ArgumentNullException($"given id ({carId}) should be greater than 0");
+            _logger.LogInformation($"given id ({carId}) should not be null");
+            throw new ArgumentNullException($"given id ({carId}) should not be null");
 
         }
 
@@ -74,6 +75,7 @@ namespace Common.Services.CarDbListService
 
                     return request;
                 }
+                _logger.LogInformation("No car exist with given Id");
                 throw new Exception("No car exist with given Id");
 
             }
@@ -84,6 +86,7 @@ namespace Common.Services.CarDbListService
             if (carId <= 0)
 
             {
+                _logger.LogInformation("Invalid Id.");
                 throw new Exception("Invalid Id.");
 
             }
@@ -99,6 +102,7 @@ namespace Common.Services.CarDbListService
                     return await _context.Cars.ToListAsync();
 
                 }
+                _logger.LogInformation("No car exist with given Id");
                 throw new ArgumentNullException("No car exist with given Id");
 
             }

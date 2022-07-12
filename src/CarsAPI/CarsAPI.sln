@@ -23,6 +23,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		..\..\templates\5AppServiceMang.parameters.json = ..\..\templates\5AppServiceMang.parameters.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarsAPI.Test", "..\CarsAPI.Test\CarsAPI.Test.csproj", "{E3AF47FA-E46B-40CC-ACE9-6CE7ECC745F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{5101CF2D-A2AA-4B25-9B71-124600F00A7C}"
+	ProjectSection(SolutionItems) = preProject
+		Initial_migration.sql = Initial_migration.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +44,10 @@ Global
 		{AF21EE59-8DF9-4102-B313-F97461973EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF21EE59-8DF9-4102-B313-F97461973EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF21EE59-8DF9-4102-B313-F97461973EC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3AF47FA-E46B-40CC-ACE9-6CE7ECC745F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3AF47FA-E46B-40CC-ACE9-6CE7ECC745F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3AF47FA-E46B-40CC-ACE9-6CE7ECC745F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3AF47FA-E46B-40CC-ACE9-6CE7ECC745F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

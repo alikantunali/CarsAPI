@@ -1,0 +1,48 @@
+variables:
+  - name: Resource.Prefix
+    value: $(App.Environment.Code)-$(Region.ShortName)-lab
+
+    #GIVE RESOURCE GROUP NAME 
+  - name: Azure.ResourceGroup.Name
+    value: aca-devops
+
+
+    #GIVE RESOURCE GROUP NAME name: Api.Name
+  - name: Api.Name
+    value: $(Resource.Prefix)-app
+
+    #GIVE DOTNET VERSION 
+  - name: Api.DotnetVersion
+    value: DOTNETCORE|6.0
+
+    #give Keyvault name 
+  - name: Keyvault.Name
+    value: codit-academy-vault
+
+    #sku storage
+  - name: Storage.SkuName
+    value: Standard_LRS
+
+    #storage name
+  - name: Keyvault_SkuName
+    value: Standard
+
+    #give connection string
+  - name: Keyvault.SecretName
+    value: EncryptionKey
+
+    #give app plan 
+  - name: AppSvcPlan.SkuName
+    value: S1
+
+    #storage account if needed. 
+  - name: StorageAccount.TableName
+    value: EncryptionTable
+
+    #release object id --> related to application object id. 
+  - name: Release.ObjectId
+    value: $(DevOps.ObjectId) 
+
+    #tenant id 
+  - name: Release.TenantId
+    value: $(DevOps.TenantId)

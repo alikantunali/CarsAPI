@@ -1,6 +1,6 @@
 ﻿using Common.Entities;
 
-namespace Common.Services.CarListService;
+namespace Common.Repositories.CarListService;
 
 public interface ICarInfoRepository            //LISTING METHODS IMPLEMENTED IN INTERFACE
 {

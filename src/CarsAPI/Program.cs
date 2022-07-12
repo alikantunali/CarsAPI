@@ -2,8 +2,8 @@
 global using Microsoft.EntityFrameworkCore;
 using Common.DbDataContext;
 using Common.Models;
-using Common.Services.CarDbListService;
-using Common.Services.CarListService;
+using Common.Repositories.CarDbListService;
+using Common.Repositories.CarListService;
 
 
     
