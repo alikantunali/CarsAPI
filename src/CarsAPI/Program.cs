@@ -42,13 +42,7 @@ builder.Services.AddDbContext<CarDataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CarsSQLDbConnectionString"));
     options.UseSqlServer(b => b.MigrationsAssembly("Common"));
 
-    /* var sqlServer = Environment.GetEnvironmentVariable("SQL_SERVER_NAME");
-     var sqlPort = Environment.GetEnvironmentVariable("SQL_PORT");
-     var dbName = Environment.GetEnvironmentVariable("DATABASE_NAME");
-     var user = Environment.GetEnvironmentVariable("SQL_USER");
-     var psw = Environment.GetEnvironmentVariable("SQL_PASSWORD");
-     var conStr = $"Data Source=tcp:{sqlServer}.database.windows.net,{sqlPort};Initial Catalog={dbName};User Id={user}@{sqlServer};Password={psw}";
-     //options.UseSqlServer($"Data Source=tcp:{sqlServer}.database.windows.net,{sqlPort};Initial Catalog={dbName};User Id={user}@{sqlServer};Password={psw}");*/
+
 
 
 });

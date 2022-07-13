@@ -29,11 +29,17 @@ namespace CarsAPI.Controllers
         //public async Task<IActionResult> Get() //NO SCHEMAS DEFINED HERE WITH IActionResult
 
         //GET THE CARS FROM CARS TABLE BY USING DB SET "CARS" DEFINED IN DataContext.cs
-        public async Task<ActionResult<List<Car>>> GetCarsFromDb()
+        public async Task<ActionResult<IEnumerable<Car>>> GetCarsFromDb()
         {
             try
             {
-                return Ok(await _dbCarInfoRepository.GetCarsFromDbAsync());
+                var cars = await _dbCarInfoRepository.GetCarsFromDbAsync();
+                foreach (var car in cars)
+                {
+                    car.Summary = car.BrandName + " " + car.ManufactureYear;
+                }
+
+                return Ok(cars);
             }       
             catch
             {
@@ -46,7 +52,20 @@ namespace CarsAPI.Controllers
         public async Task<ActionResult<List<Car>>> GetCarFromDB( int id)
             
         {
-            return Ok(await _dbCarInfoRepository.GetCarByIdFromDbAsync(id));    
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
+                try
+                {
+
+                    return Ok(await _dbCarInfoRepository.GetCarByIdFromDbAsync(id));
+                }
+                catch
+                {
+                    return BadRequest(id);
+                }
 
         }
 

@@ -23,5 +23,7 @@ namespace Common.Entities
         [MaxLength(25)]
         public string Model { get; set; }
 
+        public string Summary { get; set; }
+
     }
 }

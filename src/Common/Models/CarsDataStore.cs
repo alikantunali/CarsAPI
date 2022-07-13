@@ -26,7 +26,7 @@ namespace Common.Models
                   BrandName = "BMW",
                   ManufactureYear = "2022",
                   Model = "M5"
-              }
+              }                 
           };
 
     }
