@@ -27,7 +27,7 @@ namespace CarsAPI.Test
             var result = await carControllerDb.GetCarFromDB(id);
 
             //ASSERT
-            var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
+            var actionResult = Assert.IsType<ActionResult<List<Common.Entities.Car>>>(result);
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
 
         }
@@ -35,7 +35,7 @@ namespace CarsAPI.Test
         [Fact]
         public async Task AddCar_ReturnsBadRequestResult_WhenModelStateIsInvalid()
         {
-            var newCar = new Car()
+            var newCar = new Common.Entities.Car()
             {
                 Id = 3,
                 BrandName = "FORD",
@@ -50,7 +50,7 @@ namespace CarsAPI.Test
             //ACT 
 
             var result = await carControllerDb.AddCarToDB(newCar);
-            var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
+            var actionResult = Assert.IsType<ActionResult<List<Common.Entities.Car>>>(result);
             //ASSERT
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
@@ -71,7 +71,7 @@ namespace CarsAPI.Test
             var result = await carControllerDb.DeleteCarFromDb(id);
 
             //ASSERT
-            var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
+            var actionResult = Assert.IsType<ActionResult<List<Common.Entities.Car>>>(result);
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
 
         }
@@ -90,7 +90,7 @@ namespace CarsAPI.Test
             var result = await carControllerDb.DeleteCarFromDb(id);
 
             //ASSERT
-            var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
+            var actionResult = Assert.IsType<ActionResult<List<Common.Entities.Car>>>(result);
             Assert.IsType<OkObjectResult>(actionResult.Result);
 
         }
@@ -99,7 +99,7 @@ namespace CarsAPI.Test
         public async Task AddCar_ReturnsCar_WhenModelStateIsValid()
         {
 
-            var newCar = new Car()
+            var newCar = new Common.Entities.Car()
             {
 
                 BrandName = "FORD",
@@ -116,7 +116,7 @@ namespace CarsAPI.Test
             var result = await carControllerDb.AddCarToDB(newCar);
 
             //ASSERT
-            var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
+            var actionResult = Assert.IsType<ActionResult<List<Common.Entities.Car>>>(result);
             Assert.IsType<OkObjectResult>(actionResult.Result);
 
         }
@@ -125,7 +125,7 @@ namespace CarsAPI.Test
         public async Task UpdateCar_ReturnsBadRequest_WhenModelStateIsInvalid()
         {
 
-            var newCar = new Car()
+            var newCar = new Common.Entities.Car()
             {
 
                 BrandName = "FORD",
@@ -142,7 +142,7 @@ namespace CarsAPI.Test
             var result = await carControllerDb.UpdateExistingCar(newCar);
 
             //ASSERT
-            var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
+            var actionResult = Assert.IsType<ActionResult<List<Common.Entities.Car>>>(result);
             Assert.IsType<OkObjectResult>(actionResult.Result);
 
         }

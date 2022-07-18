@@ -1,14 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Common.Entities
+namespace CarsAPI.Test
 {
-    public class Car
+    public class TestCar : Common.Entities.Car
     {
         //ANNOTATIONS
-        [Key]
+
         //WHEN GENERATED IN DB IT WILL BE GENERATED AS IDENTTIY UNIQUE KEY
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Brand Name is required.")]
@@ -22,7 +27,6 @@ namespace Common.Entities
         [Required(ErrorMessage = "Model is mandatory.")]
         [MaxLength(25)]
         public string Model { get; set; }
-      
 
     }
 }

@@ -10,27 +10,27 @@ namespace CarsAPI.Test.Repositories
 {
     public class CarInfoTestRepository : ICarInfoRepository
     {
-        private List<Car> _carList;
+        private List<Common.Entities.Car> _carList;
 
         public CarInfoTestRepository()
         {
-           _carList = new()
+            _carList = new()
             {
-                new Car
+                new Common.Entities.Car
               {
                   Id =1,
                   BrandName = "TOYOTA",
                   ManufactureYear = "1999",
                   Model = "Supra"
               },
-                 new Car
+                 new Common.Entities.Car
               {
                   Id =2,
                   BrandName = "HONDA",
                   ManufactureYear = "2002",
                   Model = "S2000"
               },
-                 new Car
+                 new Common.Entities.Car
               {
                   Id =3,
                   BrandName = "BMW",
@@ -40,32 +40,32 @@ namespace CarsAPI.Test.Repositories
             };
         }
 
-        public Task<List<Car>> AddCarToList(Car car)
+        public Task<List<Common.Entities.Car>> AddCarToList(Common.Entities.Car car)
         {
             _carList.Add(car);
             return Task.FromResult(_carList);
         }
 
-        public Task<List<Car>> DeleteCarFromList(int Id)
+        public Task<List<Common.Entities.Car>> DeleteCarFromList(int Id)
         {
             _carList.Remove(_carList[Id]);
             return Task.FromResult(_carList);
 
         }
 
-        public Task<Car?> GetCarFromList(int Id)
+        public Task<Common.Entities.Car?> GetCarFromList(int Id)
         {
             var car = _carList[Id];
             return Task.FromResult(car);
 
         }
 
-        public Task<List<Car>> GetCarsFromList()
+        public Task<List<Common.Entities.Car>> GetCarsFromList()
         {
             return Task.FromResult(_carList);
         }
 
-        public Task<List<Car>> UpdateCarInList(Car car)
+        public Task<List<Common.Entities.Car>> UpdateCarInList(Common.Entities.Car car)
         {
             var updatedCar = _carList.Find(c => c.Id == car.Id);
             updatedCar.BrandName = car.BrandName;

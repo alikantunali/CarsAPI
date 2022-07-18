@@ -34,7 +34,7 @@ namespace CarsAPI.Test
             repositoryMock.Verify(r => r.GetCarFromList(3));
 
 
-            Assert.IsType<ActionResult<List<Car>>>(result);
+            Assert.IsType<ActionResult<List<Common.Entities.Car>>>(result);
 
         }
     }

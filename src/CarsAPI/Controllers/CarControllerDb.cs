@@ -25,7 +25,7 @@ namespace CarsAPI.Controllers
 
         
     
-        [HttpGet("GetCarsFromDb")]
+        [HttpGet("GetCarsFromDb")]        
         //public async Task<IActionResult> Get() //NO SCHEMAS DEFINED HERE WITH IActionResult
 
         //GET THE CARS FROM CARS TABLE BY USING DB SET "CARS" DEFINED IN DataContext.cs
@@ -34,10 +34,6 @@ namespace CarsAPI.Controllers
             try
             {
                 var cars = await _dbCarInfoRepository.GetCarsFromDbAsync();
-                foreach (var car in cars)
-                {
-                    car.Summary = car.BrandName + " " + car.ManufactureYear;
-                }
 
                 return Ok(cars);
             }       

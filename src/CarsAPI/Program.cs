@@ -39,7 +39,7 @@ builder.Services.AddDbContext<CarDataContext>(options =>
                                                                 
 {
 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CarsSQLDbConnectionString"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CarsDbSQLConnection"));
     options.UseSqlServer(b => b.MigrationsAssembly("Common"));
 
 
@@ -62,7 +62,7 @@ var app = builder.Build();
 
 // only runs swagger in development environment.
 //MIDDLEWARE SECTION. in the request pipeline  pipeline can include below :DIAGNOSTICS, AUTHENTICATION, ROUTING, ENDPOINT
-// if (app.Environment.IsDevelopment())        
+if (app.Environment.IsDevelopment())        
     app.UseSwagger();
 
 
@@ -82,9 +82,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-/*app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});*/
+
 
 app.Run();

@@ -14,10 +14,11 @@ namespace CarsAPI.Test
     public class DbInfoMoqRepositoryTests
     {
         [Fact]
-        public async void GetCars_Returns_TypeCar()
+        public async Task GetCars_Runs_AndCompletes()
         {
             //Arrange
-            var isTrue = true;
+            
+            
             var repositoryMock = new Mock<IDbCarInfoRepository>();
             repositoryMock
             .Setup(r => r.GetCarsFromDbAsync());
@@ -29,39 +30,47 @@ namespace CarsAPI.Test
             //Act
 
             var result = carControllerDb.GetCarsFromDb().IsCompleted;
+
             
             //Assert
 
-            repositoryMock.Verify(r => r.GetCarsFromDbAsync());
+            repositoryMock.Verify(r => r.GetCarsFromDbAsync(),Times.Once);
 
-           
-            Assert.Equal(isTrue, result);
+            Assert.True(result);
+            
+            
+            
 
         }
         [Fact]
         public async Task GetCarbyId_Returns_Value()
         {
             //Arrange
+            var car = new Car()
+            { Id=3
+            };
             var repositoryMock = new Mock<IDbCarInfoRepository>();
             repositoryMock
-            .Setup(r => r.GetCarByIdFromDbAsync(3))       
-            .ReturnsAsync(new Car { BrandName = "FORD", ManufactureYear = "MUSTANG", Model = "1968", Id = 3 });
+            .Setup<Task<Car>>(r => r.GetCarByIdFromDbAsync(3))       
+            .ReturnsAsync( new Car { BrandName = "FORD", ManufactureYear = "MUSTANG", Model = "1968", Id = 3 });
 
 
-            var carControllerDb = new CarControllerDb(repositoryMock.Object);
+            var carControllerDb =  new CarControllerDb(repositoryMock.Object);
 
 
             //Act
+            
 
-
-            var result = carControllerDb.GetCarFromDB(3);
+            var result = await carControllerDb.GetCarFromDB(3);
+           
+            
             //Assert           
             
 
-           repositoryMock.Verify(r => r.GetCarByIdFromDbAsync(3));
+           repositoryMock.Verify(r => r.GetCarByIdFromDbAsync(3),Times.Once);
 
             Assert.NotNull(result);
-            
+           
 
         }
        

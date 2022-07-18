@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Common.Repositories.CarDbListService
 {
+    //TENTITY ADDED FOR TESTING PURPOSES <Car>
     public class DbCarInfoRepository : IDbCarInfoRepository
     {
         //DATA CONTEXT FROM DB
@@ -20,7 +21,7 @@ namespace Common.Repositories.CarDbListService
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<Car> GetCarByIdFromDbAsync(int carId)
+        public async Task<Car?> GetCarByIdFromDbAsync(int carId)
         {
             if (carId <= 0)
             {
@@ -40,8 +41,8 @@ namespace Common.Repositories.CarDbListService
 
         public async Task<IEnumerable<Car>> GetCarsFromDbAsync()
         {
-            return await _context.Cars.OrderByDescending(i => i.Id).ToListAsync();
-
+            //return await _context.Cars.OrderByDescending(i => i.Id).ToListAsync();
+            return await _context.Cars.ToListAsync();
         }
 
         public async Task<Car?> AddCarToDbAsync(Car request)
@@ -52,7 +53,7 @@ namespace Common.Repositories.CarDbListService
 
         }
 
-        public async Task<Car?> UpdateCarInDbAsync(Car request)
+        public async Task<Car> UpdateCarInDbAsync(Car request)
         {
             if (request.Id <= 0)
             {

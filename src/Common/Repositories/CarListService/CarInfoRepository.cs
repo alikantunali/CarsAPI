@@ -81,7 +81,7 @@ public class CarInfoRepository : ICarInfoRepository //PERSISTENCE LOGIC APPLIED 
                 currentCar.BrandName = car.BrandName;
                 currentCar.ManufactureYear = car.ManufactureYear;
                 currentCar.ManufactureYear = car.Model;
-                return CarsDataStore.cars.ToList();
+                return  CarsDataStore.cars.ToList();
             }
             else
             {

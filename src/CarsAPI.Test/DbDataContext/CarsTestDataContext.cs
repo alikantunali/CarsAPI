@@ -15,7 +15,7 @@ namespace CarsAPI.Test.DbDataContext
         {
 
         }
-        public virtual DbSet<Car> Cars { get; set; }
+        public virtual DbSet<Common.Entities.Car> Cars { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
