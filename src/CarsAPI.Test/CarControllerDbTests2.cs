@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace CarsAPI.Test
 {
-    public class DbCarInfoRepositoryTests
+    public class CarControllerDbTests2
     {
 
 
@@ -22,7 +22,7 @@ namespace CarsAPI.Test
         private Mock<IDbCarInfoRepository> _carRepository;
         private CarControllerDb _carControllerDb;
 
-        public DbCarInfoRepositoryTests()
+        public CarControllerDbTests2()
         {
             _carRepository = new Mock<IDbCarInfoRepository>();
             _carControllerDb = new CarControllerDb(_carRepository.Object);

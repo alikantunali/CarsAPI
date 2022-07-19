@@ -34,15 +34,15 @@ namespace CarsAPI.Controllers
             try
             {
                 var cars = await _dbCarInfoRepository.GetCarsFromDbAsync();
-                if (cars == null)
+                if (cars != null)
                 {
-                    return NoContent();
-                }    
-                return Ok(cars);
+                    return Ok(cars);
+                }
+                return NoContent(); 
             }       
             catch
             {
-                return NotFound();
+                return NotFound("Connection to DB is not configured. Run Migration and specify Connection String Properly.");
             }
 
         }

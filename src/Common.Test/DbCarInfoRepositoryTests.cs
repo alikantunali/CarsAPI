@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common.Test
 {
-    internal class DbSetMoq
+    internal class DbCarInfoRepositoryTests
     {
     }
 }

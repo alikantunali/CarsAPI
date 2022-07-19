@@ -49,6 +49,7 @@ namespace Common.Repositories.CarDbListService
         {
             await _context.Cars.AddAsync(request);
             await _context.SaveChangesAsync();
+            _logger.LogInformation($"Given car added to db.");
             return request;
 
         }
