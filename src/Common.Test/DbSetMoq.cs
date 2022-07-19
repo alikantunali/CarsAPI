@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarsAPI.Test
+namespace Common.Test
 {
     internal class DbSetMoq
     {

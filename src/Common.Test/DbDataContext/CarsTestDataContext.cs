@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarsAPI.Test.DbDataContext
+namespace Common.Test.DbDataContext
 {
     public class CarsTestDataContext : DbContext
     {

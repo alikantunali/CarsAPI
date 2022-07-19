@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarsAPI.Test
+namespace Common.Test
 {
-    public class TestCar : Common.Entities.Car
+    public class TestCar : Car
     {
         //ANNOTATIONS
 
