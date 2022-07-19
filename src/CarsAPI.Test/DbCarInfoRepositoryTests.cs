@@ -9,11 +9,9 @@ namespace CarsAPI.Test
 {
     public class DbCarInfoRepositoryTests
     {
-        public int carId { get; set; }
 
-        public bool carExists { get; set; }
 
-        Car TestCar = new Car()
+        private Car TestCar = new Car()
         {
             Id = 1,
             BrandName = "xxx",
@@ -21,9 +19,17 @@ namespace CarsAPI.Test
             Model = "yyy"
         };
 
+        private Mock<IDbCarInfoRepository> _carRepository;
+        private CarControllerDb _carControllerDb;
 
-        Mock<IDbCarInfoRepository> carRepository = new Mock<IDbCarInfoRepository>();
+        public DbCarInfoRepositoryTests()
+        {
+            _carRepository = new Mock<IDbCarInfoRepository>();
+            _carControllerDb = new CarControllerDb(_carRepository.Object);
+        }
+       
         
+
         [Fact]
         public async Task GetCars_Runs_AndCompletes()
         {
@@ -31,18 +37,15 @@ namespace CarsAPI.Test
 
 
 
-            carRepository
-            .Setup(r => r.GetCarsFromDbAsync());
-            
-            var carControllerDb = new CarControllerDb(carRepository.Object);
-
+            _carRepository
+            .Setup(r => r.GetCarsFromDbAsync());            
             //Act
 
-            var result = carControllerDb.GetCarsFromDb().IsCompleted;
+            var result = _carControllerDb.GetCarsFromDb().IsCompleted;
 
             //Assert
 
-            carRepository.Verify(r => r.GetCarsFromDbAsync(),Times.Once);
+            _carRepository.Verify(r => r.GetCarsFromDbAsync(),Times.Once);
             
             Assert.True(result);
         }
@@ -54,24 +57,21 @@ namespace CarsAPI.Test
             var carList= new List<Car>();
             carList.Add(TestCar);
 
-            carRepository
+            _carRepository
             .Setup(r => r.GetCarsFromDbAsync())
-            .ReturnsAsync(carList);
-
-
-            var carControllerDb = new CarControllerDb(carRepository.Object);
+            .ReturnsAsync(carList);          
 
 
             //Act
 
-            var result = carControllerDb.GetCarsFromDb() ;
+            var result = _carControllerDb.GetCarsFromDb() ;
             ActionResult<IEnumerable<Car>> returnedCar = result.Result;
             var actual = returnedCar.Result;
-            
+
 
             //Assert
 
-            carRepository.Verify(r => r.GetCarsFromDbAsync(), Times.Once);
+            _carRepository.Verify(r => r.GetCarsFromDbAsync(), Times.Once);
 
            // Assert.True(result);
 
@@ -87,18 +87,16 @@ namespace CarsAPI.Test
             var returnedCar = TestCar;
 
 
-            carRepository
+            _carRepository
             .Setup(r => r.GetCarsFromDbAsync());
-
-            var carControllerDb = new CarControllerDb(carRepository.Object);
 
             //Act
 
-            var result = carControllerDb.GetCarsFromDb().Result;           
+            var result = _carControllerDb.GetCarsFromDb().Result;           
             //Assert
 
             Assert.NotNull(result);
-            carRepository.Verify(r => r.GetCarsFromDbAsync(), Times.Once);
+            _carRepository.Verify(r => r.GetCarsFromDbAsync(), Times.Once);
             
             
         }
