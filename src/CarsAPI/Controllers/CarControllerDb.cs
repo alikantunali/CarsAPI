@@ -34,7 +34,10 @@ namespace CarsAPI.Controllers
             try
             {
                 var cars = await _dbCarInfoRepository.GetCarsFromDbAsync();
-
+                if (cars == null)
+                {
+                    return NoContent();
+                }    
                 return Ok(cars);
             }       
             catch
@@ -45,7 +48,7 @@ namespace CarsAPI.Controllers
         }
 
         [HttpGet("GetCarFromDB/{id}")]
-        public async Task<ActionResult<List<Car>>> GetCarFromDB( int id)
+        public async Task<ActionResult<Car>> GetCarFromDB( int id)
             
         {
             if (!ModelState.IsValid)
@@ -55,8 +58,9 @@ namespace CarsAPI.Controllers
             else
                 try
                 {
+                    var car = await _dbCarInfoRepository.GetCarByIdFromDbAsync(id);
 
-                    return Ok(await _dbCarInfoRepository.GetCarByIdFromDbAsync(id));
+                    return Ok(car);
                 }
                 catch
                 {
@@ -83,6 +87,7 @@ namespace CarsAPI.Controllers
             try
             {
                 await _dbCarInfoRepository.UpdateCarInDbAsync(request);
+                
                 return Ok("Update is succesful");
             }
             catch

@@ -1,18 +1,12 @@
 ﻿using CarsAPI.Controllers;
 using Common.Entities;
-using Common.Repositories;
 using Common.Repositories.CarListService;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarsAPI.Test
 {
-    public class CarInfoMoqRepositoryTests
+    public class CarInfoRepositoryTests
     {
         [Fact]
         public async void GetCarbyId_Returns_CarType()
@@ -20,7 +14,7 @@ namespace CarsAPI.Test
             //Arrange
             
             var repositoryMock = new Mock<ICarInfoRepository>();
-            repositoryMock.Setup(r=> r.GetCarFromList(3));
+            repositoryMock.Setup(r=> r.GetCarFromList(3)).ReturnsAsync(new Car { BrandName = "FORD", ManufactureYear = "MUSTANG", Model = "1968", Id = 3 }); ;
 
             var carController = new CarController(repositoryMock.Object);
 
@@ -29,12 +23,13 @@ namespace CarsAPI.Test
 
             var result = carController.GetCarById(3).Result;
             
+
             //Assert
 
             repositoryMock.Verify(r => r.GetCarFromList(3));
 
 
-            Assert.IsType<ActionResult<List<Common.Entities.Car>>>(result);
+            Assert.IsType<ActionResult<List<Car>>>(result);
 
         }
     }
