@@ -69,7 +69,6 @@ namespace Common.Repositories.CarDbListService
             }
             else
             {
-
                 var dbCar = await _context.Cars.FindAsync(request.Id);
 
                 if (dbCar != null)
@@ -85,7 +84,6 @@ namespace Common.Repositories.CarDbListService
                 }
                 _logger.LogInformation("No car exist with given Id");
                 throw new Exception("No car exist with given Id");
-
             }
 
         }
@@ -112,7 +110,6 @@ namespace Common.Repositories.CarDbListService
                 }
                 _logger.LogInformation("No car exist with given Id");
                 throw new ArgumentNullException("No car exist with given Id");
-
             }
 
         }

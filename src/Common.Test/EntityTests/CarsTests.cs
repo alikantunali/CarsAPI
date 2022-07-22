@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarsAPI.Test
+namespace Common.Test.EntityTests
 {
 
     public class CarTests
@@ -14,13 +14,12 @@ namespace CarsAPI.Test
 
         public CarTests()
         {
-            _car =  new Common.Entities.Car();
+            _car = new Car();
         }
         [Fact]
         public void CheckCarClass_InputBrandName_CheckMaxLenghtBrandName()
         {
             //ARRANGE 
-            
 
             //ACT
             _car.BrandName = "asdadavvdfglkdfgdflgkjhfglkfgjhflgkhjflgkhjfghlerktretlkertejrterltj";
@@ -34,7 +33,6 @@ namespace CarsAPI.Test
         {
             //ARRANGE 
 
-
             //ACT
             _car.ManufactureYear = "19955";
 
@@ -46,7 +44,6 @@ namespace CarsAPI.Test
         public void CheckCarClass_InputModel_CheckMaxLenghtModel()
         {
             //ARRANGE 
-
 
             //ACT
             _car.ManufactureYear = "asdadasasasdasdasfdgfdfgdfggdfdfgdgfdgferter";

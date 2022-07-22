@@ -2,7 +2,6 @@
 
 namespace Common.Repositories.CarDbListService
 {
-
     public interface IDbCarInfoRepository
     {
         Task<IEnumerable<Car?>> GetCarsFromDbAsync();

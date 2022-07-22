@@ -5,19 +5,17 @@ using Common.DbDataContext;
 using Common.Repositories.CarDbListService;
 using Microsoft.Extensions.Logging;
 using Common.Entities;
-using Common.Test.DbDataContext;
 
-namespace Common.Test
+namespace Common.Test.RepositoryTests
 {
     public class DbCarInfoRepositoryTests2
     {
         private List<Car> _list, _emptyList;
         private Car _car;
         private Mock<CarDataContext> _dataContext;
-        private CarTestDataContext _testDataContext;
         private DbCarInfoRepository _repository;
         private Mock<ILogger<DbCarInfoRepository>> _logger;
-        private Mock <DbSet<Car>> _dbSet;
+        private Mock<DbSet<Car>> _dbSet;
 
 
         private static Mock<DbSet<T>> GetMockDbSet<T>(List<T> entities) where T : class
@@ -34,26 +32,26 @@ namespace Common.Test
 
         public DbCarInfoRepositoryTests2()
         {
-            _car = new Car() 
+            _car = new Car()
             {
                 Id = 1,
                 BrandName = "AKLM",
                 Model = "QQQQ",
                 ManufactureYear = "2022"
-            };            
-            
+            };
+
             _list = new List<Car>();
             _list.Add(_car);
 
             _emptyList = new List<Car>();
 
-            
 
-                      
-            
-            
+
+
+
+
             _logger = new Mock<ILogger<DbCarInfoRepository>>();
-            
+
             //System.ArgumentNullException : Value cannot be null. (Parameter 'context')
         }
         [Fact]
@@ -76,19 +74,19 @@ namespace Common.Test
             //var mockDbSet = GetMockDbSet(_list);
             _dbSet = new Mock<DbSet<Car>>();
 
-            
+
             _dataContext = new Mock<CarDataContext>();
             _dataContext.Setup(m => m.Cars).Returns(_dbSet.Object);
 
             _repository = new DbCarInfoRepository(_dataContext.Object, _logger.Object);
             _ = _repository.GetCarsFromDbAsync();
 
-            _dbSet.Verify(m => m.OrderByDescending(i => i.Id), Times.Once);                       
+            _dbSet.Verify(m => m.OrderByDescending(i => i.Id), Times.Once);
             //_dataContext.Verify(m=>m.Cars.ToListAsync());
         }
 
 
     }
 
-       
+
 }

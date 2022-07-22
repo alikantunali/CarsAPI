@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.Test
+namespace Common.Test.FakeData
 {
     public class CarMockData
     {

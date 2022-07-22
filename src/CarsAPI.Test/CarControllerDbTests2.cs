@@ -35,12 +35,10 @@ namespace CarsAPI.Test
         {
             //Arrange
 
-
-
             _carRepository
             .Setup(r => r.GetCarsFromDbAsync());            
+            
             //Act
-
             var result = _carControllerDb.GetCarsFromDb().IsCompleted;
 
             //Assert
@@ -61,7 +59,6 @@ namespace CarsAPI.Test
             .Setup(r => r.GetCarsFromDbAsync())
             .ReturnsAsync(carList);          
 
-
             //Act
 
             var result = _carControllerDb.GetCarsFromDb() ;
@@ -75,9 +72,6 @@ namespace CarsAPI.Test
 
            // Assert.True(result);
 
-
-
-
         }
         [Fact]
         public void CarsReturn_Notnull()
@@ -85,7 +79,6 @@ namespace CarsAPI.Test
             //Arrange
 
             var returnedCar = TestCar;
-
 
             _carRepository
             .Setup(r => r.GetCarsFromDbAsync());
@@ -97,8 +90,6 @@ namespace CarsAPI.Test
 
             Assert.NotNull(result);
             _carRepository.Verify(r => r.GetCarsFromDbAsync(), Times.Once);
-            
-            
         }
 
 

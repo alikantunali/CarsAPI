@@ -1,12 +1,12 @@
 ﻿using CarsAPI.Controllers;
-using Common.Entities;
+using Common.Test.FakeData;
 using Common.Repositories.CarDbListService;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace Common.Test
+namespace Common.Test.ControllerTests
 {
-    public class MockedDataDbControllerTests 
+    public class MockedDataDbControllerTests
     {
         private Mock<IDbCarInfoRepository> _service;
         private CarControllerDb _carControllerDb;
@@ -22,13 +22,11 @@ namespace Common.Test
             /// Arrange
 
             _service.Setup(_ => _.GetCarsFromDbAsync()).ReturnsAsync(CarMockData.GetData());
-            
 
             /// Act
             var result = _carControllerDb.GetCarsFromDb();
             var actionResult = await result;
             var okResult = actionResult.Result;
-            
 
             // /// Assert
             Assert.IsType<OkObjectResult>(okResult);
@@ -46,7 +44,7 @@ namespace Common.Test
             var result = _carControllerDb.GetCarsFromDb().Result;
             var actionResult = result.Result;
             var noContentResult = actionResult;
-            
+
             /// Assert
             Assert.IsType<NoContentResult>(noContentResult);
             _service.Verify(_ => _.GetCarsFromDbAsync(), Times.Exactly(1));

@@ -5,10 +5,9 @@ namespace Common.DbDataContext
 {
     public class CarDataContext : DbContext
     {
-        public CarDataContext() { }
+        //public CarDataContext() { }
         public CarDataContext(DbContextOptions<CarDataContext> options) : base(options)
-        {
-           
+        {           
         }
         public virtual DbSet<Car> Cars { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

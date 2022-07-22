@@ -6,11 +6,11 @@ using Moq;
 
 namespace CarsAPI.Test
 {
-    public class CarInfoRepositoryTests
+    public class CarControllerDbTests3
     {
         private Mock<ICarInfoRepository> _repositoryMock;
         private CarController _carController;
-        public CarInfoRepositoryTests()
+        public CarControllerDbTests3()
         {
             _repositoryMock = new Mock<ICarInfoRepository>();
             _carController = new CarController(_repositoryMock.Object);
@@ -18,13 +18,9 @@ namespace CarsAPI.Test
         [Fact]
         public async void GetCarbyId_Returns_CarType()
         {
-            //Arrange
-            
+            //Arrange            
             
             _repositoryMock.Setup(r=> r.GetCarFromList(3)).ReturnsAsync(new Car { BrandName = "FORD", ManufactureYear = "MUSTANG", Model = "1968", Id = 3 }); ;
-
-            
-
 
             //Act
 
