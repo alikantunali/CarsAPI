@@ -32,6 +32,7 @@ namespace Common.Test
 
             // /// Assert
             Assert.IsType<OkObjectResult>(okResult);
+            _service.Verify(_ => _.GetCarsFromDbAsync(), Times.Exactly(1));
         }
 
         [Fact]

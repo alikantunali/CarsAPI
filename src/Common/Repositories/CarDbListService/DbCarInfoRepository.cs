@@ -28,21 +28,27 @@ namespace Common.Repositories.CarDbListService
                 _logger.LogInformation($"given id {carId} is not in range ");
                 throw new ArgumentOutOfRangeException(nameof(carId));
             }
-
             var dbCar = await _context.Cars.FindAsync(carId);
             if (dbCar != null)
             {
-                return dbCar;
+              return dbCar;
             }
-            _logger.LogInformation($"given id ({carId}) should not be null");
-            throw new ArgumentNullException($"given id ({carId}) should not be null");
-
+            else 
+            {
+                _logger.LogInformation($"No cars Found with given Id");
+                throw new ArgumentNullException($"No cars Found with given Id ({carId})");
+            }                                              
         }
 
-        public async Task<IEnumerable<Car>> GetCarsFromDbAsync()
+        public async Task<IEnumerable<Car?>?> GetCarsFromDbAsync()
         {
-            //return await _context.Cars.OrderByDescending(i => i.Id).ToListAsync();
-            return await _context.Cars.ToListAsync();
+            var list = await _context.Cars.OrderByDescending(i => i.Id).ToListAsync();
+            if (list != null)
+            {
+                return list;
+                
+            }
+            return null;
         }
 
         public async Task<Car?> AddCarToDbAsync(Car request)

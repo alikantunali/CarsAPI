@@ -51,9 +51,9 @@ namespace CarsAPI.Controllers
         public async Task<ActionResult<Car>> GetCarFromDB( int id)
             
         {
-            if (!ModelState.IsValid)
+            if (id <=0)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
             else
                 try

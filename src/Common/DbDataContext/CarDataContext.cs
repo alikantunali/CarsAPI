@@ -10,7 +10,7 @@ namespace Common.DbDataContext
         {
            
         }
-        public DbSet<Car> Cars { get; set; }
+        public virtual DbSet<Car> Cars { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             _ = modelBuilder.Entity<Car>().HasData(
@@ -121,6 +121,7 @@ namespace Common.DbDataContext
               });
             base.OnModelCreating(modelBuilder);
         }
+
     }
 
 }

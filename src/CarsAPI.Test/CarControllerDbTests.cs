@@ -22,7 +22,7 @@ namespace CarsAPI.Test
             _carControllerDb = new CarControllerDb(_repositoryMock.Object);
         }
         [Fact]
-        public async Task GetCarbyId_ReturnsBadRequest_WhenIdIsInvalid()
+        public async Task GetCarbyId_WithInvalidId_ReturnsBadRequest()
         {
             //Arrange
             var id = 0;
@@ -34,10 +34,11 @@ namespace CarsAPI.Test
 
             //ASSERT
             var actionResult = Assert.IsType<ActionResult<Car>>(result);
-            Assert.IsType<BadRequestObjectResult>(actionResult.Result);
+            Assert.IsType<BadRequestResult>(actionResult.Result);
             _repositoryMock.Verify(x => x.GetCarByIdFromDbAsync(It.IsAny<int>()), Times.Never);
 
         }
+
 
         [Fact]
         public async Task AddCar_ReturnsBadRequestResult_WhenModelStateIsInvalid()
