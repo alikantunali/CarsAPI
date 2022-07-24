@@ -9,9 +9,9 @@ namespace CarsAPI.Controllers
 
 {
 
-    [Route("CarsDbAPI")]
+    [Route("CarsDbAPI")]  
     [ApiController]
-    
+    [ResponseCache(CacheProfileName = "VaryUserAgentHeader_Default30")]
     //CONSTRUCTOR IS NEEDED TO INJECT DATACONTEXT and SERVICES BELONG TO INTERFACE IN THE STARTUP
     public class CarControllerDb : ControllerBase
     {
@@ -25,7 +25,8 @@ namespace CarsAPI.Controllers
 
         
     
-        [HttpGet("GetCarsFromDb")]        
+        [HttpGet("GetCarsFromDb")]
+        [ResponseCache(CacheProfileName = "VaryUserAgentHeader_Default30")]
         //public async Task<IActionResult> Get() //NO SCHEMAS DEFINED HERE WITH IActionResult
 
         //GET THE CARS FROM CARS TABLE BY USING DB SET "CARS" DEFINED IN DataContext.cs
@@ -48,6 +49,7 @@ namespace CarsAPI.Controllers
         }
 
         [HttpGet("GetCarFromDB/{id}")]
+        [ResponseCache(CacheProfileName = "VaryUserAgentHeader_Default30")]
         public async Task<ActionResult<Car>> GetCarFromDB( int id)
             
         {
@@ -56,16 +58,15 @@ namespace CarsAPI.Controllers
                 return BadRequest();
             }
             else
-                try
+            {
+                var car = await _dbCarInfoRepository.GetCarByIdFromDbAsync(id);
+                if (car != null)
                 {
-                    var car = await _dbCarInfoRepository.GetCarByIdFromDbAsync(id);
-
                     return Ok(car);
                 }
-                catch
-                {
-                    return BadRequest(id);
-                }
+                return NoContent();
+
+            }                                  
 
         }
 

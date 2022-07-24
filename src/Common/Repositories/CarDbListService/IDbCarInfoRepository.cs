@@ -4,6 +4,7 @@ namespace Common.Repositories.CarDbListService
 {
     public interface IDbCarInfoRepository
     {
+        //IEnumerable
         Task<IEnumerable<Car?>> GetCarsFromDbAsync();
         Task<Car?> GetCarByIdFromDbAsync(int carId);  // this can return null when id is given so ? mark is next to Car .
 

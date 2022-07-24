@@ -4,21 +4,23 @@ using Common.DbDataContext;
 using Common.Models;
 using Common.Repositories.CarDbListService;
 using Common.Repositories.CarListService;
+using Microsoft.AspNetCore.Mvc;
 
-
-    
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Add services to the container.
 //services collection will be configured below. Service is a component. 
 
-
+builder.Services.AddResponseCaching();
 //ADDED XML RETURN OPTION 
 builder.Services.AddControllers(options =>
 {
     options.ReturnHttpNotAcceptable = true;
+    options.CacheProfiles
+    .Add("VaryUserAgentHeader_Default30", new CacheProfile(){Duration = 30, VaryByHeader= "User-Agent"});    
+
 }).AddXmlDataContractSerializerFormatters();
+
 
 
 // ADDED SINGLETON LIST OBJECT FOR THE METHODS WORK ON LIST RATHER THAN DB
@@ -72,16 +74,17 @@ if (app.Environment.IsDevelopment())
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cars API v1");
     c.RoutePrefix = String.Empty;
     });
+
 app.UseHttpsRedirection();
+
+app.UseResponseCaching();
+
+app.UseAuthorization();
 
 //app.UseRouting();
 
 //INSTEAD OF ADDING ROUTING AND ENDPOINT MIDDLEWARE WE USE MAPCONTROLLERS, THANKS TO .NET CORE 6*/
-
-app.UseAuthorization();         
-
 app.MapControllers();
-
 
 
 app.Run();

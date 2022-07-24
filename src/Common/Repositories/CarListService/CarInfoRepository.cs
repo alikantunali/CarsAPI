@@ -38,9 +38,9 @@ public class CarInfoRepository : ICarInfoRepository //PERSISTENCE LOGIC APPLIED 
 
     public async Task<List<Car>> AddCarToList(Car car)
     {
-        if (car.Id <= 3 && car.Model == null && car.ManufactureYear == null && car.BrandName == null)
+        if (car.Id <= 3 || car.Model == null || car.ManufactureYear == null || car.BrandName == null)
         {
-            throw new Exception("check car properties. Id must be greater than 3. ");
+            throw new Exception("Check car properties. Id must be greater than 3.");
 
         }
         CarsDataStore.cars.Add(car);

@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Common.Repositories.CarDbListService
-{
-    //TENTITY ADDED FOR TESTING PURPOSES <Car>
+{    
     public class DbCarInfoRepository : IDbCarInfoRepository
     {
         //DATA CONTEXT FROM DB
@@ -35,15 +34,16 @@ namespace Common.Repositories.CarDbListService
             }
             else 
             {
-                _logger.LogInformation($"No cars Found with given Id");
-                throw new ArgumentNullException($"No cars Found with given Id ({carId})");
+                _logger.LogInformation($"No cars Found with given Id.");
+                throw new ArgumentNullException($"No cars Found with given Id ({carId}).");
             }                                              
         }
 
-        public async Task<IEnumerable<Car?>?> GetCarsFromDbAsync()
+        public async Task<IEnumerable<Car?>> GetCarsFromDbAsync()
         {
-            var list = await _context.Cars.OrderByDescending(i => i.Id).ToListAsync();
-            if (list != null)
+            //.OrderByDescending(i => i.Id)
+            var list = _context.Cars.ToList();
+            if (list.Count != 0)
             {
                 return list;
                 
@@ -51,39 +51,39 @@ namespace Common.Repositories.CarDbListService
             return null;
         }
 
-        public async Task<Car?> AddCarToDbAsync(Car request)
+        public async Task<Car?> AddCarToDbAsync(Car car)
         {
-            await _context.Cars.AddAsync(request);
+            await _context.Cars.AddAsync(car);
             await _context.SaveChangesAsync();
             _logger.LogInformation($"Given car added to db.");
-            return request;
+            return car;
 
         }
 
-        public async Task<Car> UpdateCarInDbAsync(Car request)
+        public async Task<Car> UpdateCarInDbAsync(Car car)
         {
-            if (request.Id <= 0)
+            if (car.Id <= 0)
             {
-                _logger.LogInformation($"given id: {request.Id} is invalid");
+                _logger.LogInformation($"given id: {car.Id} is invalid");
                 throw new Exception("Id is invalid");
             }
             else
             {
-                var dbCar = await _context.Cars.FindAsync(request.Id);
+                var dbCar = await _context.Cars.FindAsync(car.Id);
 
                 if (dbCar != null)
                 {
 
-                    dbCar.BrandName = request.BrandName;
-                    dbCar.ManufactureYear = request.ManufactureYear;
-                    dbCar.Model = request.Model;
+                    dbCar.BrandName = car.BrandName;
+                    dbCar.ManufactureYear = car.ManufactureYear;
+                    dbCar.Model = car.Model;
 
                     await _context.SaveChangesAsync();
 
-                    return request;
+                    return car;
                 }
                 _logger.LogInformation("No car exist with given Id");
-                throw new Exception("No car exist with given Id");
+                throw new Exception("No car exists with given Id.");
             }
 
         }
@@ -111,7 +111,6 @@ namespace Common.Repositories.CarDbListService
                 _logger.LogInformation("No car exist with given Id");
                 throw new ArgumentNullException("No car exist with given Id");
             }
-
         }
     }
 }
