@@ -32,7 +32,6 @@ namespace CarsAPI.Test.Controllers
 
 
             Assert.IsType<ActionResult<List<Car>>>(result);
-
         }
     }
 }

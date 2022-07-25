@@ -135,25 +135,25 @@ namespace Common.Test.RepositoryTests
             Assert.IsType<Task<List<Car>>>(result);
             
         }
-/*
+
         [Fact]
         public void AddCar_ReturnsException_WhenIdIsLessThan3()
         {
             //ARRANGE
         
-            var car = list.First();
-            var fakeList = list;
+            var fakelist = FakeData.CarMockData.GetData();
+            var car = fakelist.First();
             repository = new CarInfoRepository();
             
             //ACT
             var result = repository.AddCarToList(car);
-           
+            var exceptionType = result.Exception;
+            var exceptionMsg = exceptionType?.InnerException?.Message;
+
             //ASSERT             
-              
+            Assert.IsType<AggregateException>(exceptionType);
+            Assert.Equal("Check car properties. Id must be greater than 3.", exceptionMsg);
         }
-*/
+
     }
-
-
-
 }
