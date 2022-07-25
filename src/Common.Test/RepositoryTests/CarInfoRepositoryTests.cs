@@ -122,6 +122,7 @@ namespace Common.Test.RepositoryTests
         public void AddCar_ReturnsException_WhenIdIsLessThan3()
         {
             //ARRANGE
+            var x = 0;
             var fakelist = FakeData.CarMockData.GetData();
             var car = fakelist.First();
             
