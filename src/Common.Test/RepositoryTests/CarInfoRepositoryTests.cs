@@ -122,10 +122,9 @@ namespace Common.Test.RepositoryTests
         public void AddCar_ReturnsException_WhenIdIsLessThan3()
         {
             //ARRANGE
-            var x = 0;
             var fakelist = FakeData.CarMockData.GetData();
             var car = fakelist.First();
-            
+
             //ACT
             var result = repository.AddCarToList(car);
             var exceptionType = result.Exception;
@@ -135,6 +134,7 @@ namespace Common.Test.RepositoryTests
             Assert.IsType<AggregateException>(exceptionType);
             Assert.Equal("Check car properties. Id must be greater than 3.", exceptionMsg);
         }
+
 
     }
 }
