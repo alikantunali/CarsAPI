@@ -13,8 +13,8 @@ namespace Common.Test.RepositoryTests
         private CarInfoRepository repository;
         public CarInfoRepositoryTests()
         {
-            list = new List<Car>();
             list = CarsDataStore.cars.ToList();
+            repository = new CarInfoRepository();
         }
 
         [Fact]
@@ -22,8 +22,7 @@ namespace Common.Test.RepositoryTests
         {
             //ARRANGE
             var cars = list;
-            repository = new CarInfoRepository();
-
+            
             //ACT
             var result = repository.GetCarsFromList();
 
@@ -39,8 +38,6 @@ namespace Common.Test.RepositoryTests
             var cars = list;
             var carId= cars.FirstOrDefault().Id;
 
-            repository = new CarInfoRepository();
-
             //ACT
             var result = repository.GetCarFromList(carId);
 
@@ -54,8 +51,6 @@ namespace Common.Test.RepositoryTests
         {
             //ARRANGE
 
-            repository = new CarInfoRepository();
-
             //ACT
             var result = repository.GetCarFromList(It.IsAny<int>());
             var exception = result.Exception.InnerException;
@@ -68,9 +63,7 @@ namespace Common.Test.RepositoryTests
         public void GetCarbyId_ReturnsException_WhenIdIsNotFound()
         {
             //ARRANGE
-
             var idOutOfRange = list.Count() + 1;
-            repository = new CarInfoRepository();
 
             //ACT
             var result = repository.GetCarFromList(idOutOfRange);
@@ -85,11 +78,9 @@ namespace Common.Test.RepositoryTests
         public void AddCar_ReturnsListofCars_WhenIdIsGreaterThan3()
         {
             //ARRANGE
-
             var car = list.First();
             car.ManufactureYear = "2022";
             car.Id = 4;
-            repository = new CarInfoRepository();
 
             //ACT
             var result = repository.AddCarToList(car);
@@ -103,9 +94,6 @@ namespace Common.Test.RepositoryTests
         public void DeleteCar_ReturnsException_WhenCarDoesNotExist()
         {
             //ARRANGE
-
-            //var car = list.First();
-            repository = new CarInfoRepository();
 
             //ACT
             var result = repository.DeleteCarFromList(It.IsInRange<int>(1,3,Moq.Range.Inclusive));
@@ -121,39 +109,31 @@ namespace Common.Test.RepositoryTests
         public void DeleteCar_ReturnsUpdatedCarList_WhenCarIsDeleted()
         {
             //ARRANGE
-
             var car = list.First();
-            
-            repository = new CarInfoRepository();
 
             //ACT
             var result = repository.DeleteCarFromList(car.Id);
-
-           
 
             //ASSERT             
             Assert.IsType<Task<List<Car>>>(result);
             
         }
-/*
         [Fact]
         public void AddCar_ReturnsException_WhenIdIsLessThan3()
         {
             //ARRANGE
-        
-            var car = list.First();
-            var fakeList = list;
-            repository = new CarInfoRepository();
+            var fakelist = FakeData.CarMockData.GetData();
+            var car = fakelist.First();
             
             //ACT
             var result = repository.AddCarToList(car);
-           
+            var exceptionType = result.Exception;
+            var exceptionMsg = exceptionType?.InnerException?.Message;
+
             //ASSERT             
-              
+            Assert.IsType<AggregateException>(exceptionType);
+            Assert.Equal("Check car properties. Id must be greater than 3.", exceptionMsg);
         }
-*/
+
     }
-
-
-
 }

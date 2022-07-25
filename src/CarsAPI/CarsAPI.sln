@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{5101CF2D-A2A
 		Initial_migration.sql = Initial_migration.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Test", "..\Common.Test\Common.Test.csproj", "{5B296D3C-6378-4A21-8388-62A48DCA6302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Test", "..\Common.Test\Common.Test.csproj", "{5B296D3C-6378-4A21-8388-62A48DCA6302}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AF21EE59-8DF9-4102-B313-F97461973EC0} = {AF21EE59-8DF9-4102-B313-F97461973EC0}
 	EndProjectSection
