@@ -93,7 +93,7 @@ namespace Common.Test.RepositoryTests
             //ASSERT 
 
             dataContext.Verify(v => v.Cars.FindAsync(), Times.Never);
-            Assert.Equal("Specified argument was out of the range of valid values. (Parameter 'carId')", exception.InnerException.Message);
+            Assert.Equal("Specified argument was out of the range of valid values. (Parameter 'carId')", exception?.InnerException?.Message);
 
         }
 
@@ -134,7 +134,7 @@ namespace Common.Test.RepositoryTests
 
             Assert.IsType<AggregateException>(exception);
             Assert.Equal("Faulted", statusCode.ToString());
-            Assert.Equal($"Value cannot be null. (Parameter 'No cars Found with given Id ({car.Id}).')", exception.InnerException.Message);
+            Assert.Equal($"Value cannot be null. (Parameter 'No cars Found with given Id ({car.Id}).')", exception?.InnerException?.Message);
         }
 
         [Fact]
@@ -156,7 +156,7 @@ namespace Common.Test.RepositoryTests
 
             //ASSERT 
             Assert.IsType<List<Car>>(returnedResult);
-            Assert.Equal(1, returnedResult.Count());
+            Assert.Equal(1, returnedResult.Count());            
             dataContext.Verify(x => x.Cars, Times.Once);
         }
 
@@ -221,7 +221,7 @@ namespace Common.Test.RepositoryTests
 
 
             var returnedValue = result.Exception;
-            var message = returnedValue.InnerException.Message;
+            var message = returnedValue?.InnerException?.Message;
 
             //ASSERT 
 
@@ -274,7 +274,7 @@ namespace Common.Test.RepositoryTests
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
             var result = repository.DeleteCarFromDbAsync(2);
             var exception = result.Exception;
-            var message = exception.InnerException.Message;            
+            var message = exception?.InnerException?.Message;            
             //ASSERT
             //
             Assert.IsType<AggregateException>(exception);
@@ -300,7 +300,7 @@ namespace Common.Test.RepositoryTests
             var mockDbSet = GetMockDbSet(list);
             dataContext = new Mock<CarDataContext>();
             dataContext.Setup(x => x.Cars).Returns(mockDbSet.Object);
-            dataContext.Setup(x => x.Cars.FindAsync(updatedCar.Id)).Returns(new ValueTask<Car>(car));
+            dataContext.Setup(x => x.Cars.FindAsync(updatedCar.Id)).Returns(new ValueTask<Car?>(car));
             dataContext.Setup(x => x.SaveChangesAsync(default));
             dataContext.Setup(x => x.Cars).Returns(mockDbSet.Object);
 
@@ -342,11 +342,11 @@ namespace Common.Test.RepositoryTests
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
             var result = repository.UpdateCarInDbAsync(invalidCar);
-            var exception = result.Exception.InnerException;
+            var exception = result?.Exception?.InnerException;
 
             //ASSERT             
             Assert.IsType<Exception>(exception);
-            Assert.Equal("No car exists with given Id.", exception.Message);
+            Assert.Equal("No car exists with given Id.", exception?.Message);
             dataContext.Verify(x => x.Cars.FindAsync(invalidCar.Id), Times.Once);
 
         }
@@ -370,11 +370,11 @@ namespace Common.Test.RepositoryTests
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
             var result = repository.UpdateCarInDbAsync(zeroCar);
-            var exception = result.Exception.InnerException;
+            var exception = result?.Exception?.InnerException;
 
             //ASSERT             
             Assert.IsType<Exception>(exception);
-            Assert.Equal("Id is invalid", exception.Message);
+            Assert.Equal("Id is invalid", exception?.Message);
             dataContext.Verify(x => x.Cars.FindAsync(zeroCar.Id), Times.Never);
 
         }

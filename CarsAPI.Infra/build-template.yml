@@ -1,0 +1,16 @@
+parameters:
+  BuildConfiguration: Release
+  TargetFramework: 
+
+stages:
+  - stage: Build
+    jobs:
+      - job: DotNetCore
+        pool:
+          vmImage: 'windows-latest'
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore Packages for CarsAPI Project'
+            inputs:
+              command: restore
+              projects: '**/*/*.sln'

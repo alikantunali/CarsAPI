@@ -5,7 +5,7 @@ variables:
   Release.ReleaseName: $(Build.BuildNumber)
   Release.Deployment.RequestedFor: $(Build.QueuedBy)
 
-name: CarsAPI.App-$(Date:yyyyMMdd)$(Rev:.r)
+name: CarsAPI-$(Date:yyyyMMdd)$(Rev:.r)
 
 stages:
   - template: build-template.yml

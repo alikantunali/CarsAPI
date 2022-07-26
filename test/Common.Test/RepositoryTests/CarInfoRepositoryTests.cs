@@ -8,8 +8,7 @@ namespace Common.Test.RepositoryTests
 {
     public class CarInfoRepositoryTests
     {
-        private List<Car> list;
-        private Mock<CarsDataStore> dataStore;
+        private List<Car> list;        
         private CarInfoRepository repository;
         public CarInfoRepositoryTests()
         {
