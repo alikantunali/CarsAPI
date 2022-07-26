@@ -26,5 +26,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*.csproj'
+    configuration: $(buildConfiguration)
     testRunTitle: 'project tests run'
     workingDirectory: 'test/'
+
