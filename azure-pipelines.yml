@@ -13,6 +13,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build $(buildConfiguration)'
   inputs:
@@ -21,6 +22,7 @@ steps:
     projects: '**/*.csproj'
     configuration: $(buildConfiguration)
 - task: DotNetCoreCLI@2
+  displayName: Unit Test 
   inputs:
     command: 'test'
     projects: '**/*.csproj'
