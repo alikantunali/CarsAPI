@@ -21,7 +21,7 @@
                 "family": "F",
                 "capacity": 1
             },
-            "kind": "linux",
+            "kind": "windows",
             "properties": {
                 "perSiteScaling": false,
                 "elasticScaleEnabled": false,

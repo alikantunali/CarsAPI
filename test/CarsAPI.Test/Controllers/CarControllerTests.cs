@@ -15,23 +15,17 @@ namespace CarsAPI.Test.Controllers
             carController = new CarController(repositoryMock.Object);
         }
         [Fact]
-        public async void GetCarbyId_Returns_CarType()
+        public void GetCarbyId_Returns_CarType()
         {
-            //Arrange            
-
+            //ARRANGE            
             repositoryMock.Setup(r => r.GetCarFromList(3)).ReturnsAsync(new Car { BrandName = "FORD", ManufactureYear = "MUSTANG", Model = "1968", Id = 3 }); ;
 
-            //Act
-
+            //ACT
             var result = carController.GetCarById(3).Result;
 
-
-            //Assert
-
+            //ASSERT
             repositoryMock.Verify(r => r.GetCarFromList(3));
-
-
-            Assert.IsType<ActionResult<List<Car>>>(result);
+            Assert.IsType<ActionResult<List<Car>>>(result);            
         }
     }
 }

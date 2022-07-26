@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarsAPI\CarsAPI.csproj" />
+    <ProjectReference Include="..\..\src\CarsAPI\CarsAPI.csproj" />
     <ProjectReference Include="..\Common.Test\Common.Test.csproj" />
   </ItemGroup>
 
