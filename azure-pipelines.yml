@@ -14,13 +14,15 @@ variables:
 
 steps:
 
+
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet build $(buildConfiguration)'
+  displayName: 'Build $(buildConfiguration)'
   inputs:
     command: 'build'
     workingDirectory: 'src/'
     projects: '**/*.csproj'
     configuration: $(buildConfiguration)
+
 - task: DotNetCoreCLI@2
   displayName: Unit Test 
   inputs:
@@ -29,4 +31,12 @@ steps:
     configuration: $(buildConfiguration)
     testRunTitle: 'project tests run'
     workingDirectory: 'test/'
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    workingDirectory: 'src/'
 
