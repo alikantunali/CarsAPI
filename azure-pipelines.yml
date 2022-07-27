@@ -59,7 +59,7 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)/ProjectFolder/arm'
     CleanTargetFolder: true    
 
-#- task: PublishPipelineArtifact@1
+- task: PublishPipelineArtifact@1
   displayName: 'Publish artifact'
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)/artifact'
