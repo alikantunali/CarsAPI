@@ -33,12 +33,12 @@ steps:
     workingDirectory: 'test/'
     
 - task: DotNetCoreCLI@2
-  displayName: Publish Artifacts
+  displayName: Publish Build to SourceZip folder
   inputs:
     command: 'publish'
     publishWebProjects: false
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/source/'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/sourceZips/'
     workingDirectory: 'src/'
 
     # Publish Project Zip Folders
