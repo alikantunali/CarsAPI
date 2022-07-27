@@ -49,20 +49,20 @@ steps:
     ArtifactName: 'ProjectFolder'
     publishLocation: 'Container'
 
-# Copy ARM Templates
-#- task: CopyFiles@2
-#  displayName: Copy ARM templates
-#  inputs:
-#    SourceFolder: 'templates'
-#    Contents: '*.json'
-#    TargetFolder: '$(Build.ArtifactStagingDirectory)/ProjectFolder/arm'
-#    CleanTargetFolder: true    
+# Copy ARM Templates to Artifact Staging
+- task: CopyFiles@2
+  displayName: Copy ARM templates to Artifact Staging
+  inputs:
+    SourceFolder: 'templates'
+    Contents: '*.json'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/arm'
+    CleanTargetFolder: true    
 
 - task: PublishPipelineArtifact@1
-  displayName: 'Publish artifact'
+  displayName: 'Publish Copied Templates to Pipeline'
   inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)'
-    artifact: 'arm'
+    targetPath: '$(Build.ArtifactStagingDirectory)/arm'
+    artifact: 'armTemplates'
     publishLocation: pipeline
 
 
