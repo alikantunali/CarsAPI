@@ -55,7 +55,7 @@ steps:
   inputs:
     SourceFolder: 'templates'
     Contents: '*.json'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/templates/'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/artifact/templates/'
     CleanTargetFolder: true
 
 
