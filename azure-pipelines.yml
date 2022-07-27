@@ -46,8 +46,8 @@ steps:
   inputs:
     SourceFolder: deploy
     Contents: |
-      armtemplate.json
-      armtemplate.parameters.json
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/arm'
+      *.json
+      *.json
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/templates'
 
     
