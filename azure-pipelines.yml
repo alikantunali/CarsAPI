@@ -41,13 +41,22 @@ steps:
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     workingDirectory: 'src/'
 
+    # Publish
 - task: CopyFiles@2
   displayName: Copy ARM templates
   inputs:
-    SourceFolder: deploy
-    Contents: |
-      *.json
-      *.json
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/templates'
+    SourceFolder: 'templates'
+    Contents: '*.json'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/artifact/'
+    CleanTargetFolder: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'artifact'
+    publishLocation: 'Container'
+
+
+
 
     
