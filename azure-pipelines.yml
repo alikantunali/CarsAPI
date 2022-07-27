@@ -41,3 +41,13 @@ steps:
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     workingDirectory: 'src/'
 
+- task: CopyFiles@2
+  displayName: Copy ARM templates
+  inputs:
+    SourceFolder: deploy
+    Contents: |
+      armtemplate.json
+      armtemplate.parameters.json
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/arm'
+
+    
