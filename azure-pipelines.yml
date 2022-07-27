@@ -37,7 +37,7 @@ stages:
         publishLocation: pipeline
 
 - stage: Build
-  displayName: Build Stage
+  displayName: Build-Test-Publish Stage
 
   jobs:
   - job: Build_Job
@@ -54,30 +54,8 @@ stages:
         workingDirectory: 'src/'
         projects: '**/*.csproj'
         configuration: $(buildConfiguration)
-
-    - task: DotNetCoreCLI@2
-      displayName: Publish Build to SourceZip folder
-      inputs:
-        command: 'publish'
-        publishWebProjects: false
-        projects: '**/*.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/sourceZips/'
-        workingDirectory: 'src/'        
-
-        # Publish Project Zip Folders
-    - task: PublishBuildArtifacts@1
-      displayName: Publish Project Zip Folders
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'ProjectFolder'
-        publishLocation: 'Container'
-        
-- stage: Unit_Test
-  displayName: Unit Test Stage
-  jobs:
   - job: Test_Job
-    displayName: Test Job
-    
+    displayName: Test Job    
     steps:
       - task: DotNetCoreCLI@2
         displayName: Unit Testing 
@@ -87,6 +65,27 @@ stages:
           configuration: $(buildConfiguration)
           testRunTitle: 'project tests run'
           workingDirectory: 'test/'
+ 
+  - job: Publish_Job
+    displayName: Publish Job    
+    steps:         
+      - task: DotNetCoreCLI@2
+        displayName: Publish the Built to SourceZip folder
+        inputs:
+          command: 'publish'
+          publishWebProjects: false
+          projects: '**/*.csproj'
+          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/sourceZips/'
+          workingDirectory: 'src/'        
+
+         # Publish Project Zip Folders
+      - task: PublishBuildArtifacts@1
+        displayName: Publish Project's Zip Folders
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'ProjectFolder'
+          publishLocation: 'Container'
+
 
 
 
