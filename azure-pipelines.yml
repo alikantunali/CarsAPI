@@ -41,6 +41,15 @@ steps:
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     workingDirectory: 'src/'
 
+# Copy ARM Templates
+- task: CopyFiles@2
+  displayName: Copy ARM templates
+  inputs:
+    SourceFolder: 'templates'
+    Contents: '*.json'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/artifact/arm'
+    CleanTargetFolder: true    
+
     # Publish Project Zip Folders
 - task: PublishBuildArtifacts@1
   displayName: Publish Project Zip Folders
@@ -49,16 +58,12 @@ steps:
     ArtifactName: 'ProjectZip'
     publishLocation: 'Container'
 
-# Publish ARM Templates
-- task: CopyFiles@2
-  displayName: Copy ARM templates
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish artifact'
   inputs:
-    SourceFolder: 'templates'
-    Contents: '*.json'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/templates/'
-    CleanTargetFolder: true
-
-
+    targetPath: '$(Build.ArtifactStagingDirectory)/artifact'
+    artifact: 'artifact'
+    publishLocation: 'pipeline'
 
 
 
