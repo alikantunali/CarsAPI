@@ -71,7 +71,7 @@ stages:
       displayName: Copy ARM templates to Artifact Staging
       inputs:
         SourceFolder: 'templates'
-        Contents: '*.json'
+        Contents: '1AppServicePlan*.json'
         TargetFolder: '$(Build.ArtifactStagingDirectory)/arm'
         CleanTargetFolder: true    
 
