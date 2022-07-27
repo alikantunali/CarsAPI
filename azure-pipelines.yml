@@ -38,8 +38,17 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/source/'
     workingDirectory: 'src/'
+
+    # Publish Project Zip Folders
+- task: PublishBuildArtifacts@1
+  displayName: Publish Project Zip Folders
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'ProjectFolder'
+    publishLocation: 'Container'
+
 
 # Copy ARM Templates
 - task: CopyFiles@2
@@ -47,18 +56,10 @@ steps:
   inputs:
     SourceFolder: 'templates'
     Contents: '*.json'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/artifact/arm'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/ProjectFolder/arm'
     CleanTargetFolder: true    
 
-    # Publish Project Zip Folders
-- task: PublishBuildArtifacts@1
-  displayName: Publish Project Zip Folders
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'ProjectZip'
-    publishLocation: 'Container'
-
-- task: PublishPipelineArtifact@1
+#- task: PublishPipelineArtifact@1
   displayName: 'Publish artifact'
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)/artifact'
