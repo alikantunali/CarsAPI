@@ -54,8 +54,10 @@ stages:
         workingDirectory: 'src/'
         projects: '**/*.csproj'
         configuration: $(buildConfiguration)
+
   - job: Test_Job
-    displayName: Test Job    
+    displayName: Test Job 
+    dependsOn: Build_Job  
     steps:
       - task: DotNetCoreCLI@2
         displayName: Unit Testing 
@@ -67,23 +69,25 @@ stages:
           workingDirectory: 'test/'
  
   - job: Publish_Job
-    displayName: Publish Job    
+    displayName: Publish Artifacts Job
+    dependsOn: Test_Job   
     steps:         
       - task: DotNetCoreCLI@2
-        displayName: Publish the Built to SourceZip folder
+        displayName: Publish the to SourceZip folder
         inputs:
           command: 'publish'
           publishWebProjects: false
+          workingDirectory: 'src/' 
           projects: '**/*.csproj'
-          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/sourceZips/'
-          workingDirectory: 'src/'        
-
+          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+          zipAfterPublish: true
+                 
          # Publish Project Zip Folders
       - task: PublishBuildArtifacts@1
         displayName: Publish Project's Zip Folders
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'ProjectFolder'
+          ArtifactName: 'sourceZips'
           publishLocation: 'Container'
 
 
