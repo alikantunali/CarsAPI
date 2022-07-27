@@ -46,7 +46,7 @@ steps:
   displayName: Publish Project Zip Folders
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'artifact'
+    ArtifactName: 'ProjectZip'
     publishLocation: 'Container'
 
 # Publish ARM Templates
@@ -55,7 +55,7 @@ steps:
   inputs:
     SourceFolder: 'templates'
     Contents: '*.json'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/artifact/templates/'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/templates/'
     CleanTargetFolder: true
 
 
