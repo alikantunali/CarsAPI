@@ -17,7 +17,7 @@ variables:
 
     #give Keyvault name 
   - name: Keyvault.Name
-    value: codit-academy-vault
+    value: 'at-carsapi-keyvault'
 
     #sku storage
   - name: Storage.SkuName
@@ -29,7 +29,7 @@ variables:
 
     #give connection string
   - name: Keyvault.SecretName
-    value: EncryptionKey
+    value: $(Keyvault.SecretName)
 
     #give app plan 
   - name: AppSvcPlan.SkuName
