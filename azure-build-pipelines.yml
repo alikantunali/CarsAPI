@@ -48,7 +48,7 @@ stages:
       condition: eq('${{parameters['loggingLevel']}}', 'Debug')
       displayName: "[Debug]"
       inputs:
-        script: 'ls -R $(Pipeline.Workspace)'
+        script: 'ls -R $(Pipeline.Workspace)' 
     - task: CmdLine@2
       displayName: Install jsonlint
       inputs:
