@@ -24,7 +24,7 @@
             "type": "string"
         },
         "Application.Name": { 
-            "defaultValue":"XXXXXXXXXXXX",           
+                                  
             "type": "String"
         }
     },

@@ -4,7 +4,7 @@
     "parameters": {
 
         "Application.Name": {
-            "value": "#{App.Name}#"
+            "value": "#{Application.Name}#"
         },
         "Application.Environment": {
             "value": "#{App.Environment.Code}#"
