@@ -33,7 +33,7 @@ steps:
     inputs:
       targetType: inline
       script: |
-        $files = Get-ChildItem -Path ${{parameters.artifactFolder}}\armTemplates\*.json
+        $files = Get-ChildItem -Path ${{parameters.artifactFolder}}\*.json
         foreach ($file in $files)
         {
           Write-Host "=== ARM template Output ==="
@@ -53,8 +53,8 @@ steps:
     resourceGroupName: '${{parameters.resourceGroupName}}'
     location: '${{parameters.location}}'
     templateLocation: 'Linked artifact'
-    csmFile: '${{parameters.artifactFolder}}/armTemplates/1AppServicePlan.json'
-    csmParametersFile: '${{parameters.artifactFolder}}/armTemplates/1AppServicePlan.parameters.json'
+    csmFile: '${{parameters.artifactFolder}}/1AppServicePlan.json'
+    csmParametersFile: '${{parameters.artifactFolder}}/1AppServicePlan.parameters.json'
     deploymentMode: 'Incremental'
     deploymentOutputs: 'ArmOutputs'
   
