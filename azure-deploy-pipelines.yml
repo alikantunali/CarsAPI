@@ -7,7 +7,7 @@ trigger: none
 resources:
   pipelines:
     # Name of the pipeline resource inside this workflow. Used to reference the pipeline resources later on (e.g. download artifacts).
-  - pipeline: a
+  - pipeline: package_build
     # Name of the pipeline in Azure Pipelines
     source: 'CarsAPI-Build Pipeline'
     trigger: true
@@ -28,7 +28,7 @@ variables:
 - name: Pipeline.Version
   value: $(Artifact.Version)-$(Build.BuildNumber) 
 - name: Artifact.Version
-  value: $(resources.pipeline.a.runName)
+  value: $(resources.pipeline.package_build.runName)
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -60,7 +60,7 @@ stages:
       runOnce:
         deploy:
           steps:    
-          - download: 'a'
+          - download: package_build
             artifact: 'armTemplates'
             displayName: Download ARM Templates
           - template: ./deploy/templates/deploy-arm-template.yaml
