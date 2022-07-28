@@ -1,0 +1,146 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+name: ${{ parameters.major }}.${{ parameters.minor }}$(rev:.r)
+
+pr: none
+
+trigger:
+ branches:
+   include:
+   - master
+ paths:
+   include:
+   - /templates/
+    
+parameters: 
+- name: major
+  displayName: Major Version
+  type: string
+  default: 1
+- name: minor
+  displayName: Minor Version
+  type: string
+  default: 0
+- name: loggingLevel
+  displayName: Logging Level
+  type: string
+  default: Pipeline
+  values:
+  - Pipeline
+  - Debug
+
+pool:
+ vmImage: ubuntu-latest
+
+stages:
+- stage: Package
+  displayName: Package
+  dependsOn: []
+  jobs:
+  - job: validate_and_publish
+    displayName: Validate & Publish Artifact
+    steps:
+    # Validation    
+    - task: CmdLine@2
+      condition: eq('${{parameters['loggingLevel']}}', 'Debug')
+      displayName: "[Debug]"
+      inputs:
+        script: 'ls -R $(Pipeline.Workspace)'
+    - task: CmdLine@2
+      displayName: Install jsonlint
+      inputs:
+        script: 'sudo npm install -g jsonlint-cli'
+    - task: CmdLine@2
+      displayName: Lint JSON files
+      inputs:
+        script: 'jsonlint-cli $(Pipeline.Workspace)/s/templates/1AppServicePlan*.json'
+
+
+- stage: Publish_ARM_Template
+  displayName: Publish ARM Templates
+
+  jobs:
+  - job: Publish_ARM_Templates
+    displayName: Publish ARM Templates
+    steps:
+    # Copy ARM Templates to Artifact Staging
+    - task: CopyFiles@2
+      displayName: Copy ARM templates to Artifact Staging
+      inputs:
+        SourceFolder: 'templates'
+        Contents: '1AppServicePlan*.json'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/arm'
+        CleanTargetFolder: true    
+
+    #Publish ARM Templates to Artifact folder on Pipeline
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Copied Templates to Pipeline'
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/arm'
+        artifact: 'armTemplates'
+        publishLocation: pipeline
+
+- stage: Build
+  displayName: Build-Test-Publish Stage
+
+  jobs:
+  - job: Build_Job
+    displayName: Build Job
+  
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Build $(buildConfiguration)'
+      inputs:
+        command: 'build'
+        workingDirectory: 'src/'
+        projects: '**/*.csproj'
+        configuration: $(buildConfiguration)
+
+  - job: Test_Job
+    displayName: Test Job 
+    dependsOn: Build_Job  
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: Unit Testing 
+        inputs:
+          command: 'test'
+          projects: '**/*.csproj'
+          configuration: $(buildConfiguration)
+          testRunTitle: 'project tests run'
+          workingDirectory: 'test/'
+ 
+  - job: Publish_Job
+    displayName: Publish Artifacts Job
+    dependsOn: Test_Job   
+    steps:         
+      - task: DotNetCoreCLI@2
+        displayName: Publish zip
+        inputs:
+          command: 'publish'
+          publishWebProjects: false
+          workingDirectory: 'src/' 
+          projects: '**/*.csproj'
+          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+          zipAfterPublish: true
+                 
+         # Publish Project Zip Folders
+      - task: PublishBuildArtifacts@1
+        displayName: Publish Project's Zip Folders
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'sourceZips'
+          publishLocation: 'Container'
+
+
+
+
+
+
+
+
+
+
+    

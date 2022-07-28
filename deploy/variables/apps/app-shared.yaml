@@ -1,15 +1,15 @@
 variables:
   - name: Resource.Prefix
-    value: $(App.Environment.Code)-$(Region.ShortName)-lab
+    value: $(App.Environment.Code)-$(Region.ShortName)-at
 
     #GIVE RESOURCE GROUP NAME 
   - name: Azure.ResourceGroup.Name
-    value: aca-devops
+    value: AlikanTraining
 
 
     #GIVE RESOURCE GROUP NAME name: Api.Name
   - name: Api.Name
-    value: $(Resource.Prefix)-app
+    value: $(Resource.Prefix)-carsapi
 
     #GIVE DOTNET VERSION 
   - name: Api.DotnetVersion
