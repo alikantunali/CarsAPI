@@ -61,7 +61,7 @@ stages:
         deploy:
           steps:    
           - download: 'a'
-            artifact: 'arm'
+            artifact: 'armTemplates'
             displayName: Download ARM Templates
           - template: ./deploy/templates/deploy-arm-template.yaml
             parameters:
