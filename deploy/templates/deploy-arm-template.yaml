@@ -2,7 +2,7 @@ parameters:
   azureResourceManagerConnection: ''
   subscriptionId: ''
   resourceGroupName: ''
-  artifactFolder: '$(Pipeline.Workspace)/armTemplates'
+  artifactFolder: '$(Pipeline.Workspace)'
   location: ''
   loggingLevel: ''
 
@@ -57,4 +57,3 @@ steps:
     csmParametersFile: '${{parameters.artifactFolder}}/1AppServicePlan.parameters.json'
     deploymentMode: 'Incremental'
     deploymentOutputs: 'ArmOutputs'
-  
