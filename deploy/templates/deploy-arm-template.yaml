@@ -11,7 +11,7 @@ steps:
   - task: CmdLine@2
     displayName: "[Debug] Output artifact structure"
     inputs:
-      script: 'ls ${{parameters.artifactFolder}}'
+      script: 'ls -R ${{parameters.artifactFolder}}'
 
 - task: qetza.replacetokens.replacetokens-task.replacetokens@3
   displayName: Replace Tokens in ARM template
