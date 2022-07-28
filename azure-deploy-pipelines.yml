@@ -55,7 +55,7 @@ stages:
   jobs:
   - deployment: deploy_to_dev
     displayName: 'Deploy to DEV'
-    environment: DevOps CarsApi (Development)
+    environment: Dev
     strategy:
       runOnce:
         deploy:
