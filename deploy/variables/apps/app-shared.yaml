@@ -17,7 +17,7 @@ variables:
 
     #give Keyvault name 
   - name: Keyvault.Name
-    value: 'at-carsapi-keyvault'
+    value: 'at-carsapi-kv'
 
     #sku storage
   - name: Storage.SkuName
