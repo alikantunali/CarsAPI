@@ -52,7 +52,7 @@ stages:
     - template: ./deploy/variables/environments/environment-dev.yaml
     - template: ./deploy/variables/apps/app-dev.yaml        
 
-jobs:
+  jobs:
   - deployment: deploy_to_dev
     displayName: 'Deploy to DEV'
     environment: DevOps CarsApi (Development)
