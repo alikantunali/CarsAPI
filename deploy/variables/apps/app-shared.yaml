@@ -29,7 +29,7 @@ variables:
 
     #give connection string
   - name: Keyvault.SecretName
-    value: $(Keyvault.SecretName)
+    value: 'CarsDbSQLConnection'
 
     #give app plan 
   - name: AppSvcPlan.SkuName

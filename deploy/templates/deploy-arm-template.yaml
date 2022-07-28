@@ -42,9 +42,25 @@ steps:
           Write-Host $content
         }
 
-# Deploy through ARM
+# Deploy Components through ARM
+
 - task: AzureResourceManagerTemplateDeployment@3
-  displayName: 'Deploy ARM template on ${{parameters.resourceGroupName}}'
+  displayName: 'Deploy Key Vault on ${{parameters.resourceGroupName}}'
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: '${{parameters.azureResourceManagerConnection}}'
+    subscriptionId: '${{parameters.subscriptionId}}'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '${{parameters.resourceGroupName}}'
+    location: '${{parameters.location}}'
+    templateLocation: 'Linked artifact'
+    csmFile: '${{parameters.artifactFolder}}/0_1KeyVault.json'
+    csmParametersFile: '${{parameters.artifactFolder}}/0_1KeyVault.parameters.json'
+    deploymentMode: 'Incremental'
+    deploymentOutputs: 'ArmOutputs'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Deploy App Service Plan on ${{parameters.resourceGroupName}}'
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: '${{parameters.azureResourceManagerConnection}}'

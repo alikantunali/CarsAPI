@@ -1,0 +1,117 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "Application.Environment": {
+            "type": "string"
+      },
+      "Application.Version": {
+            "type": "string"
+        },
+        "Release.Name": {
+            "type": "string"
+        },
+        "Release.RequestedFor": {
+            "type": "string"
+        },
+        "Release.SourceCodeBranch": {
+            "type": "string"
+        },
+        "Release.TriggerType": {
+            "type": "string"
+        },
+        "Release.Url": {
+            "type": "string"
+        },
+        "KeyVault.Name": {
+          "type": "string"
+        },
+        "accessPolicies": {
+          "defaultValue": { "list": [] },
+          "type": "object"
+        },
+        "ResourceGroup.Location": {
+              "type": "string"
+        },
+        "TenantId": {
+          "type": "string"
+        },
+        "ObjectId": {
+          "type": "string"                  
+        }
+    },
+    "variables": {
+        "Tags": {
+            "displayName": "[variables('keyVaultName')]",
+            "environment": "[parameters('Application.Environment')]",
+            "version": "[parameters('Application.Version')]",
+            "releaseName": "[parameters('Release.Name')]",
+            "createdBy": "[parameters('Release.Url')]",
+            "branch": "[parameters('Release.SourceCodeBranch')]",
+            "triggeredBy": "[parameters('Release.RequestedFor')]",
+            "triggerType": "[parameters('Release.TriggerType')]"
+        },      
+      "keyVaultName": "[concat(parameters('Application.Environment'), parameters('KeyVault.Name'))]",
+      "keyVaultResourceId": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+    },
+    "resources": [
+      {
+
+        "type": "Microsoft.Resources/tags",
+        "name": "default",
+        "apiVersion": "2019-10-01",
+        "dependsOn": [],
+        "properties": {
+            "tags": "[variables('Tags')]"
+        }
+      },
+      {
+        "apiVersion": "2016-10-01",
+        "location": "[parameters('ResourceGroup.Location')]",
+        "name": "[variables('keyVaultName')]",
+        "properties": {
+          "enabledForDeployment": false,
+          "enabledForDiskEncryption": false,
+          "enabledForTemplateDeployment": true,
+          "tenantId": "[parameters('TenantId')]",
+          "accessPolicies": "[parameters('accessPolicies').list]",
+          "sku": {
+            "name": "standard",
+            "family": "A"
+          }
+        },
+        "type": "Microsoft.KeyVault/vaults"
+      },
+      {
+        "type": "Microsoft.KeyVault/vaults/accessPolicies",
+        "name": "[concat(variables('keyVaultName'), '/add')]",
+        "apiVersion": "2018-02-14",
+        "comments": "Please make sure you use the right object Id - coming from the active directories 'Enterprise application' Section",
+        "properties": {
+          "accessPolicies": [
+            {
+              "tenantId": "[parameters('TenantId')]",
+              "objectId": "[parameters('ObjectId')]",
+              "permissions": {
+                "keys": [ "list", "get" ],
+                "secrets": [ "list", "get" ]
+              }
+            }
+          ]
+        },
+        "dependsOn": [
+          "[variables('keyVaultResourceId')]"
+        ]
+      }     
+    ],
+    "outputs": {
+      "Infra.Secrets.KeyVault.Id": {
+        "type": "string",
+        "value": "[variables('keyVaultResourceId')]"
+      },
+      "Infra.Secrets.KeyVault.Name": {
+        "type": "string",
+        "value": "[variables('keyVaultName')]"
+      }
+    }
+  }

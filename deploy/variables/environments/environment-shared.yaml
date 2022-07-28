@@ -19,6 +19,6 @@ variables:
   #
   - name: DevOps.TenantId 
     value: 7517bc42-bcf8-4916-a677-b5753051f846   
-
+    
   - name: Keyvault.SecretName
     value: CarsDbSQLConnection

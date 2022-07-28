@@ -26,6 +26,9 @@
         },
         "Release.Url": {
             "value": "#{Release.ReleaseWebUrl}#"
+        },
+        "ResourceGroup.Location": {            
+            "value": "#{Azure.ResourceGroup.Location}#"
         }
     }
 }

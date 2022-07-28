@@ -9,18 +9,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{87DEF9F1-330
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.csproj", "{AF21EE59-8DF9-4102-B313-F97461973EC0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{7724E945-4E70-47B6-8DE5-99A503ABE8BA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "armtemplates", "armtemplates", "{7724E945-4E70-47B6-8DE5-99A503ABE8BA}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\templates\1AppServicePlan.json = ..\..\templates\1AppServicePlan.json
-		..\..\templates\1AppServicePlan.parameters.json = ..\..\templates\1AppServicePlan.parameters.json
-		..\..\templates\2AppService.json = ..\..\templates\2AppService.json
-		..\..\templates\2AppService.parameters.json = ..\..\templates\2AppService.parameters.json
-		..\..\templates\3SQLServer.json = ..\..\templates\3SQLServer.json
-		..\..\templates\3SQLServer.parameters.json = ..\..\templates\3SQLServer.parameters.json
-		..\..\templates\4SQLDb.json = ..\..\templates\4SQLDb.json
-		..\..\templates\4SQLDb.parameters.json = ..\..\templates\4SQLDb.parameters.json
-		..\..\templates\5AppServiceMang.json = ..\..\templates\5AppServiceMang.json
-		..\..\templates\5AppServiceMang.parameters.json = ..\..\templates\5AppServiceMang.parameters.json
+		..\..\armtemplates\1AppServicePlan.json = ..\..\armtemplates\1AppServicePlan.json
+		..\..\armtemplates\1AppServicePlan.parameters.json = ..\..\armtemplates\1AppServicePlan.parameters.json
+		..\..\armtemplates\2AppService.json = ..\..\armtemplates\2AppService.json
+		..\..\armtemplates\2AppService.parameters.json = ..\..\armtemplates\2AppService.parameters.json
+		..\..\armtemplates\3SQLServer.json = ..\..\armtemplates\3SQLServer.json
+		..\..\armtemplates\3SQLServer.parameters.json = ..\..\armtemplates\3SQLServer.parameters.json
+		..\..\armtemplates\4SQLDb.json = ..\..\armtemplates\4SQLDb.json
+		..\..\armtemplates\4SQLDb.parameters.json = ..\..\armtemplates\4SQLDb.parameters.json
+		..\..\armtemplates\5AppServiceMang.json = ..\..\armtemplates\5AppServiceMang.json
+		..\..\armtemplates\5AppServiceMang.parameters.json = ..\..\armtemplates\5AppServiceMang.parameters.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{5101CF2D-A2AA-4B25-9B71-124600F00A7C}"

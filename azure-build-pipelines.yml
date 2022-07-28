@@ -13,7 +13,7 @@ trigger:
    - master
  paths:
    include:
-   - /templates/
+   - /armtemplates/
     
 parameters: 
 - name: major
@@ -56,7 +56,7 @@ stages:
     - task: CmdLine@2
       displayName: Lint JSON files
       inputs:
-        script: 'jsonlint-cli $(Pipeline.Workspace)/s/templates/1AppServicePlan*.json'
+        script: 'jsonlint-cli $(Pipeline.Workspace)/s/armtemplates/1AppServicePlan*.json'
 
 
 - stage: Publish_ARM_Template
@@ -70,7 +70,7 @@ stages:
     - task: CopyFiles@2
       displayName: Copy ARM templates to Artifact Staging
       inputs:
-        SourceFolder: 'templates'
+        SourceFolder: 'armtemplates'
         Contents: '1AppServicePlan*.json'
         TargetFolder: '$(Build.ArtifactStagingDirectory)/arm'
         CleanTargetFolder: true    

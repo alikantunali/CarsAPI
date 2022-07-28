@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-         "Application.Environment": {
+        "Application.Environment": {
             "type": "string"
         },
         "Application.Version": {
@@ -25,7 +25,10 @@
         },
         "Application.Name": { 
                                   
-            "type": "String"
+            "type": "string"
+        },
+        "ResourceGroup.Location": {
+            "type": "string"
         }
     },
     "variables": {
@@ -44,7 +47,7 @@
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2021-03-01",
             "name": "[parameters('Application.Name')]",
-            "location": "West Europe",
+            "location": "[parameters('ResourceGroup.Location')]",
             "sku": {
                 "name": "F1",
                 "tier": "Free",
