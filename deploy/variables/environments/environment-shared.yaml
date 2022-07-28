@@ -1,9 +1,8 @@
 variables:
   - name: Azure.ServiceConnection.Name
-
+    value: 'git-carsapi-service-connection'
    #CHECK AZURE DEVOPS for service connection 
 
-    value: '' 
   - name: Region.ShortName
     value: we
   - name: Azure.ResourceGroup.Location
@@ -11,12 +10,12 @@ variables:
 
     #check azure subscription Visual Studio
   - name: Azure.Subscription.Id 
-    value: 533f6b10-3a70-4c5d-8962-8b51e839a13c
+    value: 85397e39-4cbc-4a46-8968-83c0f62898bb
 
     #CHECK OBJECT ID OF THE APPLICATION 
   - name: DevOps.ObjectId 
-  
-  # check what this is 
-    value: 0d876cc9-1767-4fc7-b562-1d3d31671c8f
+    value: 14e9dd00-474f-41b4-924e-2fb27deb40ef
+
+  #
   - name: DevOps.TenantId 
     value: 7517bc42-bcf8-4916-a677-b5753051f846
