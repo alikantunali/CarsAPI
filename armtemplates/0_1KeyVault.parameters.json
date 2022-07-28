@@ -34,6 +34,9 @@
       },
       "ObjectId": {
           "value": "#{DevOps.ObjectId}#"
+      },
+      "RegionPrefix": {
+          "value": "#{Region.ShortName}#" 
       }
     }
   }
