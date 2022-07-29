@@ -4,7 +4,7 @@ variables:
 
     #GIVE RESOURCE GROUP NAME 
   - name: Azure.ResourceGroup.Name
-    value: rg-at-carsapi-dev
+    value: AlikanTraining
 
     #GIVE RESOURCE GROUP NAME name: Api.Name
   - name: Application.Name
