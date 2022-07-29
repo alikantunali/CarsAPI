@@ -2,387 +2,72 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "sites_as_at_carsapi_dev_name": {
-            "defaultValue": "as-at-carsapi-dev",
-            "type": "String"
+        "Application.Environment": {
+            "type": "string"
+        },        
+        "Application.Version":{
+            "type": "string"
+        },    
+        "Release.Name": {
+          "type": "string"
         },
-        "serverfarms_at_carsapi_appplan_dev_externalid": {
-            "defaultValue": "/subscriptions/ee66825c-4e83-4d89-8980-49f17684df91/resourceGroups/rg-at-carsapi-dev/providers/Microsoft.Web/serverfarms/at-carsapi-appplan-dev",
-            "type": "String"
+        "Release.RequestedFor": {
+            "type": "string" 
+        },
+        "Release.SourceCodeBranch": {
+            "type": "string"
+        },
+        "Release.TriggerType": {
+            "type": "string"
+        },
+        "Release.Url": {
+            "type": "string"
+        },
+        "ResourceGroup.Location": {            
+          "type": "string"
+        },
+        "RegionPrefix": {
+            "type": "string"
+        },
+        "WebApp.Name": {
+          "type": "string"          
         }
     },
-    "variables": {},
+    "variables": {
+        "Tags": {
+            "environment": "[parameters('Application.Environment')]",
+            "version": "[parameters('Application.Version')]",
+            "releaseName": "[parameters('Release.Name')]",
+            "createdBy": "[parameters('Release.Url')]",
+            "branch": "[parameters('Release.SourceCodeBranch')]",
+            "triggeredBy": "[parameters('Release.RequestedFor')]",
+            "triggerType": "[parameters('Release.TriggerType')]"
+        },
+        "WebAppName": "[concat(parameters('Application.Environment'), '-',parameters('RegionPrefix'),'-', parameters('WebApp.Name'))]",
+        "WebAppNameResourceId": "[resourceId('Microsoft.Web/sites', variables('WebAppName'))]"       
+    },
     "resources": [
         {
-            "type": "Microsoft.Web/sites",
-            "apiVersion": "2021-03-01",
-            "name": "[parameters('sites_as_at_carsapi_dev_name')]",
-            "location": "West Europe",
-            "tags": {
-                "hidden-related:/subscriptions/ee66825c-4e83-4d89-8980-49f17684df91/resourceGroups/rg-at-carsapi-dev/providers/Microsoft.Web/serverFarms/at-carsapi-appplan-dev": "empty"
-            },
-            "kind": "app,linux",
-            "identity": {
-                "type": "SystemAssigned"
-            },
+            "type": "Microsoft.Resources/tags",
+            "name": "default",
+            "apiVersion": "2019-10-01",
+            "dependsOn": [],
             "properties": {
-                "enabled": true,
-                "hostNameSslStates": [
-                    {
-                        "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '.azurewebsites.net')]",
-                        "sslState": "Disabled",
-                        "hostType": "Standard"
-                    },
-                    {
-                        "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '.scm.azurewebsites.net')]",
-                        "sslState": "Disabled",
-                        "hostType": "Repository"
-                    }
-                ],
-                "serverFarmId": "[parameters('serverfarms_at_carsapi_appplan_dev_externalid')]",
-                "reserved": true,
-                "isXenon": false,
-                "hyperV": false,
-                "siteConfig": {
-                    "numberOfWorkers": 1,
-                    "linuxFxVersion": "DOTNETCORE|6.0",
-                    "acrUseManagedIdentityCreds": false,
-                    "alwaysOn": false,
-                    "http20Enabled": false,
-                    "functionAppScaleLimit": 0,
-                    "minimumElasticInstanceCount": 0
-                },
-                "scmSiteAlsoStopped": false,
-                "clientAffinityEnabled": true,
-                "clientCertEnabled": false,
-                "clientCertMode": "Required",
-                "hostNamesDisabled": false,
-                "customDomainVerificationId": "836D3ED3F1854C0758215967A0EF51C64635CB434B7190FAD36344E3A519B720",
-                "containerSize": 0,
-                "dailyMemoryTimeQuota": 0,
-                "httpsOnly": true,
-                "redundancyMode": "None",
-                "storageAccountRequired": false,
-                "keyVaultReferenceIdentity": "SystemAssigned"
+                "tags": "[variables('Tags')]"
             }
-        },
+        },                
         {
-            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/ftp')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "tags": {
-                "hidden-related:/subscriptions/ee66825c-4e83-4d89-8980-49f17684df91/resourceGroups/rg-at-carsapi-dev/providers/Microsoft.Web/serverFarms/at-carsapi-appplan-dev": "empty"
-            },
-            "properties": {
-                "allow": true
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/scm')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "tags": {
-                "hidden-related:/subscriptions/ee66825c-4e83-4d89-8980-49f17684df91/resourceGroups/rg-at-carsapi-dev/providers/Microsoft.Web/serverFarms/at-carsapi-appplan-dev": "empty"
-            },
-            "properties": {
-                "allow": true
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/config",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/web')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "tags": {
-                "hidden-related:/subscriptions/ee66825c-4e83-4d89-8980-49f17684df91/resourceGroups/rg-at-carsapi-dev/providers/Microsoft.Web/serverFarms/at-carsapi-appplan-dev": "empty"
-            },
-            "properties": {
-                "numberOfWorkers": 1,
-                "defaultDocuments": [
-                    "Default.htm",
-                    "Default.html",
-                    "Default.asp",
-                    "index.htm",
-                    "index.html",
-                    "iisstart.htm",
-                    "default.aspx",
-                    "index.php",
-                    "hostingstart.html"
-                ],
-                "netFrameworkVersion": "v4.0",
-                "linuxFxVersion": "DOTNETCORE|6.0",
-                "requestTracingEnabled": false,
-                "remoteDebuggingEnabled": false,
-                "httpLoggingEnabled": false,
-                "acrUseManagedIdentityCreds": false,
-                "logsDirectorySizeLimit": 35,
-                "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$as-at-carsapi-dev",
-                "scmType": "None",
-                "use32BitWorkerProcess": true,
-                "webSocketsEnabled": false,
-                "alwaysOn": false,
-                "appCommandLine": "dotnet CarsAPI.dll",
-                "managedPipelineMode": "Integrated",
-                "virtualApplications": [
-                    {
-                        "virtualPath": "/",
-                        "physicalPath": "site\\wwwroot",
-                        "preloadEnabled": false
-                    }
-                ],
-                "loadBalancing": "LeastRequests",
-                "experiments": {
-                    "rampUpRules": []
-                },
-                "autoHealEnabled": false,
-                "vnetRouteAllEnabled": false,
-                "vnetPrivatePortsCount": 0,
-                "localMySqlEnabled": false,
-                "managedServiceIdentityId": 17505,
-                "ipSecurityRestrictions": [
-                    {
-                        "ipAddress": "Any",
-                        "action": "Allow",
-                        "priority": 1,
-                        "name": "Allow all",
-                        "description": "Allow all access"
-                    }
-                ],
-                "scmIpSecurityRestrictions": [
-                    {
-                        "ipAddress": "Any",
-                        "action": "Allow",
-                        "priority": 1,
-                        "name": "Allow all",
-                        "description": "Allow all access"
-                    }
-                ],
-                "scmIpSecurityRestrictionsUseMain": false,
-                "http20Enabled": false,
-                "minTlsVersion": "1.2",
-                "scmMinTlsVersion": "1.2",
-                "ftpsState": "FtpsOnly",
-                "preWarmedInstanceCount": 0,
-                "functionAppScaleLimit": 0,
-                "functionsRuntimeScaleMonitoringEnabled": false,
-                "minimumElasticInstanceCount": 0,
-                "azureStorageAccounts": {}
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/014c202d-6416-406b-b846-b5a57e8b924b')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T20:35:54.1806702Z",
-                "end_time": "2022-06-24T20:35:58.6423531Z",
-                "active": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/0e8b054d-0939-42a3-91fa-e995c9f32ddc')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T20:38:38.1157631Z",
-                "end_time": "2022-06-24T20:38:43.2659533Z",
-                "active": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/2bfe4750-09ff-4de6-a68d-dd8882e9c895')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T21:23:35.5838612Z",
-                "end_time": "2022-06-24T21:23:42.9751508Z",
-                "active": true
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/5d0e3e31-c8ab-45ef-85ec-a8c90223d2e8')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T21:11:09.9546358Z",
-                "end_time": "2022-06-24T21:11:15.8574826Z",
-                "active": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/5dbc7c31-5dbb-4e65-81ec-d3138b32a31d')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T20:31:52.0821641Z",
-                "end_time": "2022-06-24T20:31:56.2648735Z",
-                "active": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/5ecbcda5-2b64-4f91-9bad-9a795dba72ef')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T11:22:31.2424231Z",
-                "end_time": "2022-06-24T11:22:39.5577599Z",
-                "active": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/986eee58-1872-4cda-8114-02fa2856688d')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T20:40:33.4393977Z",
-                "end_time": "2022-06-24T20:40:52.0714071Z",
-                "active": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/9cfdc6d4-410e-4064-9436-4c39accaa78b')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T21:18:07.9474021Z",
-                "end_time": "2022-06-24T21:18:18.0317881Z",
-                "active": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/bb9f6ef2-e9d9-4468-82d8-fe56b36aac4d')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T20:42:30.9973559Z",
-                "end_time": "2022-06-24T20:42:35.6343497Z",
-                "active": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/ef7edcb4-86dd-4d4d-86c9-566615c42a1e')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2022-06-24T21:08:00.1134065Z",
-                "end_time": "2022-06-24T21:08:05.1337762Z",
-                "active": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/hostNameBindings",
-            "apiVersion": "2021-03-01",
-            "name": "[concat(parameters('sites_as_at_carsapi_dev_name'), '/', parameters('sites_as_at_carsapi_dev_name'), '.azurewebsites.net')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_at_carsapi_dev_name'))]"
-            ],
-            "properties": {
-                "siteName": "as-at-carsapi-dev",
-                "hostNameType": "Verified"
+        "name": "[variables('WebAppName')]",
+        "type": "Microsoft.Web/sites",
+        "apiVersion": "2020-12-01",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', variables('WebAppName'))]"
+        ],
+        "properties": {
+            "name": "[variables('WebAppName')]",
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('WebAppName'))]"
             }
         }
     ]
-}
+}        

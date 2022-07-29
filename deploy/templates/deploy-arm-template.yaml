@@ -73,3 +73,18 @@ steps:
     csmParametersFile: '${{parameters.artifactFolder}}/1AppServicePlan.parameters.json'
     deploymentMode: 'Incremental'
     deploymentOutputs: 'ArmOutputs'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Deploy App Service on ${{parameters.resourceGroupName}}'
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: '${{parameters.azureResourceManagerConnection}}'
+    subscriptionId: '${{parameters.subscriptionId}}'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '${{parameters.resourceGroupName}}'
+    location: '${{parameters.location}}'
+    templateLocation: 'Linked artifact'
+    csmFile: '${{parameters.artifactFolder}}/2AppService.json'
+    csmParametersFile: '${{parameters.artifactFolder}}/2AppService.parameters.json'
+    deploymentMode: 'Incremental'
+    deploymentOutputs: 'ArmOutputs'

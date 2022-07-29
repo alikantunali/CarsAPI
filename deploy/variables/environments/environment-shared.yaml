@@ -5,6 +5,7 @@ variables:
 
   - name: Region.ShortName
     value: we
+    
   - name: Azure.ResourceGroup.Location
     value: 'West Europe'
 

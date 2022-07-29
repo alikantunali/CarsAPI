@@ -29,6 +29,9 @@
         },
         "ResourceGroup.Location": {            
             "value": "#{Azure.ResourceGroup.Location}#"
+        },
+        "RegionPrefix": {
+            "value": "#{Region.ShortName}#"
         }
     }
 }

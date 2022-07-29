@@ -23,13 +23,15 @@
         "Release.Url": {
             "type": "string"
         },
-        "Application.Name": { 
-                                  
+        "Application.Name": {                                   
             "type": "string"
         },
         "ResourceGroup.Location": {
             "type": "string"
-        }
+        },
+        "RegionPrefix": {
+          "type": "string"
+        }  
     },
     "variables": {
         "Tags": {
@@ -40,9 +42,20 @@
             "branch": "[parameters('Release.SourceCodeBranch')]",
             "triggeredBy": "[parameters('Release.RequestedFor')]",
             "triggerType": "[parameters('Release.TriggerType')]"
-        }
+        },
+        "appServicePlanName": "[concat(parameters('Application.Environment'), '-',parameters('RegionPrefix'),'-', parameters('Application.Name'))]",
+        "appServicePlanNameResourceId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
     },
     "resources": [
+        {
+            "type": "Microsoft.Resources/tags",
+            "name": "default",
+            "apiVersion": "2019-10-01",
+            "dependsOn": [],
+            "properties": {
+                "tags": "[variables('Tags')]"
+            }
+        },
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2021-03-01",
@@ -69,5 +82,15 @@
                 "zoneRedundant": false
             }
         }
-    ]
+    ],
+    "outputs": {
+        "Infra.Secrets.AppServicePlanId": {
+            "type": "string",
+            "value": "[variables('appServicePlanNameResourceId')]"
+        },
+      "Infra.Secrets.AppServicePlan.Name": {
+        "type": "string",
+        "value": "[variables('appServicePlanName')]"
+      }        
+    }
 }

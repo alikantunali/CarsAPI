@@ -2,11 +2,36 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "sites_as_at_carsapi_dev_name": {
-            "value": null
+
+        "Application.Environment": {
+            "value": "#{App.Environment.Code}#"
         },
-        "serverfarms_at_carsapi_appplan_dev_externalid": {
-            "value": null
-        }
+        "Application.Version": {
+            "value": "#{Artifact.Version}#"
+        },
+        "Release.Name": {
+            "value": "#{Release.ReleaseName}#" 
+        },
+        "Release.RequestedFor": {
+            "value": "#{Release.Deployment.RequestedFor}#"
+        },
+        "Release.SourceCodeBranch": {
+            "value": "#{Release.SourceCodeBranch}#"
+        },
+        "Release.TriggerType": {
+            "value": "#{Release.Reason}#"
+        },
+        "Release.Url": {
+            "value": "#{Release.ReleaseWebUrl}#"
+        },
+        "ResourceGroup.Location": {
+            "value": "#{Azure.ResourceGroup.Location}#"
+        },
+        "RegionPrefix": {
+            "value": "#{Region.ShortName}#" // TODO: Fill in parameter value
+        },
+        "WebApp.Name": {
+            "value": "#{Application.Name}#"
+        }            
     }
 }

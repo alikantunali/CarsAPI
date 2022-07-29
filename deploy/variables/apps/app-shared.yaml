@@ -9,7 +9,7 @@ variables:
 
     #GIVE RESOURCE GROUP NAME name: Api.Name
   - name: Application.Name
-    value: $(Resource.Prefix)-carsapi
+    value: at-carsapi
 
     #GIVE DOTNET VERSION 
   - name: Api.DotnetVersion
