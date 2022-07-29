@@ -1,6 +1,6 @@
 variables:
   - name: Azure.ServiceConnection.Name
-    value: 'git-carsapi-service-connection'
+    value: 'Visual Studio Enterprise Subscription – MPN(ee66825c-4e83-4d89-8980-49f17684df91)'
    #CHECK AZURE DEVOPS for service connection 
 
   - name: Region.ShortName
@@ -11,15 +11,15 @@ variables:
 
     #check azure subscription Visual Studio
   - name: Azure.Subscription.Id 
-    value: 85397e39-4cbc-4a46-8968-83c0f62898bb
+    value: ee66825c-4e83-4d89-8980-49f17684df91
 
     #CHECK OBJECT ID OF THE APPLICATION 
   - name: DevOps.ObjectId 
-    value: 14e9dd00-474f-41b4-924e-2fb27deb40ef
+    value: c41b1803-71e0-4dab-a575-f1fa2ef19c7c
 
   #
   - name: DevOps.TenantId 
-    value: 7517bc42-bcf8-4916-a677-b5753051f846   
+    value: 7517bc42-bcf8-4916-a677-b5753051f846
     
   - name: Keyvault.SecretName
     value: CarsDbSQLConnection
