@@ -59,7 +59,7 @@
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2021-03-01",
-            "name": "[parameters('Application.Name')]",
+            "name": "[variables('appServicePlanName')]",
             "location": "[parameters('ResourceGroup.Location')]",
             "sku": {
                 "name": "F1",
@@ -67,7 +67,7 @@
                 "size": "F1",
                 "family": "F",
                 "capacity": 1
-            },
+            },            
             "kind": "windows",
             "properties": {
                 "perSiteScaling": false,
