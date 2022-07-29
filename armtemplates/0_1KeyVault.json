@@ -59,20 +59,11 @@
     },
     "resources": [
       {
-
-        "type": "Microsoft.Resources/tags",
-        "name": "default",
-        "apiVersion": "2019-10-01",
-        "dependsOn": [],
-        "properties": {
-            "tags": "[variables('Tags')]"
-        }
-      },
-      {
         "apiVersion": "2016-10-01",
         "location": "[parameters('ResourceGroup.Location')]",
         "name": "[variables('keyVaultName')]",
         "properties": {
+          "tags":"[variables('Tags')]",
           "enabledForDeployment": false,
           "enabledForDiskEncryption": false,
           "enabledForTemplateDeployment": true,
@@ -81,7 +72,7 @@
           "sku": {
             "name": "standard",
             "family": "A"
-          }
+          }      
         },
         "type": "Microsoft.KeyVault/vaults"
       },

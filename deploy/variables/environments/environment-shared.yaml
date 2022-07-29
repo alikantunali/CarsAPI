@@ -1,6 +1,6 @@
 variables:
   - name: Azure.ServiceConnection.Name
-    value: 'Visual Studio Enterprise Subscription – MPN(ee66825c-4e83-4d89-8980-49f17684df91)'
+    value: 'git-carsapi-service-connection'
    #CHECK AZURE DEVOPS for service connection 
 
   - name: Region.ShortName
