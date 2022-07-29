@@ -62,8 +62,8 @@
         "apiVersion": "2016-10-01",
         "location": "[parameters('ResourceGroup.Location')]",
         "name": "[variables('keyVaultName')]",
+        "tags": "[variables('Tags')]",
         "properties": {
-          "tags":"[variables('Tags')]",
           "enabledForDeployment": false,
           "enabledForDiskEncryption": false,
           "enabledForTemplateDeployment": true,
@@ -84,11 +84,57 @@
         "properties": {
           "accessPolicies": [
             {
-              "tenantId": "[parameters('TenantId')]",
+              "tenantId": "[parameters('TenantId')]",            
               "objectId": "[parameters('ObjectId')]",
               "permissions": {
-                "keys": [ "list", "get","create","update","delete"],
-                "secrets": [ "list", "get","set","delete" ]
+                "keys": [ "List", "Get","Create","Update","Delete"],
+                "secrets": [ "List", "Get","Set","Delete" ]
+              }
+            },
+            {
+              "tenantId": "7517bc42-bcf8-4916-a677-b5753051f846",
+              "objectId": "41fd3ae3-ba58-40be-97ff-5ac41cff7c1e",
+              "permissions": {
+                  "keys": [
+                      "Get",
+                      "List",
+                      "Update",
+                      "Create",
+                      "Import",
+                      "Delete",
+                      "Recover",
+                      "Backup",
+                      "Restore",
+                      "GetRotationPolicy",
+                      "SetRotationPolicy",
+                      "Rotate"
+                  ],
+                  "secrets": [
+                      "Get",
+                      "List",
+                      "Set",
+                      "Delete",
+                      "Recover",
+                      "Backup",
+                      "Restore"
+                  ],
+                  "certificates": [
+                      "Get",
+                      "List",
+                      "Update",
+                      "Create",
+                      "Import",
+                      "Delete",
+                      "Recover",
+                      "Backup",
+                      "Restore",
+                      "ManageContacts",
+                      "ManageIssuers",
+                      "GetIssuers",
+                      "ListIssuers",
+                      "SetIssuers",
+                      "DeleteIssuers"
+                  ]
               }
             }
           ]
