@@ -87,7 +87,7 @@
               "tenantId": "[parameters('TenantId')]",
               "objectId": "[parameters('ObjectId')]",
               "permissions": {
-                "keys": [ "list", "get" ],
+                "keys": [ "list", "get"],
                 "secrets": [ "list", "get" ]
               }
             }
