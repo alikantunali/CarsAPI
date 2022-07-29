@@ -6,10 +6,9 @@ variables:
   - name: Azure.ResourceGroup.Name
     value: AlikanTraining
 
-
     #GIVE RESOURCE GROUP NAME name: Api.Name
   - name: Application.Name
-    value: at-carsapi
+    value: carsapi
 
     #GIVE DOTNET VERSION 
   - name: Api.DotnetVersion
@@ -17,7 +16,7 @@ variables:
 
     #give Keyvault name 
   - name: Keyvault.Name
-    value: 'at-carsapi-kv'
+    value: 'carsapi-kv'
 
     #sku storage
   - name: Storage.SkuName

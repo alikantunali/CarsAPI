@@ -39,7 +39,7 @@
         "ObjectId": {
           "type": "string"                  
         },
-        "RegionPrefix": {
+        "Resource.Prefix": {
           "type": "string"
         }    
     },
@@ -54,7 +54,7 @@
             "triggeredBy": "[parameters('Release.RequestedFor')]",
             "triggerType": "[parameters('Release.TriggerType')]"
         },      
-      "keyVaultName": "[concat(parameters('Application.Environment'), '-',parameters('RegionPrefix'),'-', parameters('KeyVault.Name'))]",
+      "keyVaultName": "[concat(parameters('Resource.Prefix'),'-', parameters('KeyVault.Name'))]",
       "keyVaultResourceId": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
     },
     "resources": [

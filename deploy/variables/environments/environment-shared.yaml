@@ -23,3 +23,27 @@ variables:
     
   - name: Keyvault.SecretName
     value: CarsDbSQLConnection
+
+    
+#  -name: Azure.ServiceConnection.Name.Training
+
+#   value: 'Visual Studio Enterprise Subscription – MPN(ee66825c-4e83-4d89-8980-49f17684df91)'
+#  #Training Account Service Connection  
+#
+
+#  -name: Azure.Subscription.Id.Training
+
+#   value: 'ee66825c-4e83-4d89-8980-49f17684df91'
+#  #Training Account Subscription
+#
+
+#  -name: DevOps.ObjectId.Training 
+
+#   value: 'c41b1803-71e0-4dab-a575-f1fa2ef19c7c'
+#  #Training Devops Object ID
+#
+
+#  -name: DevOps.TenantId.Training
+
+#   value: '7517bc42-bcf8-4916-a677-b5753051f846'
+#  #Training Devops Tenant ID

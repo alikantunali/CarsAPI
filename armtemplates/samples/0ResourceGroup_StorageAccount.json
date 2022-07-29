@@ -1,0 +1,99 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#", 
+  "contentVersion": "1.0.0.0",
+  "parameters": { 
+      "Application.Name" :{
+        "type": "string"
+      },
+      "Application.Environment": {
+        "type": "string"
+      },
+      "Application.Version": {
+            "type": "string"
+      },
+      "Release.Name": {
+          "type": "string"
+      },
+      "Release.RequestedFor": {
+          "type": "string"
+      },
+      "Release.SourceCodeBranch": {
+          "type": "string"
+      },
+      "Release.TriggerType": {
+          "type": "string"
+      },
+      "Release.Url": {
+          "type": "string"
+      },  
+      "Resource.Group.Location": {
+        "type": "string"
+        },
+      "RegionPrefix": {
+        "type": "string"
+      }  
+  },
+  "variables": {
+      "resourceGroupName": "[concat('at-',parameters('RegionPrefix'),'-',parameters('Application.Name'))]",
+      "storageName": "[concat(parameters('Application.Name'),'-',parameters('RegionPrefix'),'-at-store')]",
+      "Tags": {
+          "displayName": "[variables('resourceGroupName')]",
+          "environment": "[parameters('Application.Environment')]",
+          "version": "[parameters('Application.Version')]",
+          "releaseName": "[parameters('Release.Name')]",
+          "createdBy": "[parameters('Release.Url')]",
+          "branch": "[parameters('Release.SourceCodeBranch')]",
+          "triggeredBy": "[parameters('Release.RequestedFor')]",
+          "triggerType": "[parameters('Release.TriggerType')]"
+      }      
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/tags",
+      "name": "default",
+      "apiVersion": "2019-10-01",
+      "dependsOn": [],
+      "properties": {
+          "tags": "[variables('Tags')]"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2018-05-01",
+      "location": "[parameters('Resource.Group.Location')]",
+      "name": "[variables('resourceGroupName')]"
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "storageDeployment",
+      "resourceGroup": "[variables('resourceGroupName')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/resourceGroups/', variables('resourceGroupName'))]"
+    ],
+    "properties": {
+        "mode": "Incremental",       
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "variables": {},
+          "resources": [
+            {
+              "type": "Microsoft.Storage/storageAccounts",
+              "apiVersion": "2021-04-01",
+              "name": "[variables('storageName')]",
+              "location": "[parameters('Resource.Group.Location')]",
+              "sku": {
+                "name": "Standard_LRS"
+              },
+              "kind": "StorageV2"
+            }
+          ],
+          "outputs": {}      
+        }
+      }
+    }
+  ],                                
+  "outputs": {}  
+}
