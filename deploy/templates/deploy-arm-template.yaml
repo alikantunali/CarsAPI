@@ -54,52 +54,34 @@ steps:
     resourceGroupName: '${{parameters.resourceGroupName}}'
     location: '${{parameters.location}}'
     templateLocation: 'Linked artifact'
-    csmFile: '${{parameters.artifactFolder}}/0_1KeyVault.json'
-    csmParametersFile: '${{parameters.artifactFolder}}/0_1KeyVault.parameters.json'
+    csmFile: '${{parameters.artifactFolder}}/1KeyVault.json'
+    csmParametersFile: '${{parameters.artifactFolder}}/1KeyVault.parameters.json'
     deploymentMode: 'Incremental'
     deploymentOutputs: 'ArmOutputs'
 
 - ${{ if eq(parameters.loggingLevel, 'Debug') }}:
-  - task: PowerShell@2
-    displayName: '[Debug] Output ARM templates that will be deployed'
+  - task: CmdLine@2
+    displayName: "[Debug] Output artifact structure"
     inputs:
-      targetType: inline
-      script: |
-        $files = Get-ChildItem -Path ${{parameters.artifactFolder}}\*.json
-        foreach ($file in $files)
-        {
-          Write-Host "=== ARM template Output ==="
-          Write-Host "Filename: ($file)" 
-          $content = Get-Content $file
-          Write-Host $content
-        }
+      script: 'ls -R ${{parameters.artifactFolder}}'
 
-#- task: AzureResourceManagerTemplateDeployment@3
-#  displayName: 'Deploy App Service Plan on ${{parameters.resourceGroupName}}'
-#  inputs:
-#    deploymentScope: 'Resource Group'
-#    azureResourceManagerConnection: '${{parameters.azureResourceManagerConnection}}'
-#    subscriptionId: '${{parameters.subscriptionId}}'
-#    action: 'Create Or Update Resource Group'
-#    resourceGroupName: '${{parameters.resourceGroupName}}'
-#    location: '${{parameters.location}}'
-#    templateLocation: 'Linked artifact'
-#    csmFile: '${{parameters.artifactFolder}}/1AppServicePlan.json'
-#    csmParametersFile: '${{parameters.artifactFolder}}/1AppServicePlan.parameters.json'
-#    deploymentMode: 'Incremental'
-#    deploymentOutputs: 'ArmOutputs'
-#
-#- task: AzureResourceManagerTemplateDeployment@3
-#  displayName: 'Deploy App Service on ${{parameters.resourceGroupName}}'
-#  inputs:
-#    deploymentScope: 'Resource Group'
-#    azureResourceManagerConnection: '${{parameters.azureResourceManagerConnection}}'
-#    subscriptionId: '${{parameters.subscriptionId}}'
-#    action: 'Create Or Update Resource Group'
-#    resourceGroupName: '${{parameters.resourceGroupName}}'
-#    location: '${{parameters.location}}'
-#    templateLocation: 'Linked artifact'
-#    csmFile: '${{parameters.artifactFolder}}/2AppService.json'
-#    csmParametersFile: '${{parameters.artifactFolder}}/2AppService.parameters.json'
-#    deploymentMode: 'Incremental'
-#    deploymentOutputs: 'ArmOutputs'
+- task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Deploy Application on ${{parameters.resourceGroupName}}'
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: '${{parameters.azureResourceManagerConnection}}'
+    subscriptionId: '${{parameters.subscriptionId}}'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '${{parameters.resourceGroupName}}'
+    location: '${{parameters.location}}'
+    templateLocation: 'Linked artifact'
+    csmFile: '${{parameters.artifactFolder}}/2WebApp-SQLDatabase-AppPlan-AI.json'
+    csmParametersFile: '${{parameters.artifactFolder}}/2WebApp-SQLDatabase-AppPlan-AI.parameters.json'
+    deploymentMode: 'Incremental'
+    deploymentOutputs: 'ArmOutputs'
+
+- ${{ if eq(parameters.loggingLevel, 'Debug') }}:
+  - task: CmdLine@2
+    displayName: "[Debug] Output artifact structure"
+    inputs:
+      script: 'ls -R ${{parameters.artifactFolder}}'    
