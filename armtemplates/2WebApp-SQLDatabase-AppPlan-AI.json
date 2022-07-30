@@ -2,9 +2,38 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "hostingPlanName": {
+      "Application.Environment": {
+          "type": "string"
+      },
+      "Application.Version": {
+          "type": "string"
+      },
+      "App.Name": {
+        "type": "string"
+      },
+      "Release.Name": {
+          "type": "string"
+      },
+      "Release.RequestedFor": {
+          "type": "string"
+      },
+      "Release.SourceCodeBranch": {
+          "type": "string"
+      },
+      "Release.TriggerType": {
+          "type": "string"
+      },
+      "Release.Url": {
+          "type": "string"
+      },   
+      "ResourcePrefix": {
         "type": "string",
-        "minLength": 1
+        "metadata": {
+          "description": "generic name tag of the resources - depending on environment and resource group location and clientprefix"
+        }
+      }, 
+      "hostingPlanName": {
+        "type": "string"
       },
       "skuName": {
         "type": "string"
@@ -28,8 +57,7 @@
         "type": "string"
       },
       "collation": {
-        "type": "string",
-        "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+        "type": "string"
       },
       "edition": {
         "type": "string",
@@ -40,6 +68,9 @@
           "Premium"
         ]
       },
+      "ConnectionStringName": {
+        "type": "string"
+      }
       "maxSizeBytes": {
         "type": "string",
         "defaultValue": "1073741824"
@@ -60,9 +91,8 @@
           "description": "Describes the performance level for Edition"
         }
       },
-      "sacarsapiType": {
-        "type": "string",
-        "defaultValue": "Standard_LRS",
+      "storageAccountType": {
+        "type": "string",        
         "allowedValues": [
           "Standard_LRS",
           "Standard_ZRS",
@@ -73,19 +103,27 @@
       }
     },
     "variables": {
-      "webSiteName": "at-webapp-carsapi-dev",
-      "sqlserverName": "at-sql-carsapi-dev",
-      "sacarsapiName": "[concat('sacarsapi', uniqueString(resourceGroup().id))]",
-      "sqldbLocation": "Norway East"
+        "Tags": {
+            "environment": "[parameters('Application.Environment')]",
+            "version": "[parameters('Application.Version')]",
+            "releaseName": "[parameters('Release.Name')]",
+            "createdBy": "[parameters('Release.Url')]",
+            "branch": "[parameters('Release.SourceCodeBranch')]",
+            "triggeredBy": "[parameters('Release.RequestedFor')]",
+            "triggerType": "[parameters('Release.TriggerType')]"
+        },
+        "webSiteName": "[concat(parameters('ResourcePrefix'),'-',parameters('App.Name'),'-web')]",
+        "sqlServerName": "[concat(parameters('ResourcePrefix'),'-',parameters('App.Name'),'-sql')]",
+        "storageAccountName": "[concat(parameters('App.Name'), parameters('Application.Environment'),'storage')]",
+        "sqldbLocation": "Norway East",
+        "applicationGatewayName": "[concat(parameters('ResourcePrefix'),'-',parameters('App.Name'),'-apim')]"
     },
     "resources": [
       {
         "name": "[variables('sqlserverName')]",
         "type": "Microsoft.Sql/servers",
         "location": "[variables('sqldbLocation')]",
-        "tags": {
-          "displayName": "SqlServer"
-        },
+        "tags": "[variables('Tags')]",
         "apiVersion": "2014-04-01-preview",
         "properties": {
           "administratorLogin": "[parameters('administratorLogin')]",
@@ -96,9 +134,8 @@
             "name": "[parameters('databaseName')]",
             "type": "databases",
             "location": "[variables('sqldbLocation')]",
-            "tags": {
-              "displayName": "Database"
-            },
+            "tags":
+              "[variables('Tags')]",        
             "apiVersion": "2014-04-01-preview",
             "dependsOn": [
               "[resourceId('Microsoft.Sql/servers/', variables('sqlserverName'))]"
@@ -130,9 +167,7 @@
         "name": "[parameters('hostingPlanName')]",      
         "type": "Microsoft.Web/serverfarms",
         "location": "[resourceGroup().location]",
-        "tags": {
-          "displayName": "HostingPlan"
-        },
+        "tags": "[variables('Tags')]",
         "sku": {
           "name": "[parameters('skuName')]",
           "capacity": "[parameters('skuCapacity')]"
@@ -146,11 +181,11 @@
         "apiVersion": "2015-08-01",
         "name": "[variables('webSiteName')]",
         "type": "Microsoft.Web/sites",
-        "location": "[resourceGroup().location]",
+        "location": "[resourceGroup().location]",        
         "dependsOn": [
           "[resourceId('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]"
         ],
-        "tags": {
+        "tags": {          
           "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty",
           "displayName": "Website"
         },
@@ -163,17 +198,19 @@
             "apiVersion": "2015-08-01",
             "type": "config",
             "name": "connectionstrings",
+            "tags": "[variables('Tags')]",
             "dependsOn": [
               "[resourceId('Microsoft.Web/Sites/', variables('webSiteName'))]"
             ],
             "properties": {
               "DefaultConnection": {
                 "value": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', variables('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
-                "type": "SQLServer"
-              }
+                "type": "SQLServer"                
+              },              
+              "connectionStringNames": "[parameters('ConnectionStringName')]"              
             }
-          }
-        ]
+          }          
+        ]      
       },
       {
         "apiVersion": "2014-04-01",
@@ -245,7 +282,7 @@
         "apiVersion": "2014-04-01",
         "name": "[variables('webSiteName')]",
         "type": "Microsoft.Insights/components",
-        "location": "West Europe",
+        "location": "West Europe",        
         "dependsOn": [
           "[resourceId('Microsoft.Web/sites/', variables('webSiteName'))]"
         ],
@@ -258,18 +295,112 @@
         }
       },
       {
-        "name": "[variables('sacarsapiName')]",
+        "name": "[variables('storageAccountName')]",
         "type": "Microsoft.Storage/storageAccounts",
         "location": "[resourceGroup().location]",
+        
         "apiVersion": "2016-01-01",
         "sku": {
-          "name": "[parameters('sacarsapiType')]"
+          "name": "[parameters('storageAccountType')]"
         },
         "dependsOn": [ ],
         "tags": {
-          "displayName": "sacarsapi"
+          "displayName": "[variables('storageAccountName')]"
         },
         "kind": "Storage"
+      },
+      {
+        "type": "Microsoft.Network/applicationGateways",
+        "apiVersion": "2020-11-01",
+        "name": "[variables('applicationGatewayName')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/virtualNetworks', 'virtualNetwork1')]",
+          "[resourceId('Microsoft.Network/publicIPAddresses', 'publicIPAddress1')]"
+        ],
+        "properties": {
+          "sku": {
+            "name": "Standard_Small",
+            "tier": "Standard",
+            "capacity": 2
+          },
+          "gatewayIPConfigurations": [
+            {
+              "name": "appGatewayIpConfig",
+              "properties": {
+                "subnet": {
+                  "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'virtualNetwork1', 'Subnet-1')]"
+                }
+              }
+            }
+          ],
+          "frontendIPConfigurations": [
+            {
+              "name": "appGatewayFrontendIP",
+              "properties": {
+                "PublicIPAddress": {
+                  "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'publicIPAddress1')]"
+                }
+              }
+            }
+          ],
+          "frontendPorts": [
+            {
+              "name": "appGatewayFrontendPort",
+              "properties": {
+                "Port": 80
+              }
+            }
+          ],
+          "backendAddressPools": [
+            {
+              "name": "appGatewayBackendPool",
+              "properties": {}
+            }
+          ],
+          "backendHttpSettingsCollection": [
+            {
+              "name": "appGatewayBackendHttpSettings",
+              "properties": {
+                "Port": 80,
+                "Protocol": "Http",
+                "CookieBasedAffinity": "Disabled"
+              }
+            }
+          ],
+          "httpListeners": [
+            {
+              "name": "appGatewayHttpListener",
+              "properties": {
+                "FrontendIPConfiguration": {
+                  "Id": "[resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', 'applicationGatewayName', 'appGatewayFrontendIP')]"
+                },
+                "FrontendPort": {
+                  "Id": "[resourceId('Microsoft.Network/applicationGateways/frontendPorts',  'applicationGatewayName', 'appGatewayFrontendPort')]"
+                },
+                "Protocol": "Http",
+                "SslCertificate": null
+              }
+            }
+          ],
+          "requestRoutingRules": [
+            {
+              "Name": "ruleName",
+              "properties": {
+                "RuleType": "Basic",
+                "httpListener": {
+                  "id": "[resourceId('Microsoft.Network/applicationGateways/httpListeners', 'applicationGatewayName', 'appGatewayHttpListener')]"
+                },
+                "backendAddressPool": {
+                  "id": "[resourceId('Microsoft.Network/applicationGateways/backendAddressPools', 'applicationGatewayName', 'appGatewayBackendPool')]"
+                },
+                "backendHttpSettings": {
+                  "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', 'applicationGatewayName', 'appGatewayBackendHttpSettings')]"
+                }
+              }
+            }
+          ]
+        }
       }
     ]
   }
