@@ -68,9 +68,6 @@
           "Premium"
         ]
       },
-      "ConnectionStringName": {
-        "type": "string"
-      },
       "maxSizeBytes": {
         "type": "string",
         "defaultValue": "1073741824"
@@ -190,16 +187,14 @@
             "apiVersion": "2015-08-01",
             "type": "config",
             "name": "connectionstrings",
-            "tags": "[variables('Tags')]",
             "dependsOn": [
               "[resourceId('Microsoft.Web/Sites/', variables('webSiteName'))]"
             ],
             "properties": {
               "DefaultConnection": {
                 "value": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', variables('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
-                "type": "SQLServer"                
-              },              
-              "connectionStringNames": "[parameters('ConnectionStringName')]"              
+                "type": "SQLServer"
+              }
             }
           }          
         ]      

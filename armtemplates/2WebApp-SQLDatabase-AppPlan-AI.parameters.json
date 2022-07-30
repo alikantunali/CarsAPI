@@ -52,9 +52,6 @@
         "databaseName": {
             "value": "#{SQL.Database.Name}#"
         },
-        "ConnectionStringName": {
-            "value": "#{Keyvault.ConnectionString}#"
-        },
         "collation": {
             "value": "#{SQL.Collation}#"
         },
