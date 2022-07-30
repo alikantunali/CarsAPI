@@ -46,7 +46,7 @@
                 "keyVault": {
                     "id": "/subscriptions/#{Azure.Subscription.Id}#/resourceGroups/#{Azure.ResourceGroup.Name}#/providers/Microsoft.KeyVault/vaults/#{Resource.Prefix}#-#{Keyvault.Name}#",
                 },
-                "secretName": "#{CarsApiSQLAdminPassword}#"
+                "secretName": "#{Keyvault.SecretName.SQLPass}#"
                 }
         },
         "databaseName": {
