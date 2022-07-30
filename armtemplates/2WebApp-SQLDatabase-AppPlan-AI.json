@@ -92,14 +92,7 @@
         }
       },
       "storageAccountType": {
-        "type": "string",        
-        "allowedValues": [
-          "Standard_LRS",
-          "Standard_ZRS",
-          "Standard_GRS",
-          "Standard_RAGRS",
-          "Premium_LRS"
-        ]
+        "type": "string"
       }
     },
     "variables": {
@@ -115,8 +108,7 @@
         "webSiteName": "[concat(parameters('ResourcePrefix'),'-',parameters('App.Name'),'-web')]",
         "sqlServerName": "[concat(parameters('ResourcePrefix'),'-',parameters('App.Name'),'-sql')]",
         "storageAccountName": "[concat(parameters('App.Name'), parameters('Application.Environment'),'storage')]",
-        "sqldbLocation": "Norway East",
-        "applicationGatewayName": "[concat(parameters('ResourcePrefix'),'-',parameters('App.Name'),'-apim')]"
+        "sqldbLocation": "Norway East"        
     },
     "resources": [
       {
@@ -124,7 +116,7 @@
         "type": "Microsoft.Sql/servers",
         "location": "[variables('sqldbLocation')]",
         "tags": "[variables('Tags')]",
-        "apiVersion": "2014-04-01-preview",
+        "apiVersion": "2021-11-01-preview",
         "properties": {
           "administratorLogin": "[parameters('administratorLogin')]",
           "administratorLoginPassword": "[parameters('administratorLoginPassword')]"
@@ -136,7 +128,7 @@
             "location": "[variables('sqldbLocation')]",
             "tags":
               "[variables('Tags')]",        
-            "apiVersion": "2014-04-01-preview",
+            "apiVersion": "2021-08-01-preview",
             "dependsOn": [
               "[resourceId('Microsoft.Sql/servers/', variables('sqlserverName'))]"
             ],
@@ -149,7 +141,7 @@
           },
           {
             "type": "firewallrules",
-            "apiVersion": "2014-04-01-preview",
+            "apiVersion": "2021-11-01-preview",
             "dependsOn": [
               "[resourceId('Microsoft.Sql/servers/', variables('sqlserverName'))]"
             ],
@@ -308,99 +300,6 @@
           "displayName": "[variables('storageAccountName')]"
         },
         "kind": "Storage"
-      },
-      {
-        "type": "Microsoft.Network/applicationGateways",
-        "apiVersion": "2020-11-01",
-        "name": "[variables('applicationGatewayName')]",
-        "location": "[resourceGroup().location]",
-        "dependsOn": [
-          "[resourceId('Microsoft.Network/virtualNetworks', 'virtualNetwork1')]",
-          "[resourceId('Microsoft.Network/publicIPAddresses', 'publicIPAddress1')]"
-        ],
-        "properties": {
-          "sku": {
-            "name": "Standard_Small",
-            "tier": "Standard",
-            "capacity": 2
-          },
-          "gatewayIPConfigurations": [
-            {
-              "name": "appGatewayIpConfig",
-              "properties": {
-                "subnet": {
-                  "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'virtualNetwork1', 'Subnet-1')]"
-                }
-              }
-            }
-          ],
-          "frontendIPConfigurations": [
-            {
-              "name": "appGatewayFrontendIP",
-              "properties": {
-                "PublicIPAddress": {
-                  "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'publicIPAddress1')]"
-                }
-              }
-            }
-          ],
-          "frontendPorts": [
-            {
-              "name": "appGatewayFrontendPort",
-              "properties": {
-                "Port": 80
-              }
-            }
-          ],
-          "backendAddressPools": [
-            {
-              "name": "appGatewayBackendPool",
-              "properties": {}
-            }
-          ],
-          "backendHttpSettingsCollection": [
-            {
-              "name": "appGatewayBackendHttpSettings",
-              "properties": {
-                "Port": 80,
-                "Protocol": "Http",
-                "CookieBasedAffinity": "Disabled"
-              }
-            }
-          ],
-          "httpListeners": [
-            {
-              "name": "appGatewayHttpListener",
-              "properties": {
-                "FrontendIPConfiguration": {
-                  "Id": "[resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', 'applicationGatewayName', 'appGatewayFrontendIP')]"
-                },
-                "FrontendPort": {
-                  "Id": "[resourceId('Microsoft.Network/applicationGateways/frontendPorts',  'applicationGatewayName', 'appGatewayFrontendPort')]"
-                },
-                "Protocol": "Http",
-                "SslCertificate": null
-              }
-            }
-          ],
-          "requestRoutingRules": [
-            {
-              "Name": "ruleName",
-              "properties": {
-                "RuleType": "Basic",
-                "httpListener": {
-                  "id": "[resourceId('Microsoft.Network/applicationGateways/httpListeners', 'applicationGatewayName', 'appGatewayHttpListener')]"
-                },
-                "backendAddressPool": {
-                  "id": "[resourceId('Microsoft.Network/applicationGateways/backendAddressPools', 'applicationGatewayName', 'appGatewayBackendPool')]"
-                },
-                "backendHttpSettings": {
-                  "id": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', 'applicationGatewayName', 'appGatewayBackendHttpSettings')]"
-                }
-              }
-            }
-          ]
-        }
-      }
+      }      
     ]
   }
