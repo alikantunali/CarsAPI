@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Application.Environment": {
+            "value": "#{App.Environment.Code}#"
+        },
+        "Application.Version": {
+            "value": "#{Artifact.Version}#"
+        },
+        "App.Name": {
+            "value": "#{Application.Name}#"
+        },
+        "Release.Name": {
+            "value": "#{Release.ReleaseName}#"
+        },
+        "Release.RequestedFor": {
+            "value": "#{Release.Deployment.RequestedFor}#"
+        },
+        "Release.SourceCodeBranch": {
+            "value": "#{Release.SourceCodeBranch}#"
+        },
+        "Release.TriggerType": {
+            "value": "#{Release.Reason}#"
+        },
+        "Release.Url": {
+            "value": "#{Release.ReleaseWebUrl}#"
+        },
+        "ResourcePrefix": {
+            "value": "#{Resource.Prefix}#"
+        },
+        "hostingPlanName": {
+            "value": "#{Resource.Prefix}#-#{Application.Name}#"
+        },
+        "skuName": {
+            "value": "#{AppSvcPlan.SkuName}#"
+        },
+        "skuCapacity": {
+            "value": 1
+        },
+        "administratorLogin": {
+            "value": "#{CarsApi.Sql.User}#"
+        },
+        "administratorLoginPassword": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/#{Azure.Subscription.Id}#/resourceGroups/#{Azure.ResourceGroup.Name}#/providers/Microsoft.KeyVault/vaults/#{Resource.Prefix}#-#{Keyvault.Name}#",
+                },
+                "secretName": "#{CarsApiSQLAdminPassword}#"
+                }
+        },
+        "databaseName": {
+            "value": "#{SQL.Database.Name}#"
+        },
+        "ConnectionStringName": {
+            "value": "#{Keyvault.ConnectionString}#"
+        },
+        "collation": {
+            "value": "#{SQL.Collation}#"
+        },
+        "edition": {
+            "value": "Basic"
+        },
+        "maxSizeBytes": {
+            "value": "1073741824"
+        },
+        "requestedServiceObjectiveName": {
+            "value": "Basic"
+        },
+        "storageAccountType": {
+            "value": "#{Storage.SkuName}#"
+        }
+    }
+}

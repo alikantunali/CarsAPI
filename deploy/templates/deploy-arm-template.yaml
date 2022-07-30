@@ -58,7 +58,22 @@ steps:
     csmParametersFile: '${{parameters.artifactFolder}}/0_1KeyVault.parameters.json'
     deploymentMode: 'Incremental'
     deploymentOutputs: 'ArmOutputs'
-#
+
+- ${{ if eq(parameters.loggingLevel, 'Debug') }}:
+  - task: PowerShell@2
+    displayName: '[Debug] Output ARM templates that will be deployed'
+    inputs:
+      targetType: inline
+      script: |
+        $files = Get-ChildItem -Path ${{parameters.artifactFolder}}\*.json
+        foreach ($file in $files)
+        {
+          Write-Host "=== ARM template Output ==="
+          Write-Host "Filename: ($file)" 
+          $content = Get-Content $file
+          Write-Host $content
+        }
+
 #- task: AzureResourceManagerTemplateDeployment@3
 #  displayName: 'Deploy App Service Plan on ${{parameters.resourceGroupName}}'
 #  inputs:

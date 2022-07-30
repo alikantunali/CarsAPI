@@ -17,9 +17,10 @@ builder.Services.AddControllers(options =>
 {
     options.ReturnHttpNotAcceptable = true;
     options.CacheProfiles
-    .Add("VaryUserAgentHeader_Default30", new CacheProfile(){Duration = 30, VaryByHeader= "User-Agent"});    
-
+    .Add("VaryUserAgentHeader_Default30", new CacheProfile(){Duration = 30, VaryByHeader= "User-Agent"});
+    
 }).AddXmlDataContractSerializerFormatters();
+
 
 
 

@@ -2,6 +2,15 @@ variables:
   - name: Resource.Prefix
     value: $(App.Environment.Code)-$(Region.ShortName)-at
 
+    #release object id --> related to application object id. 
+  - name: Release.ObjectId
+    value: $(DevOps.ObjectId) 
+
+    #tenant id 
+  - name: Release.TenantId
+    value: $(DevOps.TenantId)
+
+
     #GIVE RESOURCE GROUP NAME 
   - name: Azure.ResourceGroup.Name
     value: AlikanTraining
@@ -27,21 +36,28 @@ variables:
     value: Standard
 
     #give connection string
-  - name: Keyvault.SecretName
+  - name: Keyvault.ConnectionString
     value: 'CarsDbSQLConnection'
+
+  - name: Keyvault.SecretName.SQLUser
+    value: 'CarsApiSQLAdminUsername'
+
+  - name: CarsApi.Sql.User
+    value: 'sa_admin'
+
+  - name: Keyvault.SecretName.SQLPass
+    value: 'CarsApiSQLAdminPassword'
+
+  - name: SQL.Collation
+    value: 'SQL_Latin1_General_CP1_CI_AS'
+
+  - name: SQL.Database.Name
+    value: 'carsdb'    
 
     #give app plan 
   - name: AppSvcPlan.SkuName
-    value: S1
+    value: F1
 
     #storage account if needed. 
   - name: StorageAccount.TableName
     value: EncryptionTable
-
-    #release object id --> related to application object id. 
-  - name: Release.ObjectId
-    value: $(DevOps.ObjectId) 
-
-    #tenant id 
-  - name: Release.TenantId
-    value: $(DevOps.TenantId)
