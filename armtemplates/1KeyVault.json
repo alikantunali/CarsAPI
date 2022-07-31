@@ -30,9 +30,6 @@
           "defaultValue": { "list": [] },
           "type": "object"
         },
-        "ResourceGroup.Location": {
-              "type": "string"
-        },
         "TenantId": {
           "type": "string"
         },
@@ -103,10 +100,7 @@
                       "Delete",
                       "Recover",
                       "Backup",
-                      "Restore",
-                      "GetRotationPolicy",
-                      "SetRotationPolicy",
-                      "Rotate"
+                      "Restore"
                   ],
                   "secrets": [
                       "Get",
