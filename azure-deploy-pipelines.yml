@@ -62,7 +62,7 @@ stages:
           steps:
           - download: package_build
             displayName: Download SQL Sheet
-            artifact: 
+            artifact: 'sqlMigrations'
           - download: package_build
             displayName: Download ARM Templates
             artifact: 'armTemplates'
