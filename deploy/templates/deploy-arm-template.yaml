@@ -3,7 +3,7 @@ parameters:
   subscriptionId: ''
   resourceGroupName: ''
   armArtifactFolder: '$(Pipeline.Workspace)/package_build/armTemplates/'
-  sqlArtifactFolder: '$(Build.ArtifactStagingDirectory)/sql/'
+  sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations/'
   location: ''
   databaseName: ''
   loggingLevel: ''
@@ -86,7 +86,7 @@ steps:
   - task: CmdLine@2
     displayName: "[Debug] Output artifact structure"
     inputs:
-      script: 'ls -R ${{parameters.artifactFolder}}'    
+      script: 'ls -R ${{parameters.sqlArtifactFolder}}'    
 
 - task: SqlAzureDacpacDeployment@1
   displayName: 'Run Migration on ${{parameters.databaseName}}'
