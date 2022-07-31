@@ -14,13 +14,13 @@ steps:
     inputs:
       script: 'ls -R ${{parameters.sqlArtifactFolder}}'
 
-- task: SqlAzureDacpacDeployment@1
-  inputs:
-    azureSubscription: '${{parameters.azureSubscription}}'
-    AuthenticationType: 'servicePrincipal'
-    ServerName: '$(AppOutputs.sqlServerName.value)'
-    DatabaseName: '${{parameters.DatabaseName}}'
-    deployType: 'SqlTask'
-    SqlFile: '${{parameters.artifactFolder}}/Initial_migration.sql'
-    IpDetectionMethod: 'AutoDetect'
+#- task: SqlAzureDacpacDeployment@1
+#  inputs:
+#    azureSubscription: '${{parameters.azureSubscription}}'
+#    AuthenticationType: 'servicePrincipal'
+#    ServerName: '$(AppOutputs.sqlServerName.value)'
+#    DatabaseName: '${{parameters.DatabaseName}}'
+#    deployType: 'SqlTask'
+#    SqlFile: '${{parameters.artifactFolder}}/Initial_migration.sql'
+#    IpDetectionMethod: 'AutoDetect'
     
