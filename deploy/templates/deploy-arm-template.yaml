@@ -87,7 +87,10 @@ steps:
     displayName: "[Debug] Output artifact structure"
     inputs:
       script: 'ls -R ${{parameters.artifactFolder}}'    
-
+- download:
+  displayName: Download SQL Sheet
+  artifact: 'sqlMigrations'
+  
 - task: SqlAzureDacpacDeployment@1
   displayName: 'Run Migration on CarsDb'
   inputs:
