@@ -18,7 +18,7 @@ steps:
 - task: qetza.replacetokens.replacetokens-task.replacetokens@3
   displayName: Replace Tokens in ARM template
   inputs:
-    rootDirectory: '${{parameters.artifactFolder}}'
+    rootDirectory: '${{parameters.armArtifactFolder}}'
     targetFiles: '*.json'
     encoding: 'auto'
     writeBOM: true
@@ -35,7 +35,7 @@ steps:
     inputs:
       targetType: inline
       script: |
-        $files = Get-ChildItem -Path ${{parameters.artifactFolder}}\*.json
+        $files = Get-ChildItem -Path ${{parameters.armArtifactFolder}}\*.json
         foreach ($file in $files)
         {
           Write-Host "=== ARM template Output ==="
@@ -65,7 +65,7 @@ steps:
   - task: CmdLine@2
     displayName: "[Debug] Output artifact structure"
     inputs:
-      script: 'ls -R ${{parameters.artifactFolder}}'
+      script: 'ls -R ${{parameters.armArtifactFolder}}'
 
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: 'Deploy Application on ${{parameters.resourceGroupName}}'

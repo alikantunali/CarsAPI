@@ -59,10 +59,7 @@ stages:
     strategy:
       runOnce:
         deploy:
-          steps:
-#          - download: package_build
-#            displayName: Download SQL Sheet
-#            artifact: 'sqlMigrations'    
+          steps:   
           - download: package_build
             displayName: Download ARM Templates
             artifact: 'armTemplates'
