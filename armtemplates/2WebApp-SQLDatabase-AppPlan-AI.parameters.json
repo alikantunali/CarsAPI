@@ -39,7 +39,12 @@
             "value": 1
         },
         "administratorLogin": {
-            "value": "#{CarsApi.Sql.User}#"
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/#{Azure.Subscription.Id}#/resourceGroups/#{Azure.ResourceGroup.Name}#/providers/Microsoft.KeyVault/vaults/#{Resource.Prefix}#-#{Keyvault.Name}#"
+                },
+                "secretName": "#{Keyvault.SecretName.SQLUser}#"
+            }
         },
         "administratorLoginPassword": {
             "reference": {

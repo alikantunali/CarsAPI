@@ -39,12 +39,11 @@ variables:
   - name: Keyvault.ConnectionString
     value: 'CarsDbSQLConnection'
 
+    #SQL Admin User name
   - name: Keyvault.SecretName.SQLUser
     value: 'CarsApiSQLAdminUsername'
 
-  - name: CarsApi.Sql.User
-    value: 'sa_admin'
-
+    #SQL Admin User pass
   - name: Keyvault.SecretName.SQLPass
     value: 'CarsApiSQLAdminPassword'
 

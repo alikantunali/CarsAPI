@@ -48,7 +48,7 @@
         }
       },
       "administratorLogin": {
-        "type": "string"
+        "type": "securestring"
       },
       "administratorLoginPassword": {
         "type": "securestring"
@@ -105,7 +105,8 @@
         "webSiteName": "[concat(parameters('ResourcePrefix'),'-',parameters('App.Name'),'-web')]",
         "sqlServerName": "[concat(parameters('ResourcePrefix'),'-',parameters('App.Name'),'-sql')]",
         "storageAccountName": "[concat(parameters('App.Name'), parameters('Application.Environment'),'storage')]",
-        "sqldbLocation": "Norway East"        
+        "sqldbLocation": "Norway East",
+        "databaseName": "[parameters('databaseName')]"
     },
     "resources": [
       {
@@ -152,7 +153,7 @@
         ]
       },
       {
-        "apiVersion": "2015-08-01",
+        "apiVersion": "2021-03-01",
         "name": "[parameters('hostingPlanName')]",      
         "type": "Microsoft.Web/serverfarms",
         "location": "[resourceGroup().location]",
@@ -167,7 +168,7 @@
         }
       },
       {
-        "apiVersion": "2015-08-01",
+        "apiVersion": "2021-03-01",
         "name": "[variables('webSiteName')]",
         "type": "Microsoft.Web/sites",
         "location": "[resourceGroup().location]",        
@@ -184,23 +185,23 @@
         },
         "resources": [
           {
-            "apiVersion": "2015-08-01",
+            "apiVersion": "2021-03-01",
             "type": "config",
             "name": "connectionstrings",
             "dependsOn": [
               "[resourceId('Microsoft.Web/Sites/', variables('webSiteName'))]"
             ],
             "properties": {
-              "DefaultConnection": {
+              "CarsDbSQLConnection": {
                 "value": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', variables('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
-                "type": "SQLServer"
+                "type": "SQLServer"              
               }
             }
-          }          
-        ]      
-      },
+          }                  
+        ]              
+      },    
       {
-        "apiVersion": "2014-04-01",
+        "apiVersion": "2021-05-01-preview",
         "name": "[concat(parameters('hostingPlanName'), '-', resourceGroup().name)]",
         "type": "Microsoft.Insights/autoscalesettings",
         "location": "[resourceGroup().location]",
@@ -216,9 +217,9 @@
             {
               "name": "Default",
               "capacity": {
-                "minimum": 1,
-                "maximum": 2,
-                "default": 1
+                "minimum": "1",
+                "maximum": "2",
+                "default": "1"
               },
               "rules": [
                 {
@@ -266,7 +267,7 @@
         }
       },
       {
-        "apiVersion": "2014-04-01",
+        "apiVersion": "2020-02-02",
         "name": "[variables('webSiteName')]",
         "type": "Microsoft.Insights/components",
         "location": "West Europe",        
@@ -278,7 +279,8 @@
           "displayName": "AppInsightsComponent"
         },
         "properties": {
-          "ApplicationId": "[variables('webSiteName')]"
+          "ApplicationId": "[variables('webSiteName')]",
+          "Application_Type": "web"
         }
       },
       {
@@ -286,7 +288,7 @@
         "type": "Microsoft.Storage/storageAccounts",
         "location": "[resourceGroup().location]",
         
-        "apiVersion": "2016-01-01",
+        "apiVersion": "2021-09-01",
         "sku": {
           "name": "[parameters('storageAccountType')]"
         },
@@ -296,5 +298,19 @@
         },
         "kind": "Storage"
       }      
-    ]
+    ],
+    "outputs": {
+      "SqlServerName": {
+        "type": "string",
+        "value": "[variables('sqlServerName')]"
+      },
+      "DatabaseName": {
+        "type": "string",
+        "value": "[variables('databaseName')]"
+      },
+      "WebAppName": {
+        "type": "string",
+        "value": "[variables('webSiteName')]"
+      }
+    }
   }

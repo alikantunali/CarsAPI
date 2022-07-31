@@ -45,7 +45,6 @@
     },
     "variables": {
         "Tags": {
-            "displayName": "[variables('keyVaultName')]",
             "environment": "[parameters('Application.Environment')]",
             "version": "[parameters('Application.Version')]",
             "releaseName": "[parameters('Release.Name')]",
@@ -142,7 +141,7 @@
         "dependsOn": [
           "[variables('keyVaultResourceId')]"
         ]
-      }     
+      }  
     ],
     "outputs": {
       "Infra.Secrets.KeyVault.Id": {

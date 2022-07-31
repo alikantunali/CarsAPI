@@ -83,6 +83,29 @@ stages:
         artifact: 'armTemplates'
         publishLocation: pipeline
 
+- stage: Publish_Initial_Migration_Sql
+  displayName: Publish Initial Migration SQL 
+  jobs:
+  - job: Publish_Initial_Migration_Sql
+    displayName: Publish Initial Migration SQL
+    steps:  
+    # Copy SQL Migration Sheet to Artifact Staging
+    - task: CopyFiles@2
+      displayName: Copy SQL Migration Sheet to Artifact Staging
+      inputs:
+        SourceFolder: 'sql'
+        Contents: 'Initial_migration.sql'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/sql'
+        CleanTargetFolder: true          
+
+    #Publish SQL Migration Sheet to Artifact folder on Pipeline
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish SQL Migration Sheet to Pipeline'
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/sql'
+        artifact: 'sqlMigrations'
+        publishLocation: pipeline
+      
 - stage: Build
   displayName: Build-Test-Publish Stage
 
@@ -133,14 +156,3 @@ stages:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'sourceZips'
           publishLocation: 'Container'
-
-
-
-
-
-
-
-
-
-
-    

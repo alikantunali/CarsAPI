@@ -54,7 +54,7 @@ stages:
 
   jobs:
   - deployment: deploy_to_dev
-    displayName: 'Deploy to DEV'
+    displayName: 'Deploy Web App to DEV'
     environment: Dev
     strategy:
       runOnce:
@@ -70,3 +70,5 @@ stages:
               resourceGroupName: $(Azure.ResourceGroup.Name)
               location: $(Azure.ResourceGroup.Location)
               loggingLevel: ${{ parameters.loggingLevel }}
+
+                                                  
