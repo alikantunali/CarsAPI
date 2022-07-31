@@ -87,24 +87,3 @@ steps:
     inputs:
       script: 'ls -R ${{parameters.artifactFolder}}'    
 
-
-- task: PowerShell@2
-  displayName: "set connection-string for migration"
-  inputs:
-    targetType: inline
-    powershell: true
-    script: |
-
-      $cs = az webapp config connection-string list -n $(AppOutputs.WebAppName.value) -g ${{parameters.resourceGroupName}} -o tsv --query '[].[name,bool,type,value]' | grep Data | cut -f4
-      echo "##vvso[task.setvariable variable=connectionString;isOutput=true]$cs"
-      
-
-- task: SqlAzureDacpacDeployment@1
-  displayName: Run Migration on SQL Database 
-  inputs:    
-    azureSubscription: '${{parameters.subscriptionId}}'
-    AuthenticationType: 'servicePrincipal'
-    databaseName: $(AppOutputs.DatabaseName.value)  
-    deployType: 'SqlTask'
-    SqlFile: '${{parameters.sqlArtifactFolder}}/Initial_migration.sql'
-    IpDetectionMethod: 'AutoDetect' 
