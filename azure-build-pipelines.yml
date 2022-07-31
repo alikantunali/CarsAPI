@@ -80,7 +80,7 @@ stages:
       displayName: 'Publish Copied Templates to Pipeline'
       inputs:
         targetPath: '$(Build.ArtifactStagingDirectory)/arm'
-        artifact: 'armTemplates'
+        artifact: 'artifacts'
         publishLocation: pipeline
 
   - job: Publish_Initial_Migration_Sql
@@ -100,7 +100,7 @@ stages:
       displayName: 'Publish SQL Migration Sheet to Pipeline'
       inputs:
         targetPath: '$(Build.ArtifactStagingDirectory)/sql'
-        artifact: 'sqlMigrations'
+        artifact: 'artifacts'
         publishLocation: pipeline
       
 - stage: Build
