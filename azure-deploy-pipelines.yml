@@ -67,7 +67,6 @@ stages:
             displayName: Download SQL Sheet
             artifact: sqlMigrations  
           - template: ./deploy/templates/deploy-arm-template.yaml
-            displayName: Deploy App
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
               subscriptionId: $(Azure.Subscription.Id)
