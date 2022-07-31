@@ -62,10 +62,7 @@ stages:
           steps:    
           - download: package_build
             displayName: Download ARM Templates
-            artifact: armTemplates
-          - download: package_build
-            displayName: Download SQL Sheet
-            artifact: sqlMigrations  
+            artifact: armTemplates 
           - template: ./deploy/templates/deploy-arm-template.yaml
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
@@ -73,5 +70,14 @@ stages:
               resourceGroupName: $(Azure.ResourceGroup.Name)
               location: $(Azure.ResourceGroup.Location)
               loggingLevel: ${{ parameters.loggingLevel }}
+              
+          - download: package_build
+            displayName: Download SQL Sheet
+            artifact: sqlMigrations 
+          - template: ./deploy/templates/deploy-sql-migration-template.yaml
+            parameters:
+              azureSubscription: $(Azure.ServiceConnection.Name)
+              subscriptionId: $(Azure.Subscription.Id)
+              DatabaseName: $(SQL.Database.Name)   
          
 
