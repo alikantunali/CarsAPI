@@ -1,0 +1,15 @@
+parameters:
+  azureResourceManagerConnection: ''
+  subscriptionId: ''
+  resourceGroupName: ''
+  sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
+  location: ''
+  loggingLevel: ''
+
+
+steps:
+- ${{ if eq(parameters.loggingLevel, 'Debug') }}:
+  - task: CmdLine@2
+    displayName: "[Debug] Output artifact structure"
+    inputs:
+      script: 'ls -R ${{parameters.sqlArtifactFolder}}'
