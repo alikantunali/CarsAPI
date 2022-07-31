@@ -86,4 +86,5 @@ stages:
               azureSubscription: $(Azure.ServiceConnection.Name)
               subscriptionId: $(Azure.Subscription.Id)
               DatabaseName:  $(SQL.Database.Name)
-              loggingLevel: ${{ parameters.loggingLevel }}                                                                     
+              loggingLevel: ${{ parameters.loggingLevel }}
+                                                                                 
