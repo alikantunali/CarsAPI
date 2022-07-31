@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "armtemplates", "armtemplate
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{5101CF2D-A2AA-4B25-9B71-124600F00A7C}"
 	ProjectSection(SolutionItems) = preProject
-		Initial_migration.sql = Initial_migration.sql
+		initial_migration.sql = initial_migration.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F9F36E96-AC9E-4C9B-8D6B-64C0580236B2}"

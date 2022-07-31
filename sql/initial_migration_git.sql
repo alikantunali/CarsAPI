@@ -26,7 +26,7 @@ GO
 IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220514144150_CreateInitial')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20220514144150_CreateInitial', N'7.0.0-preview.5.22302.2');
+    VALUES (N'20220514144150_CreateInitial', N'7.0.0-preview.6.22329.4');
 END;
 GO
 
@@ -78,7 +78,7 @@ GO
 IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220606153745_CarClassAnnotations')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20220606153745_CarClassAnnotations', N'7.0.0-preview.5.22302.2');
+    VALUES (N'20220606153745_CarClassAnnotations', N'7.0.0-preview.6.22329.4');
 END;
 GO
 
@@ -116,7 +116,72 @@ GO
 IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220606160459_CarDataSeed')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20220606160459_CarDataSeed', N'7.0.0-preview.5.22302.2');
+    VALUES (N'20220606160459_CarDataSeed', N'7.0.0-preview.6.22329.4');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220624105802_CreateInitialAzureMigration')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220624105802_CreateInitialAzureMigration', N'7.0.0-preview.6.22329.4');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220630153211_azureresourcemigration_20220630')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220630153211_azureresourcemigration_20220630', N'7.0.0-preview.6.22329.4');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220715225039_x')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220715225039_x', N'7.0.0-preview.6.22329.4');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220715225330_git_version_Migration')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220715225330_git_version_Migration', N'7.0.0-preview.6.22329.4');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220731234218_gitDeployMigrations')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220731234218_gitDeployMigrations', N'7.0.0-preview.6.22329.4');
 END;
 GO
 
