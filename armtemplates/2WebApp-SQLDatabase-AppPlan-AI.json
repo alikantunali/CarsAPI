@@ -124,8 +124,7 @@
             "name": "[parameters('databaseName')]",
             "type": "databases",
             "location": "[variables('sqldbLocation')]",
-            "tags":
-              "[variables('Tags')]",        
+            "tags": "[variables('Tags')]",        
             "apiVersion": "2021-08-01-preview",
             "dependsOn": [
               "[resourceId('Microsoft.Sql/servers/', variables('sqlserverName'))]"
@@ -175,10 +174,7 @@
         "dependsOn": [
           "[resourceId('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]"
         ],
-        "tags": {          
-          "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty",
-          "displayName": "Website"
-        },
+        "tags": "[variables('Tags')]",
         "properties": {
           "name": "[variables('webSiteName')]",
           "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"

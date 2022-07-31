@@ -1,18 +1,18 @@
-parameters:
-  azureSubscription: ''
-  subscriptionId: ''
-  DatabaseName: ''
-  location: ''
-  loggingLevel: ''
-  sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
-
-
-steps:
-- ${{ if eq(parameters.loggingLevel, 'Debug') }}:
-  - task: CmdLine@2
-    displayName: "[Debug] Output artifact structure"
-    inputs:
-      script: 'ls -R ${{parameters.sqlArtifactFolder}}'
+#parameters:
+#  azureSubscription: ''
+#  subscriptionId: ''
+#  DatabaseName: ''
+#  location: ''
+#  loggingLevel: ''
+#  sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
+#
+#
+#steps:
+#- ${{ if eq(parameters.loggingLevel, 'Debug') }}:
+#  - task: CmdLine@2
+#    displayName: "[Debug] Output artifact structure"
+#    inputs:
+#      script: 'ls -R ${{parameters.sqlArtifactFolder}}'
 
 #- task: SqlAzureDacpacDeployment@1
 #  inputs:
