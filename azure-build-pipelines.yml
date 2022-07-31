@@ -59,8 +59,8 @@ stages:
         script: 'jsonlint-cli $(Pipeline.Workspace)/s/armtemplates/1AppServicePlan*.json'
 
 
-- stage: Publish_ARM_Template
-  displayName: Publish ARM Templates
+- stage: Publish_Artifacts
+  displayName: Publish ARM Temp & SQL Sheet
 
   jobs:
   - job: Publish_ARM_Templates
@@ -83,9 +83,6 @@ stages:
         artifact: 'armTemplates'
         publishLocation: pipeline
 
-- stage: Publish_Initial_Migration_Sql
-  displayName: Publish Initial Migration SQL 
-  jobs:
   - job: Publish_Initial_Migration_Sql
     displayName: Publish Initial Migration SQL
     steps:  
@@ -97,7 +94,7 @@ stages:
         Contents: 'Initial_migration.sql'
         TargetFolder: '$(Build.ArtifactStagingDirectory)/sql'
         CleanTargetFolder: true          
-
+        
     #Publish SQL Migration Sheet to Artifact folder on Pipeline
     - task: PublishPipelineArtifact@1
       displayName: 'Publish SQL Migration Sheet to Pipeline'
