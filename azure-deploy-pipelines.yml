@@ -61,8 +61,13 @@ stages:
         deploy:
           steps:    
           - download: package_build
-            displayName: Download Artifacts
+            displayName: Download ARM Templates
+            artifact: armTemplates
+          - download: package_build
+            displayName: Download Sql Sheet
+            artifact: sqlMigrations  
           - template: ./deploy/templates/deploy-arm-template.yaml
+            displayName: Deploy App
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
               subscriptionId: $(Azure.Subscription.Id)

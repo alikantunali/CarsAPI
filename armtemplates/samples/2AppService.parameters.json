@@ -28,7 +28,7 @@
             "value": "#{Azure.ResourceGroup.Location}#"
         },
         "RegionPrefix": {
-            "value": "#{Region.ShortName}#" // TODO: Fill in parameter value
+            "value": "#{Region.ShortName}#"
         },
         "WebApp.Name": {
             "value": "#{Application.Name}#"
