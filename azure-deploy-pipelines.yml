@@ -81,7 +81,7 @@ stages:
           steps:
             - download: package_build
               artifact: 'sqlMigrations'
-            - template: './deploy/templates/deploy-sql-migration-template.yaml'
+            - template: ./deploy/templates/deploy-sql-migration-template.yaml
               parameters:                
                 azureSubscription: $(Azure.ServiceConnection.Name)
                 subscriptionId: $(Azure.Subscription.Id)
