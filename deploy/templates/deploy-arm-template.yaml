@@ -91,7 +91,7 @@ steps:
 - task: SqlAzureDacpacDeployment@1
   displayName: 'Run Migration on ${{parameters.databaseName}}'
   inputs:
-    azureSubscription: '${{parameters.azureSubscription}}'
+    azureSubscription: '${{parameters.azureResourceManagerConnection}}'
     AuthenticationType: 'servicePrincipal'
     ServerName: '$(AppOutputs.sqlServerName.value)'
     DatabaseName: '${{parameters.databaseName}}'
