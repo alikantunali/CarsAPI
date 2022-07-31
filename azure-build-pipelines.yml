@@ -56,7 +56,7 @@ stages:
     - task: CmdLine@2
       displayName: Lint JSON files
       inputs:
-        script: 'jsonlint-cli $(Pipeline.Workspace)/s/armtemplates/1AppServicePlan*.json'
+        script: 'jsonlint-cli $(Pipeline.Workspace)/s/armtemplates/*.json'
 
 
 - stage: Publish_Artifacts
