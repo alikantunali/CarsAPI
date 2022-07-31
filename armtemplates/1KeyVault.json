@@ -59,7 +59,7 @@
     "resources": [
       {
         "apiVersion": "2016-10-01",
-        "location": "[parameters('ResourceGroup.Location')]",
+        "location": "[resourceGroup().location]",
         "name": "[variables('keyVaultName')]",
         "tags": "[variables('Tags')]",
         "properties": {

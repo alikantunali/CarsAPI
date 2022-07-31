@@ -64,7 +64,7 @@ stages:
             displayName: Download ARM Templates
             artifact: armTemplates
           - download: package_build
-            displayName: Download Sql Sheet
+            displayName: Download SQL Sheet
             artifact: sqlMigrations  
           - template: ./deploy/templates/deploy-arm-template.yaml
             displayName: Deploy App
