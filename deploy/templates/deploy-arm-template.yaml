@@ -88,6 +88,7 @@ steps:
       script: 'ls -R ${{parameters.artifactFolder}}'    
 
 - task: SqlAzureDacpacDeployment@1
+  
   displayName: 'Run Migration on CarsDb'
   inputs:
     azureSubscription: '${{parameters.azureResourceManagerConnection}}'
