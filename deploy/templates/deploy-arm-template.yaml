@@ -5,6 +5,7 @@ parameters:
   armArtifactFolder: '$(Pipeline.Workspace)/package_build/armTemplates/'
   sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations/'
   location: ''
+  databaseName: ''
   loggingLevel: ''
 
 steps:
@@ -88,13 +89,12 @@ steps:
       script: 'ls -R ${{parameters.artifactFolder}}'    
 
 - task: SqlAzureDacpacDeployment@1
-  
   displayName: 'Run Migration on CarsDb'
   inputs:
-    azureSubscription: '${{parameters.azureResourceManagerConnection}}'
+    azureSubscription: '${{parameters.azureSubscription}}'
     AuthenticationType: 'servicePrincipal'
-    ServerName: '$(AppOutputs.SqlServerName.value)'
-    DatabaseName: '$(AppOutputs.SqlDatabaseName.value)'
+    ServerName: '$(AppOutputs.sqlServerName.value)'
+    DatabaseName: '${{parameters.databaseName}}'
     deployType: 'SqlTask'
     SqlFile: '${{parameters.sqlArtifactFolder}}/Initial_migration.sql'
     IpDetectionMethod: 'AutoDetect'
