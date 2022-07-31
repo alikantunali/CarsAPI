@@ -62,7 +62,7 @@ stages:
           steps:    
           - download: package_build
             displayName: Download Artifacts
-            artifact: 
+            artifact: ''
           - template: ./deploy/templates/deploy-arm-template.yaml
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
