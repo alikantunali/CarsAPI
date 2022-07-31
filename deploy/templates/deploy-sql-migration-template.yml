@@ -1,10 +1,10 @@
 parameters:
-  azureResourceManagerConnection: ''
+  azureSubscription: ''
   subscriptionId: ''
-  resourceGroupName: ''
-  sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
+  DatabaseName: ''
   location: ''
   loggingLevel: ''
+  sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
 
 
 steps:
@@ -13,3 +13,13 @@ steps:
     displayName: "[Debug] Output artifact structure"
     inputs:
       script: 'ls -R ${{parameters.sqlArtifactFolder}}'
+
+- task: SqlAzureDacpacDeployment@1
+  inputs:
+    azureSubscription: '${{parameters.azureSubscription}}'
+    AuthenticationType: 'servicePrincipal'
+    ServerName: '$(AppOutputs.sqlServerName.value)'
+    DatabaseName: '${{parameters.DatabaseName}}'
+    deployType: 'SqlTask'
+    SqlFile: '${{parameters.artifactFolder}}/Initial_migration.sql'
+    IpDetectionMethod: 'AutoDetect'

@@ -71,4 +71,18 @@ stages:
               location: $(Azure.ResourceGroup.Location)
               loggingLevel: ${{ parameters.loggingLevel }}
               
-                                                  
+  - deployment: deploy_sql_dev
+    displayName: 'Exeucte SQL Migration to DEV'
+    environment: Dev
+    dependsOn: deploy_to_dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - download: package_build
+              artifact: 'sqlMigrations'
+            - template: './deploy/templates/deploy-sql-migration-template.yaml'
+              parameters:                
+                azureSubscription: $(Azure.ServiceConnection.Name)
+                subscriptionId: $(Azure.Subscription.Id)
+                DatabaseName:  $(SQL.Database.Name)                                                         

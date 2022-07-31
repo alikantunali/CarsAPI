@@ -302,7 +302,7 @@
     "outputs": {
       "SqlServerName": {
         "type": "string",
-        "value": "[variables('sqlServerName')]"
+        "value": "[concat (variables('sqlServerName'),'.database.windows.net')]"
       },
       "DatabaseName": {
         "type": "string",
