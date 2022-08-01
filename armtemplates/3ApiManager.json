@@ -1,0 +1,111 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apimName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "tier": {
+            "type": "string"
+        },
+        "capacity": {
+            "type": "string"
+        },
+        "adminEmail": {
+            "type": "string"
+        },
+        "organizationName": {
+            "type": "string"
+        },
+        "virtualNetworkType": {
+            "type": "string"
+        },
+        "tagsByResource": {
+            "type": "object"
+        },
+        "vnet": {
+            "type": "object"
+        },
+        "customProperties": {
+            "type": "object"
+        },
+        "identity": {
+            "type": "object"
+        },
+        "appInsightsObject": {
+            "type": "object"
+        },
+        "publicIpAddressId": {
+            "type": "string"
+        },
+        "privateEndpoint": {
+            "type": "object"
+        },
+        "privateDnsDeploymentName": {
+            "type": "string"
+        },
+        "subnetDeploymentName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apimNsgName": "[concat('apimnsg', uniqueString(resourceGroup().id))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service",
+            "apiVersion": "2021-01-01-preview",
+            "name": "[parameters('apimName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('tier')]",
+                "capacity": "[parameters('capacity')]"
+            },
+            "identity": "[parameters('identity')]",
+            "tags": "[parameters('tagsByResource')]",
+            "properties": {
+                "publisherEmail": "[parameters('adminEmail')]",
+                "publisherName": "[parameters('organizationName')]",
+                "customProperties": "[parameters('customProperties')]"
+            },
+            "resources": [
+                {
+                    "type": "loggers",
+                    "apiVersion": "2019-01-01",
+                    "name": "[parameters('appInsightsObject').name]",
+                    "dependsOn": [
+                        "[concat('Microsoft.ApiManagement/service/', parameters('apimName'))]"
+                    ],
+                    "properties": {
+                        "loggerType": "applicationInsights",
+                        "resourceId": "[parameters('appInsightsObject').id]",
+                        "credentials": {
+                            "instrumentationKey": "[reference(parameters('appInsightsObject').id, '2015-05-01').InstrumentationKey]"
+                        }
+                    }
+                },
+                {
+                    "type": "diagnostics",
+                    "apiVersion": "2019-01-01",
+                    "name": "applicationinsights",
+                    "dependsOn": [
+                        "[concat('Microsoft.ApiManagement/service/', parameters('apimName'))]",
+                        "[concat('Microsoft.ApiManagement/service/', parameters('apimName'), '/loggers/', parameters('appInsightsObject').name)]"
+                    ],
+                    "properties": {
+                        "loggerId": "[concat('/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/', parameters('apimName'), '/loggers/', parameters('appInsightsObject').name)]",
+                        "alwaysLog": "allErrors",
+                        "sampling": {
+                            "percentage": 100,
+                            "samplingType": "fixed"
+                        }
+                    }
+                }
+            ],
+            "dependsOn": []
+        }
+    ]
+}
