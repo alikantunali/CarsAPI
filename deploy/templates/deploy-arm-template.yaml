@@ -91,14 +91,12 @@ steps:
 #    SqlFile: '${{parameters.sqlArtifactFolder}}/*.sql'
 #    IpDetectionMethod: 'AutoDetect'    
 
-- task: SqlAzureDacpacDeployment@1
+- task: SqlDacpacDeploymentOnMachineGroup@0
   inputs:
-    AuthenticationType: 'server'
-
+    TaskType: '${{parameters.sqlArtifactFolder}}/*.sql'
+    SqlFile: '1.sql'
     ServerName: '$(AppOutputs.sqlServerName.value)'
-    DatabaseName: 'carsdb'
+    DatabaseName:  ${{parameters.databaseName}}
+    AuthScheme: 'sqlServerAuthentication'
     SqlUsername: 'sa_admin'
-    SqlPassword: 'L@chouffe'
-    deployType: 'SqlTask'
-    SqlFile: '${{parameters.sqlArtifactFolder}}/*.sql'
-    IpDetectionMethod: 'AutoDetect'    
+    SqlPassword: 'L@chouffe'    
