@@ -93,7 +93,7 @@ steps:
 
 - task: SqlDacpacDeploymentOnMachineGroup@0
   inputs:
-    TaskType: '${{parameters.sqlArtifactFolder}}/*.sql'
+    TaskType: '${{parameters.sqlArtifactFolder}}/initial_migration_git.sql'
     SqlFile: '1.sql'
     ServerName: '$(AppOutputs.sqlServerName.value)'
     DatabaseName:  ${{parameters.databaseName}}
