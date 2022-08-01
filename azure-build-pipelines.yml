@@ -91,7 +91,7 @@ stages:
       displayName: Copy SQL Migration Sheet to Artifact Staging
       inputs:
         SourceFolder: 'sql'
-        Contents: 'Initial_migration.sql'
+        Contents: 'initial_migration_git.sql'
         TargetFolder: '$(Build.ArtifactStagingDirectory)/sql'
         CleanTargetFolder: true          
         
