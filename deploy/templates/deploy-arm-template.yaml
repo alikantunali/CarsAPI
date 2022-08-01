@@ -10,9 +10,10 @@ parameters:
 
 steps:
 #- ${{ if eq(parameters.loggingLevel, 'Debug') }}:
-#  - task: CmdLine@2
+#  - task: PowerShell@2
 #    displayName: "[Debug] Output artifact structure"
 #    inputs:
+#      targetType: inline
 #      script:  |
 #        'ls -R ${{parameters.armArtifactFolder}}'
 #        'ls -R ${{parameters.sqlArtifactFolder}}'
@@ -79,13 +80,23 @@ steps:
     deploymentOutputs: 'AppOutputs'
 
 #Migrate Database.
+#- task: SqlAzureDacpacDeployment@1
+#  displayName: 'Run Migration on ${{parameters.databaseName}}'
+#  inputs:
+#    azureSubscription: '${{parameters.azureResourceManagerConnection}}'
+#    AuthenticationType: 'servicePrincipal'
+#    ServerName: '$(AppOutputs.sqlServerName.value)'
+#    DatabaseName: ${{parameters.databaseName}}
+#    deployType: 'SqlTask'
+#    SqlFile: '${{parameters.sqlArtifactFolder}}/*.sql'
+#    IpDetectionMethod: 'AutoDetect'    
+
 - task: SqlAzureDacpacDeployment@1
-  displayName: 'Run Migration on ${{parameters.databaseName}}'
   inputs:
-    azureSubscription: '${{parameters.azureResourceManagerConnection}}'
+    azureSubscription: 'git-carsapi-service-connection'
     AuthenticationType: 'servicePrincipal'
-    ServerName: '$(AppOutputs.sqlServerName.value)'
-    DatabaseName: '${{parameters.databaseName}}'
+    ServerName: 'dev-we-at-carsapi-sql.database.windows.net'
+    DatabaseName: 'carsdb'
     deployType: 'SqlTask'
     SqlFile: '${{parameters.sqlArtifactFolder}}/*.sql'
-    IpDetectionMethod: 'AutoDetect'    
+    IpDetectionMethod: 'AutoDetect'
