@@ -1,0 +1,66 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apimName": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "location": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "tier": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "capacity": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "adminEmail": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "organizationName": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "virtualNetworkType": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "tagsByResource": {
+            "value": {
+                // TODO: Fill in parameter value
+            }
+        },
+        "vnet": {
+            "value": {
+                // TODO: Fill in parameter value
+            }
+        },
+        "customProperties": {
+            "value": {
+                // TODO: Fill in parameter value
+            }
+        },
+        "identity": {
+            "value": {
+                // TODO: Fill in parameter value
+            }
+        },
+        "appInsightsObject": {
+            "value": {
+                // TODO: Fill in parameter value
+            }
+        },
+        "publicIpAddressId": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "privateEndpoint": {
+            "value": {
+                // TODO: Fill in parameter value
+            }
+        },
+        "privateDnsDeploymentName": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "subnetDeploymentName": {
+            "value": "" // TODO: Fill in parameter value
+        }
+    }
+}

@@ -95,7 +95,7 @@ steps:
 - task: SqlDacpacDeploymentOnMachineGroup@0
   inputs:
     #TaskType: 'sqlQuery'
-    SqlFile: '${{parameters.sqlArtifactFolder}}/*.sql'
+    SqlFile: '${{parameters.sqlArtifactFolder}}/initial_migration_git.sql'
     ServerName: '$(AppOutputs.sqlServerName.value)'
     DatabaseName:  ${{parameters.databaseName}}
     AuthScheme: 'sqlServerAuthentication'
