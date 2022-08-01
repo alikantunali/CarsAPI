@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "service_at_carsapi_man_svc_name": {
+        "api.Manager.Name": {
             "defaultValue": "at-carsapi-man-svc",
             "type": "String"
         }
@@ -12,7 +12,7 @@
         {
             "type": "Microsoft.ApiManagement/service",
             "apiVersion": "2021-12-01-preview",
-            "name": "[parameters('service_at_carsapi_man_svc_name')]",
+            "name": "[parameters('api.Manager.Name')]",
             "location": "West Europe",
             "sku": {
                 "name": "Consumption",
