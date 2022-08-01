@@ -94,7 +94,8 @@ steps:
 - task: SqlAzureDacpacDeployment@1
   inputs:
     AuthenticationType: 'server'
-    ServerName: 'dev-we-at-carsapi-sql.database.windows.net'
+
+    ServerName: '$(AppOutputs.sqlServerName.value)'
     DatabaseName: 'carsdb'
     SqlUsername: 'sa_admin'
     SqlPassword: 'L@chouffe'
