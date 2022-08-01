@@ -87,5 +87,5 @@ steps:
     ServerName: '$(AppOutputs.sqlServerName.value)'
     DatabaseName: '${{parameters.databaseName}}'
     deployType: 'SqlTask'
-    SqlFile: '${{parameters.sqlArtifactFolder}}/Initial_migration.sql'
+    SqlFile: '${{parameters.sqlArtifactFolder}}/*.sql'
     IpDetectionMethod: 'AutoDetect'    
