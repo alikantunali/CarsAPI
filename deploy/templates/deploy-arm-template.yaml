@@ -93,10 +93,11 @@ steps:
 
 - task: SqlAzureDacpacDeployment@1
   inputs:
-    azureSubscription: 'git-carsapi-service-connection'
-    AuthenticationType: 'servicePrincipal'
+    AuthenticationType: 'server'
     ServerName: 'dev-we-at-carsapi-sql.database.windows.net'
     DatabaseName: 'carsdb'
+    SqlUsername: 'sa_admin'
+    SqlPassword: 'L@chouffe'
     deployType: 'SqlTask'
     SqlFile: '${{parameters.sqlArtifactFolder}}/*.sql'
-    IpDetectionMethod: 'AutoDetect'
+    IpDetectionMethod: 'AutoDetect'    
