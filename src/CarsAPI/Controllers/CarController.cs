@@ -20,7 +20,7 @@ namespace CarsAPI.Controllers                           // CONTROL DOES DEPENDEN
         }
 
 
-        [HttpGet("ListCars")]
+        [HttpGet("cars")]
         //public async Task<IActionResult> Get() //NO SCHEMAS DEFINED HERE WITH IActionResult
         public async Task<ActionResult<IEnumerable<Car>>> ListCars()
         {
@@ -31,7 +31,7 @@ namespace CarsAPI.Controllers                           // CONTROL DOES DEPENDEN
         }
 
         
-        [HttpGet("GetCarById/{id}")]                              //WHEN ID IS HERE , IT BECOMES REQUIRED
+        [HttpGet("carId/{carId}")]                              //WHEN ID IS HERE , IT BECOMES REQUIRED
                                                                 //public async Task<IActionResult> Get() //NO SCHEMAS DEFINED HERE WITH IActionResult
         public async Task<ActionResult<List<Car>>> GetCarById(int id)
         {
@@ -41,7 +41,7 @@ namespace CarsAPI.Controllers                           // CONTROL DOES DEPENDEN
 
         }
 
-        [HttpPost("AddCar")]
+        [HttpPost("addCar")]
         public async Task<ActionResult<List<Car>>> AddCar([FromBody] Car car)
         {
 
@@ -50,7 +50,7 @@ namespace CarsAPI.Controllers                           // CONTROL DOES DEPENDEN
 
         }
 
-        [HttpPut("UpdateCar")]
+        [HttpPut("updateCar")]
         public async Task<ActionResult<List<Car>>> UpdateCar([FromBody] Car car)
         {
 
@@ -59,7 +59,7 @@ namespace CarsAPI.Controllers                           // CONTROL DOES DEPENDEN
 
         }
 
-        [HttpDelete("DeleteCar/{id}")]
+        [HttpDelete("deleteCar/{carId}")]
         public async Task<ActionResult<List<Car>>> DeleteCar(int id)
         {
             await _carInfoRepository.DeleteCarFromList(id);

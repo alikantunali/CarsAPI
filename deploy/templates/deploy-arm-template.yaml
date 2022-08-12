@@ -89,4 +89,4 @@ steps:
 #    DatabaseName: ${{parameters.databaseName}}
 #    deployType: 'SqlTask'
 #    SqlFile: '${{parameters.sqlArtifactFolder}}/*.sql'
-#    IpDetectionMethod: 'AutoDetect'    
+#    IpDetectionMethod: 'AutoDetect'
