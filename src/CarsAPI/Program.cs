@@ -42,7 +42,7 @@ builder.Services.AddDbContext<CarDataContext>(options =>
                                                                 
 {
 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CarsDbSQLConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CarsDbSQLConnection"),providerOptions => providerOptions.EnableRetryOnFailure());
     options.UseSqlServer(b => b.MigrationsAssembly("Common"));
 
 
