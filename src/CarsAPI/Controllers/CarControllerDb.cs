@@ -9,7 +9,7 @@ namespace CarsAPI.Controllers
 
 {
 
-    [Route("CarsDbAPI")]  
+    [Route("CarsAPI")]  
     [ApiController]
     [ResponseCache(CacheProfileName = "VaryUserAgentHeader_Default30")]
     //CONSTRUCTOR IS NEEDED TO INJECT DATACONTEXT and SERVICES BELONG TO INTERFACE IN THE STARTUP
@@ -25,7 +25,7 @@ namespace CarsAPI.Controllers
 
         
     
-        [HttpGet("GetCarsFromDb")]
+        [HttpGet("allCars")]
         [ResponseCache(CacheProfileName = "VaryUserAgentHeader_Default30")]
         //public async Task<IActionResult> Get() //NO SCHEMAS DEFINED HERE WITH IActionResult
 
@@ -48,7 +48,7 @@ namespace CarsAPI.Controllers
 
         }
 
-        [HttpGet("GetCarFromDB/{id}")]
+        [HttpGet("car/{carId}")]
         [ResponseCache(CacheProfileName = "VaryUserAgentHeader_Default30")]
         public async Task<ActionResult<Car>> GetCarFromDB( int id)
             
@@ -70,7 +70,7 @@ namespace CarsAPI.Controllers
 
         }
 
-        [HttpPost("AddCarToDB")]
+        [HttpPost("addCar")]
         public async Task<ActionResult<List<Car>>> AddCarToDB(Car request)
         {            
             if (!ModelState.IsValid)
@@ -82,7 +82,7 @@ namespace CarsAPI.Controllers
             return Ok("New car added to db");
         }
      
-        [HttpPut("UpdateExistingCar")]
+        [HttpPut("updateCar")]
         public async Task<ActionResult<List<Car>>> UpdateExistingCar(Car request)
         {
             try
@@ -97,7 +97,7 @@ namespace CarsAPI.Controllers
             }
         }
 
-        [HttpDelete("DeleteCarFromDb/{id}")]
+        [HttpDelete("deleteCar/{carId}")]
         public async Task<ActionResult<List<Car>>> DeleteCarFromDb(int id)
         {
             if (!ModelState.IsValid)
