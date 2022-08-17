@@ -30,11 +30,11 @@ namespace CarsAPI.Controllers
         //public async Task<IActionResult> Get() //NO SCHEMAS DEFINED HERE WITH IActionResult
 
         //GET THE CARS FROM CARS TABLE BY USING DB SET "CARS" DEFINED IN DataContext.cs
-        public async Task<ActionResult<IEnumerable<Car>>> GetCarsFromDb()
+        public async Task<ActionResult<IEnumerable<Car>>> GetCars()
         {
             try
             {
-                var cars = await _dbCarInfoRepository.GetCarsFromDbAsync();
+                var cars = await _dbCarInfoRepository.GetCarsAsync();
                 if (cars != null)
                 {
                     return Ok(cars);
@@ -50,7 +50,7 @@ namespace CarsAPI.Controllers
 
         [HttpGet("car/{id}")]
         [ResponseCache(CacheProfileName = "VaryUserAgentHeader_Default30")]
-        public async Task<ActionResult<Car>> GetCarFromDB( int id)
+        public async Task<ActionResult<Car>> GetCar( int id)
             
         {
             if (id <=0)
@@ -59,7 +59,7 @@ namespace CarsAPI.Controllers
             }
             else
             {
-                var car = await _dbCarInfoRepository.GetCarByIdFromDbAsync(id);
+                var car = await _dbCarInfoRepository.GetCarByIdAsync(id);
                 if (car != null)
                 {
                     return Ok(car);
@@ -71,23 +71,23 @@ namespace CarsAPI.Controllers
         }
 
         [HttpPost("car")]
-        public async Task<ActionResult<List<Car>>> AddCarToDB(Car request)
+        public async Task<ActionResult<List<Car>>> AddCar(Car request)
         {            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await _dbCarInfoRepository.AddCarToDbAsync(request);                   
+            await _dbCarInfoRepository.AddCarAsync(request);                   
 
             return Ok("New car added to db");
         }
      
         [HttpPut("car")]
-        public async Task<ActionResult<List<Car>>> UpdateExistingCar(Car request)
+        public async Task<ActionResult<List<Car>>> UpdateCar(Car request)
         {
             try
             {
-                await _dbCarInfoRepository.UpdateCarInDbAsync(request);
+                await _dbCarInfoRepository.UpdateCarAsync(request);
                 
                 return Ok("Update is succesful");
             }
@@ -98,7 +98,7 @@ namespace CarsAPI.Controllers
         }
 
         [HttpDelete("car/{id}")]
-        public async Task<ActionResult<List<Car>>> DeleteCarFromDb(int id)
+        public async Task<ActionResult<List<Car>>> DeleteCar(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -107,7 +107,7 @@ namespace CarsAPI.Controllers
             else
                 try
             {
-                await _dbCarInfoRepository.DeleteCarFromDbAsync(id);
+                await _dbCarInfoRepository.DeleteCarAsync(id);
                 return Ok("Delete successful.");
             }
                 catch

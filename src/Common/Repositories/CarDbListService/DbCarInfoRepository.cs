@@ -20,7 +20,7 @@ namespace Common.Repositories.CarDbListService
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<Car?> GetCarByIdFromDbAsync(int carId)
+        public async Task<Car?> GetCarByIdAsync(int carId)
         {
             if (carId <= 0)
             {
@@ -39,7 +39,7 @@ namespace Common.Repositories.CarDbListService
             }                                              
         }
 
-        public async Task<IEnumerable<Car?>> GetCarsFromDbAsync()
+        public async Task<IEnumerable<Car?>> GetCarsAsync()
         {
             //.OrderByDescending(i => i.Id)
             var list = _context.Cars.ToList();
@@ -51,7 +51,7 @@ namespace Common.Repositories.CarDbListService
             return null;
         }
 
-        public async Task<Car?> AddCarToDbAsync(Car car)
+        public async Task<Car?> AddCarAsync(Car car)
         {
             await _context.Cars.AddAsync(car);
             await _context.SaveChangesAsync();
@@ -60,7 +60,7 @@ namespace Common.Repositories.CarDbListService
 
         }
 
-        public async Task<Car> UpdateCarInDbAsync(Car car)
+        public async Task<Car> UpdateCarAsync(Car car)
         {
             if (car.Id <= 0)
             {
@@ -87,7 +87,7 @@ namespace Common.Repositories.CarDbListService
             }
 
         }
-        public async Task<List<Car>> DeleteCarFromDbAsync(int carId)
+        public async Task<List<Car>> DeleteCarAsync(int carId)
         {
             if (carId <= 0)
 

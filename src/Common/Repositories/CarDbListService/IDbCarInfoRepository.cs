@@ -5,12 +5,12 @@ namespace Common.Repositories.CarDbListService
     public interface IDbCarInfoRepository
     {
         //IEnumerable
-        Task<IEnumerable<Car?>> GetCarsFromDbAsync();
-        Task<Car?> GetCarByIdFromDbAsync(int carId);  // this can return null when id is given so ? mark is next to Car .
+        Task<IEnumerable<Car?>> GetCarsAsync();
+        Task<Car?> GetCarByIdAsync(int carId);  // this can return null when id is given so ? mark is next to Car .
 
-        Task<Car> AddCarToDbAsync(Car request);
+        Task<Car> AddCarAsync(Car request);
 
-        Task<Car> UpdateCarInDbAsync(Car request);
-        Task<List<Car>> DeleteCarFromDbAsync(int carId);
+        Task<Car> UpdateCarAsync(Car request);
+        Task<List<Car>> DeleteCarAsync(int carId);
     }
 }

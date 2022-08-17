@@ -35,13 +35,13 @@ namespace CarsAPI.Test.Controllers
         public void GetCars_Runs_AndCompletes()
         {
             //ARRANGE
-            repositoryMock.Setup(r => r.GetCarsFromDbAsync());
+            repositoryMock.Setup(r => r.GetCarsAsync());
 
             //ACT
-            var result = carControllerDb.GetCarsFromDb().IsCompleted;
+            var result = carControllerDb.GetCars().IsCompleted;
 
             //ASSERT
-            repositoryMock.Verify(r => r.GetCarsFromDbAsync(), Times.Once);
+            repositoryMock.Verify(r => r.GetCarsAsync(), Times.Once);
             Assert.True(result);
         }
 
@@ -51,15 +51,15 @@ namespace CarsAPI.Test.Controllers
             //ARRANGE
             var carList = new List<Car>();
             carList.Add(testCar);
-            repositoryMock.Setup(r => r.GetCarsFromDbAsync()).ReturnsAsync(carList);
+            repositoryMock.Setup(r => r.GetCarsAsync()).ReturnsAsync(carList);
 
             //ACT
-            var result = carControllerDb.GetCarsFromDb();
+            var result = carControllerDb.GetCars();
             ActionResult<IEnumerable<Car>> returnedCar = result.Result;
             var actual = returnedCar.Result;
 
             //ASSERT
-            repositoryMock.Verify(r => r.GetCarsFromDbAsync(), Times.Once);
+            repositoryMock.Verify(r => r.GetCarsAsync(), Times.Once);
         }
 
         [Fact]
@@ -67,14 +67,14 @@ namespace CarsAPI.Test.Controllers
         {
             //ARRANGE
             var returnedCar = testCar;
-            repositoryMock.Setup(r => r.GetCarsFromDbAsync());
+            repositoryMock.Setup(r => r.GetCarsAsync());
 
             //ACT
-            var result = carControllerDb.GetCarsFromDb().Result;
+            var result = carControllerDb.GetCars().Result;
             
             //ASSERT
             Assert.NotNull(result);
-            repositoryMock.Verify(r => r.GetCarsFromDbAsync(), Times.Once);
+            repositoryMock.Verify(r => r.GetCarsAsync(), Times.Once);
         }
 
         [Fact]
@@ -85,12 +85,12 @@ namespace CarsAPI.Test.Controllers
             carControllerDb.ModelState.AddModelError("id", "not valid");
 
             //ACT 
-            var result = await carControllerDb.GetCarFromDB(id);
+            var result = await carControllerDb.GetCar(id);
             var actionResult = Assert.IsType<ActionResult<Car>>(result);
 
             //ASSERT            
             Assert.IsType<BadRequestResult>(actionResult.Result);
-            repositoryMock.Verify(x => x.GetCarByIdFromDbAsync(It.IsAny<int>()), Times.Never);
+            repositoryMock.Verify(x => x.GetCarByIdAsync(It.IsAny<int>()), Times.Never);
 
         }
 
@@ -99,15 +99,15 @@ namespace CarsAPI.Test.Controllers
         {
             //ARRANGE
             var id = 1;            
-            repositoryMock.Setup(_ => _.GetCarByIdFromDbAsync(id)).ReturnsAsync(CarMockData.GetData().First());      
+            repositoryMock.Setup(_ => _.GetCarByIdAsync(id)).ReturnsAsync(CarMockData.GetData().First());      
 
             //ACT 
-            var result = await carControllerDb.GetCarFromDB(id);
+            var result = await carControllerDb.GetCar(id);
             
             //ASSERT
             var actionResult = Assert.IsType<ActionResult<Car>>(result);
             Assert.IsType<OkObjectResult>(actionResult.Result);
-            repositoryMock.Verify(x => x.GetCarByIdFromDbAsync(id), Times.Once);
+            repositoryMock.Verify(x => x.GetCarByIdAsync(id), Times.Once);
         }
 
         [Fact]
@@ -118,44 +118,44 @@ namespace CarsAPI.Test.Controllers
             carControllerDb.NoContent(); 
 
            //ACT 
-           var result = await carControllerDb.GetCarFromDB(outOfRangeId);
+           var result = await carControllerDb.GetCar(outOfRangeId);
 
             //ASSERT
             var actionResult = Assert.IsType<ActionResult<Car>>(result);
             Assert.IsType<NoContentResult>(actionResult.Result);
-            repositoryMock.Verify(x => x.GetCarByIdFromDbAsync(It.IsAny<int>()), Times.Once);
+            repositoryMock.Verify(x => x.GetCarByIdAsync(It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
         public async Task GetAllAsync_ShouldReturn200Status()
         {
             //ARRANGE
-            repositoryMock.Setup(_ => _.GetCarsFromDbAsync()).ReturnsAsync(CarMockData.GetData());
+            repositoryMock.Setup(_ => _.GetCarsAsync()).ReturnsAsync(CarMockData.GetData());
 
             //ACT
-            var result = carControllerDb.GetCarsFromDb();
+            var result = carControllerDb.GetCars();
             var actionResult = await result;
             var okResult = actionResult.Result;
 
             //ASSERT
             Assert.IsType<OkObjectResult>(okResult);
-            repositoryMock.Verify(_ => _.GetCarsFromDbAsync(), Times.Exactly(1));
+            repositoryMock.Verify(_ => _.GetCarsAsync(), Times.Exactly(1));
         }
 
         [Fact]
         public void GetAllAsync_ShouldReturn204NoContentStatus()
         {
             //ARRANGE
-            repositoryMock.Setup(_ => _.GetCarsFromDbAsync()).ReturnsAsync(CarMockNoData.GetEmptyCarList());
+            repositoryMock.Setup(_ => _.GetCarsAsync()).ReturnsAsync(CarMockNoData.GetEmptyCarList());
 
             //ACT
-            var result = carControllerDb.GetCarsFromDb().Result;
+            var result = carControllerDb.GetCars().Result;
             var actionResult = result.Result;
             var noContentResult = actionResult;
 
             //ASSERT
             Assert.IsType<NoContentResult>(noContentResult);
-            repositoryMock.Verify(_ => _.GetCarsFromDbAsync(), Times.Exactly(1));
+            repositoryMock.Verify(_ => _.GetCarsAsync(), Times.Exactly(1));
         }
 
         [Fact]
@@ -172,13 +172,13 @@ namespace CarsAPI.Test.Controllers
             carControllerDb.ModelState.AddModelError("id", "not required");
 
             //ACT 
-            var result = await carControllerDb.AddCarToDB(newCar);
+            var result = await carControllerDb.AddCar(newCar);
             var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
             
             //ASSERT
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
-            repositoryMock.Verify(x => x.AddCarToDbAsync(It.IsAny<Car>()), Times.Never);
+            repositoryMock.Verify(x => x.AddCarAsync(It.IsAny<Car>()), Times.Never);
 
         }
         [Fact]
@@ -190,12 +190,12 @@ namespace CarsAPI.Test.Controllers
             carControllerDb.ModelState.AddModelError("id", "not in range");
 
             //ACT 
-            var result = await carControllerDb.DeleteCarFromDb(id);
+            var result = await carControllerDb.DeleteCar(id);
             var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
             
             //ASSERT
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
-            repositoryMock.Verify(x => x.UpdateCarInDbAsync(It.IsAny<Car>()), Times.Never);
+            repositoryMock.Verify(x => x.UpdateCarAsync(It.IsAny<Car>()), Times.Never);
 
         }
 
@@ -206,12 +206,12 @@ namespace CarsAPI.Test.Controllers
             var id = 0;
 
             //ACT         
-            var result = await carControllerDb.DeleteCarFromDb(id);
+            var result = await carControllerDb.DeleteCar(id);
             var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
             
             //ASSERT            
             Assert.IsType<OkObjectResult>(actionResult.Result);
-            repositoryMock.Verify(r => r.DeleteCarFromDbAsync(id), Times.Once);
+            repositoryMock.Verify(r => r.DeleteCarAsync(id), Times.Once);
         }
 
         [Fact]
@@ -227,14 +227,14 @@ namespace CarsAPI.Test.Controllers
             };
 
             //ACT 
-            var result = await carControllerDb.AddCarToDB(newCar);
+            var result = await carControllerDb.AddCar(newCar);
             var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
             var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
 
             //ASSERT
 
             Assert.IsType<OkObjectResult>(actionResult.Result);
-            repositoryMock.Verify(x => x.AddCarToDbAsync(newCar), Times.Once);
+            repositoryMock.Verify(x => x.AddCarAsync(newCar), Times.Once);
 
         }
 
@@ -251,12 +251,12 @@ namespace CarsAPI.Test.Controllers
             };
 
             //ACT 
-            var result = await carControllerDb.UpdateExistingCar(newCar);
+            var result = await carControllerDb.UpdateCar(newCar);
 
             //ASSERT
             var actionResult = Assert.IsType<ActionResult<List<Car>>>(result);
             Assert.IsType<OkObjectResult>(actionResult.Result);
-            repositoryMock.Verify(x => x.UpdateCarInDbAsync(newCar), Times.Once);
+            repositoryMock.Verify(x => x.UpdateCarAsync(newCar), Times.Once);
 
         }
 
@@ -280,7 +280,7 @@ namespace CarsAPI.Test.Controllers
             repositoryMock.SetReturnsDefault(carList);
 
             //ACT 
-            var returnResult = carControllerDb.GetCarsFromDb().Result;
+            var returnResult = carControllerDb.GetCars().Result;
             var ObjectResult = returnResult.Result;
 
             //ASSERT

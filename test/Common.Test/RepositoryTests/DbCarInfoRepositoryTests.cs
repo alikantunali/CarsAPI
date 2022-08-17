@@ -87,7 +87,7 @@ namespace Common.Test.RepositoryTests
 
             //ACT
 
-            var result = repository.GetCarByIdFromDbAsync(It.IsAny<int>());
+            var result = repository.GetCarByIdAsync(It.IsAny<int>());
             var exception = result.Exception;
 
             //ASSERT 
@@ -107,7 +107,7 @@ namespace Common.Test.RepositoryTests
 
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
-            var result = repository.GetCarByIdFromDbAsync(car.Id);
+            var result = repository.GetCarByIdAsync(car.Id);
             var returnType = result.Result;
 
             //ASSERT 
@@ -126,7 +126,7 @@ namespace Common.Test.RepositoryTests
 
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
-            var result = repository.GetCarByIdFromDbAsync(car.Id);
+            var result = repository.GetCarByIdAsync(car.Id);
             var statusCode = result.Status;
             var exception = result.Exception;
 
@@ -151,7 +151,7 @@ namespace Common.Test.RepositoryTests
 
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
-            var result = repository.GetCarsFromDbAsync();
+            var result = repository.GetCarsAsync();
             var returnedResult=result.Result;
 
             //ASSERT 
@@ -172,7 +172,7 @@ namespace Common.Test.RepositoryTests
 
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
-            var result = repository.GetCarsFromDbAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            var result = repository.GetCarsAsync().ConfigureAwait(true).GetAwaiter().GetResult();
 
             //ASSERT 
             
@@ -194,7 +194,7 @@ namespace Common.Test.RepositoryTests
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
 
-            var result = repository.AddCarToDbAsync(car);
+            var result = repository.AddCarAsync(car);
 
             var returnedValue = result.Result;
 
@@ -217,7 +217,7 @@ namespace Common.Test.RepositoryTests
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
 
-            var result = repository.DeleteCarFromDbAsync(It.IsAny<int>());
+            var result = repository.DeleteCarAsync(It.IsAny<int>());
 
 
             var returnedValue = result.Exception;
@@ -252,7 +252,7 @@ namespace Common.Test.RepositoryTests
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
 
-            var result = repository.DeleteCarFromDbAsync(1);            
+            var result = repository.DeleteCarAsync(1);            
             //var returnedValue = result.Result;
             //var x = returnedValue.ToList();
             //ASSERT             
@@ -272,7 +272,7 @@ namespace Common.Test.RepositoryTests
 
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
-            var result = repository.DeleteCarFromDbAsync(2);
+            var result = repository.DeleteCarAsync(2);
             var exception = result.Exception;
             var message = exception?.InnerException?.Message;            
             //ASSERT
@@ -309,7 +309,7 @@ namespace Common.Test.RepositoryTests
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
 
-            var result = repository.UpdateCarInDbAsync(updatedCar).ConfigureAwait(true).GetAwaiter().GetResult();
+            var result = repository.UpdateCarAsync(updatedCar).ConfigureAwait(true).GetAwaiter().GetResult();
 
             var resultCarModel = result.Model;
             
@@ -341,7 +341,7 @@ namespace Common.Test.RepositoryTests
 
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
-            var result = repository.UpdateCarInDbAsync(invalidCar);
+            var result = repository.UpdateCarAsync(invalidCar);
             var exception = result?.Exception?.InnerException;
 
             //ASSERT             
@@ -369,7 +369,7 @@ namespace Common.Test.RepositoryTests
 
             //ACT
             repository = new DbCarInfoRepository(dataContext.Object, logger.Object);
-            var result = repository.UpdateCarInDbAsync(zeroCar);
+            var result = repository.UpdateCarAsync(zeroCar);
             var exception = result?.Exception?.InnerException;
 
             //ASSERT             
