@@ -67,8 +67,15 @@ stages:
             displayName: Download ARM Templates
             artifact: 'armTemplates'
           - template: ./deploy/templates/deploy-arm-template.yaml
+            parameters:
+              azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
+              subscriptionId: $(Azure.Subscription.Id)
+              resourceGroupName: $(Azure.ResourceGroup.Name)
+              location: $(Azure.ResourceGroup.Location)
+              databaseName: $(SQL.Database.Name)
+              loggingLevel: ${{ parameters.loggingLevel }}
           - download: package_build
-            displayName: Download App Zip
+            displayName: Download App Zips
             artifact: 'sourceZips'
           - template: ./deploy/templates/deploy-webapp-template.yaml
             parameters:
@@ -78,6 +85,7 @@ stages:
               location: $(Azure.ResourceGroup.Location)
               databaseName: $(SQL.Database.Name)
               loggingLevel: ${{ parameters.loggingLevel }}
+            
 
 #- stage: deploy_app_dev
 #  displayName: 'Deploy Web Api DEV'
