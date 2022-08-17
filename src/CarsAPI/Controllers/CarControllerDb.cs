@@ -25,7 +25,7 @@ namespace CarsAPI.Controllers
 
         
     
-        [HttpGet("allCars")]
+        [HttpGet("cars")]
         [ResponseCache(CacheProfileName = "VaryUserAgentHeader_Default30")]
         //public async Task<IActionResult> Get() //NO SCHEMAS DEFINED HERE WITH IActionResult
 
@@ -48,7 +48,7 @@ namespace CarsAPI.Controllers
 
         }
 
-        [HttpGet("car/{carId}")]
+        [HttpGet("car/{id}")]
         [ResponseCache(CacheProfileName = "VaryUserAgentHeader_Default30")]
         public async Task<ActionResult<Car>> GetCarFromDB( int id)
             
@@ -70,7 +70,7 @@ namespace CarsAPI.Controllers
 
         }
 
-        [HttpPost("addCar")]
+        [HttpPost("car")]
         public async Task<ActionResult<List<Car>>> AddCarToDB(Car request)
         {            
             if (!ModelState.IsValid)
@@ -82,7 +82,7 @@ namespace CarsAPI.Controllers
             return Ok("New car added to db");
         }
      
-        [HttpPut("updateCar")]
+        [HttpPut("car")]
         public async Task<ActionResult<List<Car>>> UpdateExistingCar(Car request)
         {
             try
@@ -97,7 +97,7 @@ namespace CarsAPI.Controllers
             }
         }
 
-        [HttpDelete("deleteCar/{carId}")]
+        [HttpDelete("car/{id}")]
         public async Task<ActionResult<List<Car>>> DeleteCarFromDb(int id)
         {
             if (!ModelState.IsValid)
