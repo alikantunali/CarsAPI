@@ -40,19 +40,19 @@ CRUD operations on database table.
 | Method | Path         | Body            |
 | ------ | ------------ | --------------- |
 | GET   | /CarsAPI/cars | no input |
-| GET   | /CarsAPI/carId/{carId}| int carId |
-| POST   | /CarsAPI/addCar| "brandName":"string", "manufactureYear":"string", "model":"string" |
-| PUT   | /CarsAPI/updateCar| "id":"int", "brandName":"string", "manufactureYear":"string", "model":"string" |
-| DELETE   | /CarsAPI/deleteCar/{carId}| int carId |
+| GET   | /CarsAPI/car/{carId}| int carId |
+| POST   | /CarsAPI/car| "brandName":"string", "manufactureYear":"string", "model":"string" |
+| PUT   | /CarsAPI/car| "id":"int", "brandName":"string", "manufactureYear":"string", "model":"string" |
+| DELETE   | /CarsAPI/car/{carId}| int carId |
 ##### StaticCarsAPI Service
 CRUD operations on static list.
 | Method | Path         | Body            |
 | ------ | ------------ | --------------- |
 | GET   | /StaticCarsAPI/cars | no input |
-| GET   | /StaticCarsAPI/carId/{carId}| int carId |
-| POST   | /StaticCarsAPI/addCar|"id":"int", brandName":"string", "manufactureYear":"string", "model":"string" |
-| PUT   | /StaticCarsAPI/updateCar| "id":"int", "brandName":"string", "manufactureYear":"string", "model":"string" |
-| DELETE   | /StaticCarsAPI/deleteCar/{carId}| int carId |
+| GET   | /StaticCarsAPI/car/{carId}| int carId |
+| POST   | /StaticCarsAPI/car|"id":"int", brandName":"string", "manufactureYear":"string", "model":"string" |
+| PUT   | /StaticCarsAPI/car| "id":"int", "brandName":"string", "manufactureYear":"string", "model":"string" |
+| DELETE   | /StaticCarsAPI/car/{carId}| int carId |
 
 ### Features
 - create a new car data in the specified database
