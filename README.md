@@ -152,7 +152,7 @@ azure build & deploy pipeline files are located in root folder. Deploy pipeline 
 ### SQL Server
 SQL Server must be installed to run the project locally. Using SQL Server Docker image is recommended for an easier installation.
 ## Installation
-### With Docker Desktop
+### With Docker Desktop & SQL Server Image
 You can download Docker Engine from ***[here]***
 
 1- Installing SQL Server Image
