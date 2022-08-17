@@ -184,7 +184,7 @@ git clone https://github.com/alikantunali/CarsAPI.git
   }}`
 
 4- Seeding Database
-***on Git Bash***
+***via Git Bash***
 ```
 # go to main project folder
 cd <desired_directory>/src/CarsAPI/
@@ -197,7 +197,7 @@ dotnet ef database update
 ```
 
 5- Run Project
-***on Git Bash***
+***via Git Bash***
 ```
 # In CarsAPI main project folder
 dotnet run
