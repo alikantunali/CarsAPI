@@ -13,6 +13,7 @@ steps:
       script: 'ls -R ${{parameters.AppArtifactFolder}}'
 
 - task: AzureWebApp@1
+  displayName: Deploy Web Api on $(AppOutputs.WebAppName.value)
   inputs:
     azureSubscription: '${{parameters.azureResourceManagerConnection}}'    
     appType: 'webApp'

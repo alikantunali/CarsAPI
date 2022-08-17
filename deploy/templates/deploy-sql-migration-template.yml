@@ -7,13 +7,16 @@ parameters:
 
 
 steps:
+
 - ${{ if eq(parameters.loggingLevel, 'Debug') }}:
   - task: CmdLine@2
     displayName: "[Debug] Output artifact structure"
     inputs:
       script: 'ls -R ${{parameters.sqlArtifactFolder}}'
 
+# Run initial SQL script
 - task: SqlAzureDacpacDeployment@1
+  displayName: Run initial SQL script
   inputs:
     azureSubscription: '${{parameters.azureResourceManagerConnection}}'
     AuthenticationType: 'servicePrincipal'
