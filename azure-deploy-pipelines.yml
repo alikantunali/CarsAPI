@@ -70,7 +70,7 @@ stages:
             displayName: Download App Zips
             artifact: 'sourceZips'            
           - template: ./deploy/templates/deploy-arm-template.yaml
-          - template: ./deploy/templates/deploy-sql-migration-template.yaml
+          - template: ./deploy/templates/deploy-sql-migration-template.yml
           - template: ./deploy/templates/deploy-webapp-template.yaml
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
