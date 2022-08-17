@@ -54,7 +54,7 @@ stages:
 
   jobs:
   - deployment: deploy_to_dev
-    displayName: 'Deploy App Infra to DEV'
+    displayName: 'Deploy to DEV'
     environment: Dev
     strategy:
       runOnce:
