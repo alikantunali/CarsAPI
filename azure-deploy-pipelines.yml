@@ -67,6 +67,10 @@ stages:
             displayName: Download ARM Templates
             artifact: 'armTemplates'
           - template: ./deploy/templates/deploy-arm-template.yaml
+          - download: package_build
+            displayName: Download App Zip
+            artifact: 'sourceZips'
+          - template: ./deploy/templates/deploy-webapp-template.yaml
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
               subscriptionId: $(Azure.Subscription.Id)
@@ -75,23 +79,23 @@ stages:
               databaseName: $(SQL.Database.Name)
               loggingLevel: ${{ parameters.loggingLevel }}
 
-  - deployment: deploy_web_api
-    displayName: 'Deploy CarsAPI to DEV'
-    environment: Dev
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - download: package_build
-            displayName: Download App Zip
-            artifact: 'sourceZips'
-          - template: ./deploy/templates/deploy-webapp-template.yaml
-          parameters:
-            azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
-            subscriptionId: $(Azure.Subscription.Id)
-            resourceGroupName: $(Azure.ResourceGroup.Name)
-            location: $(Azure.ResourceGroup.Location)            
-            loggingLevel: ${{ parameters.loggingLevel }}
+#- stage: deploy_app_dev
+#  displayName: 'Deploy Web Api DEV'
+#  dependsOn:
+#  strategy:
+#    runOnce:
+#      deploy:
+#        steps:
+#        - download: package_build
+#          displayName: Download App Zip
+#          artifact: 'sourceZips'
+#        - template: ./deploy/templates/deploy-webapp-template.yaml
+#        parameters:
+#          azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
+#          subscriptionId: $(Azure.Subscription.Id)
+#          resourceGroupName: $(Azure.ResourceGroup.Name)
+#          location: $(Azure.ResourceGroup.Location)            
+#          loggingLevel: ${{ parameters.loggingLevel }}
 
 
 
