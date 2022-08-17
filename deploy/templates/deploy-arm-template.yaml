@@ -3,7 +3,6 @@ parameters:
   subscriptionId: ''
   resourceGroupName: ''
   armArtifactFolder: '$(Pipeline.Workspace)/package_build/armTemplates/'
-#  sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations/'
   location: ''
   databaseName: ''
   loggingLevel: ''
@@ -47,7 +46,7 @@ steps:
           Write-Host $content
         }
 
-# Deploy Components through ARM
+# Deploy Infra Components through ARM
 
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: 'Deploy Key Vault on ${{parameters.resourceGroupName}}'
@@ -78,15 +77,3 @@ steps:
     csmParametersFile: '${{parameters.armArtifactFolder}}/2WebApp-SQLDatabase-AppPlan-AI.parameters.json'
     deploymentMode: 'Incremental'
     deploymentOutputs: 'AppOutputs'
-
-#Migrate Database.
-#- task: SqlAzureDacpacDeployment@1
-#  displayName: 'Run Migration on ${{parameters.databaseName}}'
-#  inputs:
-#    azureSubscription: '${{parameters.azureResourceManagerConnection}}'
-#    AuthenticationType: 'servicePrincipal'
-#    ServerName: '$(AppOutputs.sqlServerName.value)'
-#    DatabaseName: ${{parameters.databaseName}}
-#    deployType: 'SqlTask'
-#    SqlFile: '${{parameters.sqlArtifactFolder}}/*.sql'
-#    IpDetectionMethod: 'AutoDetect'

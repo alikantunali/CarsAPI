@@ -1,0 +1,17 @@
+parameters:
+  azureResourceManagerConnection: ''
+  subscriptionId: ''
+  resourceGroupName: ''
+  location: ''
+  loggingLevel: ''
+  AppArtifactFolder: '$(Pipeline.Workspace)/package_build/sourceZips/'
+
+steps:
+# Deploy WebApp on AppService
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '${{parameters.azureResourceManagerConnection}}'    
+    appType: 'webApp'
+    appName: '$(AppOutputs.WebAppName.value)'
+    package: '${{parameters.AppArtifactFolder}}/*.zip'
