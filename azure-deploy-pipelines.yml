@@ -66,7 +66,12 @@ stages:
           - download: package_build
             displayName: Download ARM Templates
             artifact: 'armTemplates'
+          - download: package_build
+            displayName: Download App Zips
+            artifact: 'sourceZips'            
           - template: ./deploy/templates/deploy-arm-template.yaml
+          - template: ./deploy/templates/deploy-sql-migration-template.yaml
+          - template: ./deploy/templates/deploy-webapp-template.yaml
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
               subscriptionId: $(Azure.Subscription.Id)
@@ -74,13 +79,8 @@ stages:
               location: $(Azure.ResourceGroup.Location)
               databaseName: $(SQL.Database.Name)
               loggingLevel: ${{ parameters.loggingLevel }}
-          - download: package_build
-            displayName: Download App Zips
-            artifact: 'sourceZips'
-          - template: ./deploy/templates/deploy-webapp-template.yaml
-            parameters:
-              azureServiceConnection: $(Azure.ServiceConnection.Name)
-            
+
+          
 
 #- stage: deploy_app_dev
 #  displayName: 'Deploy Web Api DEV'
