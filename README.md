@@ -118,27 +118,41 @@ SQL folder contains initial migrations script (initial.sql). In case of a migrat
 
 ### Src
 Root Source folder has two sub folders named **CarsAPI** & **Common**.
+
 CarsAPI project uses Common project as reference in order to complete database operations. 
 
-##### CarsAPI:
+- #### CarsAPI:
 Content of CarsAPI folder consists of: 
+
 **appsettings.json** file which determines the database info for the application.
+
 **Dockerfile** for future containerized application deployment.
+
 **Program** class file which sets up the startup of the app.
+
 **Controllers** folder containing mvc app controller classes. These classes injects Interfaces belong to repository classes in Common project.
 
-##### Common
+- #### Common
 Content of Common folder consists of: 
+
 **DbDataContext**  folder contains datacontext class file which is used for Entitiy Framework operations.
+
 **Entities** folder hosts the generic car class used in the project.
+
 **Migrations** folder keeps entity framework migration class which helps to keep the database schema in sync with the data model.
+
 **Models** folder includes initial data model class belongs to Entity Framework.
-**Repositories** folder comprises two sub folder named as **CarDbListService** & **CarListService**. These folders contain repository class libraries. Repository classes and Interfaces are designed for resusability with only few configuration settings. (Dependency injection purpose)
+
+**Repositories** folder comprises two sub folder named as **CarDbListService** & **CarListService**.
+These folders contain repository class libraries. Repository classes and Interfaces are designed for resusability with only few configuration settings. (Dependency injection purpose)
 
 ### Test
 Unit testing implemented for each project in this solution. (CarsAPI & Common).
+
 **CarsAPI.Test** folder contains api controller class tests. 
+
 **Common.Test** folder contains common repository tests.
+
 Unit tests for the api which connects to database are done by using mocking framework. Repository classes are mocked to test controller classes.
 Also data context (db context) logger used in repository classes and db set are mocked with Moq framework.
 
