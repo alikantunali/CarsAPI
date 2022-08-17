@@ -1,9 +1,5 @@
 parameters:
-  azureResourceManagerConnection: ''
-  subscriptionId: ''
-  resourceGroupName: ''
-  location: ''
-  loggingLevel: ''
+  azureServiceConnection: ''
   AppArtifactFolder: '$(Pipeline.Workspace)/package_build/sourceZips/'
 
 steps:
@@ -13,5 +9,5 @@ steps:
   inputs:
     azureSubscription: '${{parameters.azureResourceManagerConnection}}'    
     appType: 'webApp'
-    appName: '$(AppOutputs.WebAppName.value)'
+    appName: $(AppOutputs.WebAppName.value)
     package: '${{parameters.AppArtifactFolder}}/*.zip'

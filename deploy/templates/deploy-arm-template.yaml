@@ -64,7 +64,7 @@ steps:
     deploymentOutputs: 'ArmOutputs'
 
 - task: AzureResourceManagerTemplateDeployment@3
-  displayName: 'Deploy Application on ${{parameters.resourceGroupName}}'
+  displayName: 'Deploy AppService on ${{parameters.resourceGroupName}}'
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: '${{parameters.azureResourceManagerConnection}}'
