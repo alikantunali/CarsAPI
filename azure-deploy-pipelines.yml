@@ -79,12 +79,7 @@ stages:
             artifact: 'sourceZips'
           - template: ./deploy/templates/deploy-webapp-template.yaml
             parameters:
-              azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
-              subscriptionId: $(Azure.Subscription.Id)
-              resourceGroupName: $(Azure.ResourceGroup.Name)
-              location: $(Azure.ResourceGroup.Location)
-              databaseName: $(SQL.Database.Name)
-              loggingLevel: ${{ parameters.loggingLevel }}
+              azureServiceConnection: $(Azure.ServiceConnection.Name)
             
 
 #- stage: deploy_app_dev
