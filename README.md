@@ -17,7 +17,7 @@
 - [Prerequisites](#prerequisites)
   - [SQL Server](#sql-server)
 - [Installation](#installation)
-  - [With Docker Desktop](#with-docker-desktop)
+  - [With Docker Desktop & SQL Server Image](#with-docker-desktop-sql-server)
 - [Credits](#credits)
 
 <!-- tocstop -->
