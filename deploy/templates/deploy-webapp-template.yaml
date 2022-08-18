@@ -1,5 +1,5 @@
 parameters:
-  azureResourceManagerConnection: ''
+  svcname: ''
   AppArtifactFolder: '$(Pipeline.Workspace)/package_build/sourceZips/'
 
 
@@ -15,7 +15,7 @@ steps:
 - task: AzureWebApp@1
   displayName: Deploy Web Api on $(AppOutputs.WebAppName.value)
   inputs:
-    azureSubscription: '${{parameters.azureResourceManagerConnection}}'    
+    azureSubscription: '${{parameters.svcname}}'    
     appType: 'webApp'
     appName: $(AppOutputs.WebAppName.value)
     package: '${{parameters.AppArtifactFolder}}/*.zip'

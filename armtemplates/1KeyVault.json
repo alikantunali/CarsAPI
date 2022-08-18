@@ -138,11 +138,11 @@
       }  
     ],
     "outputs": {
-      "Infra.Secrets.KeyVault.Id": {
+      "KeyVaultId": {
         "type": "string",
         "value": "[variables('keyVaultResourceId')]"
       },
-      "Infra.Secrets.KeyVault.Name": {
+      "KeyVaultName": {
         "type": "string",
         "value": "[variables('keyVaultName')]"
       }

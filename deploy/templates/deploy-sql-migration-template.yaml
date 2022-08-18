@@ -14,13 +14,34 @@ steps:
       script: 'ls -R ${{parameters.sqlArtifactFolder}}'
 
 # Run initial SQL script
-- task: SqlAzureDacpacDeployment@1
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: '${{parameters.servicename}}'
+    KeyVaultName: '$(AppOutputs.KeyVaultName.value)'
+    
+    SecretsFilter: 'CarsApiSQLAdminUsername,CarsApiSQLAdminPassword'
+    RunAsPreJob: false
+
+- task: SqlAzureDacpacDeployment@1.
   displayName: Run initial SQL script
   inputs:
     azureSubscription: '${{parameters.servicename}}'
-    AuthenticationType: 'servicePrincipal'
+    AuthenticationType: 'server'
     ServerName: '$(AppOutputs.sqlServerName.value)'
     DatabaseName: '${{parameters.DatabaseName}}'
+    SqlUsername: '$(CarsApiSQLAdminUsername})'
+    SqlPassword: '$(CarsApiSQLAdminPassword)'
     deployType: 'SqlTask'
     SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
     IpDetectionMethod: 'AutoDetect'
+
+#- task: SqlAzureDacpacDeployment@1
+#  displayName: Run initial SQL script
+#  inputs:
+#    azureSubscription: 
+#    AuthenticationType: 'servicePrincipal'
+#    ServerName: '$(AppOutputs.sqlServerName.value)'
+#    DatabaseName: '${{parameters.DatabaseName}}'
+#    deployType: 'SqlTask'
+#    SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
+#    IpDetectionMethod: 'AutoDetect'
