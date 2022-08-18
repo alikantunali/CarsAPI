@@ -22,5 +22,5 @@ steps:
     ServerName: '$(AppOutputs.sqlServerName.value)'
     DatabaseName: '${{parameters.DatabaseName}}'
     deployType: 'SqlTask'
-    SqlFile: '${{parameters.artifactFolder}}/Initial.sql'
+    SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
     IpDetectionMethod: 'AutoDetect'
