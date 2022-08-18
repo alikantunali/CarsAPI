@@ -66,6 +66,7 @@ stages:
           - download: package_build
             displayName: Download SQL Sheet
             artifact: 'sqlMigrations'
+          - template: ./deploy/templates/deploy-sql-migration-template.yaml
           - download: package_build
             displayName: Download ARM Templates
             artifact: 'armTemplates'          
@@ -77,7 +78,7 @@ stages:
               location: $(Azure.ResourceGroup.Location)
               databaseName: $(SQL.Database.Name)
               loggingLevel: ${{ parameters.loggingLevel }}
-  - template: ./deploy/templates/deploy-sql-migration-template.yaml
+  
 
 #          - template: ./deploy/templates/deploy-webapp-template.yaml              
 
