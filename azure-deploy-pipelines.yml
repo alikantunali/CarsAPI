@@ -76,7 +76,7 @@ stages:
             artifact: 'sqlMigrations'
           - template: ./deploy/templates/deploy-sql-migration-template.yaml
             parameters:
-              serviceName: $(Azure.Subscription.Id)
+              serviceName: $(Azure.ServiceConnection.Name)
               databaseName: $(SQL.Database.Name)
               keyVaultName: '$(Resource.Prefix)-$(Keyvault.Name)'
 
