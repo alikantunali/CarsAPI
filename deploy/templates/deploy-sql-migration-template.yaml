@@ -16,11 +16,10 @@ steps:
 # Run initial SQL script
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: '${{parameters.serviceName}}'
-    KeyVaultName: '${{parameters.keyVaultName}}'
-    
-    SecretsFilter: 'CarsApiSQLAdminUsername,CarsApiSQLAdminPassword'
-    RunAsPreJob: false
+    connectedServiceName: '${{parameters.serviceName}}'
+    keyVaultName: '${{parameters.keyVaultName}}'    
+    secretsFilter: 'CarsApiSQLAdminUsername,CarsApiSQLAdminPassword'
+    runAsPreJob: false
 
 #- task: SqlAzureDacpacDeployment@1.
 #  displayName: Run initial SQL script
