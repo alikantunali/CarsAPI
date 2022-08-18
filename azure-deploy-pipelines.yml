@@ -70,6 +70,7 @@ stages:
               resourceGroupName: $(Azure.ResourceGroup.Name)
               location: $(Azure.ResourceGroup.Location)
               loggingLevel: ${{ parameters.loggingLevel }}
+
           - download: package_build
             displayName: Download SQL Sheet
             artifact: 'sqlMigrations'
@@ -77,7 +78,8 @@ stages:
             parameters:
               serviceName: $(Azure.ServiceConnection.Name)
               databaseName: $(SQL.Database.Name)
-              keyVaultName: $(AppOutputs.KeyVaultName.value)
+              keyVaultName: '$(Resource.Prefix)-$(Keyvault.Name)'
+
           - download: package_build
             displayName: Download App Zips
             artifact: 'sourceZips'
