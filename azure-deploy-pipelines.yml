@@ -61,14 +61,14 @@ stages:
         deploy:
           steps:
           - download: package_build
+            displayName: Download App Zips
+            artifact: 'sourceZips'  
+          - download: package_build
             displayName: Download SQL Sheet
             artifact: 'sqlMigrations'
           - download: package_build
             displayName: Download ARM Templates
-            artifact: 'armTemplates'
-          - download: package_build
-            displayName: Download App Zips
-            artifact: 'sourceZips'            
+            artifact: 'armTemplates'          
           - template: ./deploy/templates/deploy-arm-template.yaml
           - template: ./deploy/templates/deploy-sql-migration-template.yaml
           - template: ./deploy/templates/deploy-webapp-template.yaml
