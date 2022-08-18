@@ -1,5 +1,5 @@
 parameters:
-  serviceName: ''
+  subscriptionId: ''
   databaseName: ''
   location: ''
   loggingLevel: ''
@@ -16,7 +16,7 @@ steps:
 # Run initial SQL script
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: '${{parameters.serviceName}}'
+    azureSubscription: '${{parameters.subscriptionId}}'
     KeyVaultName: '${{parameters.keyVaultName}}'    
     SecretsFilter: 'CarsApiSQLAdminUsername,CarsApiSQLAdminPassword'
     RunAsPreJob: false
