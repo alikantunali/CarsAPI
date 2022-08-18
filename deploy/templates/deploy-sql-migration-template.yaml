@@ -1,8 +1,9 @@
 parameters:
-  servicename: ''
+  serviceName: ''
   databaseName: ''
   location: ''
   loggingLevel: ''
+  keyVaultName: ''
   sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
 
 steps:
@@ -16,8 +17,8 @@ steps:
 # Run initial SQL script
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: '${{parameters.servicename}}'
-    KeyVaultName: '$(AppOutputs.KeyVaultName.value)'
+    azureSubscription: '${{parameters.serviceName}}'
+    KeyVaultName: '${{keyVaultName}}'
     
     SecretsFilter: 'CarsApiSQLAdminUsername,CarsApiSQLAdminPassword'
     RunAsPreJob: false

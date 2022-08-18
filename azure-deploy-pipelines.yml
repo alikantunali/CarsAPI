@@ -75,8 +75,9 @@ stages:
             artifact: 'sqlMigrations'
           - template: ./deploy/templates/deploy-sql-migration-template.yaml
             parameters:
-              servicename: $(Azure.ServiceConnection.Name)
-              databaseName: $(SQL.Database.Name)              
+              serviceName: $(Azure.ServiceConnection.Name)
+              databaseName: $(SQL.Database.Name)
+              keyVaultName: $(AppOutputs.KeyVaultName.value)
           - download: package_build
             displayName: Download App Zips
             artifact: 'sourceZips'
