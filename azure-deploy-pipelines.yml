@@ -70,8 +70,8 @@ stages:
             displayName: Download ARM Templates
             artifact: 'armTemplates'          
           - template: ./deploy/templates/deploy-arm-template.yaml
-          - template: ./deploy/templates/deploy-sql-migration-template.yaml
-          - template: ./deploy/templates/deploy-webapp-template.yaml
+#          - template: ./deploy/templates/deploy-sql-migration-template.yaml
+#          - template: ./deploy/templates/deploy-webapp-template.yaml
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
               subscriptionId: $(Azure.Subscription.Id)
