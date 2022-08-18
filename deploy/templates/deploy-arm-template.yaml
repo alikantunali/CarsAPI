@@ -8,15 +8,6 @@ parameters:
   loggingLevel: ''
 
 steps:
-#- ${{ if eq(parameters.loggingLevel, 'Debug') }}:
-#  - task: PowerShell@2
-#    displayName: "[Debug] Output artifact structure"
-#    inputs:
-#      targetType: inline
-#      script:  |
-#        'ls -R ${{parameters.armArtifactFolder}}'
-#        'ls -R ${{parameters.sqlArtifactFolder}}'
-
 - task: qetza.replacetokens.replacetokens-task.replacetokens@3
   displayName: Replace Tokens in ARM template
   inputs:
