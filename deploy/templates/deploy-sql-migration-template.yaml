@@ -5,7 +5,7 @@ parameters:
   loggingLevel: ''
   sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
 
-stages:
+job:
 
 - ${{ if eq(parameters.loggingLevel, 'Debug') }}:
   - task: CmdLine@2
