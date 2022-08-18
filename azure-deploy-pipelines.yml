@@ -69,12 +69,14 @@ stages:
               subscriptionId: $(Azure.Subscription.Id)
               resourceGroupName: $(Azure.ResourceGroup.Name)
               location: $(Azure.ResourceGroup.Location)
-              databaseName: $(SQL.Database.Name)
               loggingLevel: ${{ parameters.loggingLevel }}
           - download: package_build
             displayName: Download SQL Sheet
             artifact: 'sqlMigrations'
           - template: ./deploy/templates/deploy-sql-migration-template.yaml
+            parameters:
+              servicename: $(Azure.ServiceConnection.Name)
+              databaseName: $(SQL.Database.Name)              
           - download: package_build
             displayName: Download App Zips
             artifact: 'sourceZips'

@@ -1,6 +1,6 @@
 parameters:
-  azureResourceManagerConnection: ''
-  DatabaseName: ''
+  servicename: ''
+  databaseName: ''
   location: ''
   loggingLevel: ''
   sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
@@ -17,7 +17,7 @@ steps:
 - task: SqlAzureDacpacDeployment@1
   displayName: Run initial SQL script
   inputs:
-    azureSubscription: '${{parameters.azureResourceManagerConnection}}'
+    azureSubscription: '${{parameters.servicename}}'
     AuthenticationType: 'servicePrincipal'
     ServerName: '$(AppOutputs.sqlServerName.value)'
     DatabaseName: '${{parameters.DatabaseName}}'

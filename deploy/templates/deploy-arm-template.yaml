@@ -4,7 +4,6 @@ parameters:
   resourceGroupName: ''
   armArtifactFolder: '$(Pipeline.Workspace)/package_build/armTemplates/'
   location: ''
-  databaseName: ''
   loggingLevel: ''
 
 steps:
