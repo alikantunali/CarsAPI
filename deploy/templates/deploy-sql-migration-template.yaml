@@ -3,7 +3,6 @@ parameters:
   databaseName: ''
   location: ''
   loggingLevel: ''
-  c: ''
   sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
 
 steps:
