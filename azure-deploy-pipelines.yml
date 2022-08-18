@@ -69,7 +69,7 @@ stages:
           - template: ./deploy/templates/deploy-sql-migration-template.yaml
           - download: package_build
             displayName: Download ARM Templates
-            artifact: 'armTemplates'          
+            artifact: 'armTemplates'
           - template: ./deploy/templates/deploy-arm-template.yaml
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
