@@ -52,7 +52,7 @@ stages:
     - template: ./deploy/variables/environments/environment-dev.yaml
     - template: ./deploy/variables/apps/app-dev.yaml        
 
-  jobs:
+  jobs:      
   - deployment: deploy_to_dev
     displayName: 'Deploy to DEV'
     environment: Dev
@@ -70,8 +70,6 @@ stages:
             displayName: Download ARM Templates
             artifact: 'armTemplates'          
           - template: ./deploy/templates/deploy-arm-template.yaml
-#          - template: ./deploy/templates/deploy-sql-migration-template.yaml
-#          - template: ./deploy/templates/deploy-webapp-template.yaml
             parameters:
               azureResourceManagerConnection: $(Azure.ServiceConnection.Name)
               subscriptionId: $(Azure.Subscription.Id)
@@ -79,6 +77,9 @@ stages:
               location: $(Azure.ResourceGroup.Location)
               databaseName: $(SQL.Database.Name)
               loggingLevel: ${{ parameters.loggingLevel }}
+  - template: ./deploy/templates/deploy-sql-migration-template.yaml
+
+#          - template: ./deploy/templates/deploy-webapp-template.yaml              
 
 
 
