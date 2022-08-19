@@ -3,6 +3,7 @@ parameters:
   databaseName: ''
   location: ''
   loggingLevel: ''
+  tmpFolder: 'C:\Users\VssAdministrator\AppData\Local\Temp'
   sqlArtifactFolder: '$(Pipeline.Workspace)/package_build/sqlMigrations'
 
 steps:
@@ -21,26 +22,21 @@ steps:
     SecretsFilter: 'CarsApiSQLAdminUsername,CarsApiSQLAdminPassword'
     RunAsPreJob: false
 
+- ${{ if eq(parameters.loggingLevel, 'Debug') }}:
+  - task: CmdLine@2
+    displayName: "[Debug] Output artifact structure"
+    inputs:
+      script: 'ls -R ${{parameters.sqlArtifactFolder}}'
+
 - task: SqlAzureDacpacDeployment@1
-  displayName: Run initial SQL script
+  displayName: Run initial Sql sheet
   inputs:
     azureSubscription: '${{parameters.servicename}}'
     AuthenticationType: 'server'
     ServerName: $(AppOutputs.sqlServerName.value)
-    DatabaseName: '${{parameters.databaseName}}'
+    DatabaseName: $(AppOutputs.SqlDatabaseName.value)
     SqlUsername: $(CarsApiSQLAdminUsername)
     SqlPassword: $(CarsApiSQLAdminPassword)
-    deployType: 'Dacpac'    
+    deployType: 'SqlTask'
     SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
     IpDetectionMethod: 'AutoDetect'
-
-#- task: SqlAzureDacpacDeployment@1
-#  displayName: Run initial SQL script
-#  inputs:
-#    azureSubscription: 
-#    AuthenticationType: 'servicePrincipal'
-#    ServerName: '$(AppOutputs.sqlServerName.value)'
-#    DatabaseName: '${{parameters.DatabaseName}}'
-#    deployType: 'SqlTask'
-#    SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
-#    IpDetectionMethod: 'AutoDetect'
