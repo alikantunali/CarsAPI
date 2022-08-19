@@ -16,6 +16,7 @@ steps:
 
 # Run initial SQL script
 - task: AzureKeyVault@2
+  displayName: Get Credentials for Db script
   inputs:
     azureSubscription: '${{parameters.serviceName}}'
     KeyVaultName: '${{parameters.keyVaultName}}'    
@@ -24,9 +25,9 @@ steps:
 
 - ${{ if eq(parameters.loggingLevel, 'Debug') }}:
   - task: CmdLine@2
-    displayName: "[Debug] Output artifact structure"
+    displayName: "[Debug] Output tmp folder"
     inputs:
-      script: 'ls -R ${{parameters.sqlArtifactFolder}}'
+      script: 'ls -R ${{parameters.tmpFolder}}'
 
 - task: SqlAzureDacpacDeployment@1
   displayName: Run initial Sql sheet
@@ -34,7 +35,7 @@ steps:
     azureSubscription: '${{parameters.servicename}}'
     AuthenticationType: 'server'
     ServerName: '$(AppOutputs.sqlServerName.value)'
-    DatabaseName: '$(AppOutputs.sqlDatabaseName.value)'
+    DatabaseName: 'carsdb'
     SqlUsername: $(CarsApiSQLAdminUsername)
     SqlPassword: $(CarsApiSQLAdminPassword)
     deployType: 'SqlTask'
