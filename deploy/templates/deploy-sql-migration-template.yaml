@@ -28,8 +28,8 @@ steps:
     AuthenticationType: 'server'
     ServerName: $(AppOutputs.sqlServerName.value)
     DatabaseName: '${{parameters.databaseName}}'
-    SqlUsername: '$(CarsApiSQLAdminUsername})'
-    SqlPassword: '$(CarsApiSQLAdminPassword)'
+    SqlUsername: $(CarsApiSQLAdminUsername)
+    SqlPassword: $(CarsApiSQLAdminPassword)
     deployType: 'SqlTask'
     SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
     IpDetectionMethod: 'AutoDetect'
