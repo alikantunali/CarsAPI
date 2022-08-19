@@ -27,7 +27,9 @@ steps:
   - task: CmdLine@2
     displayName: "[Debug] Output tmp folder"
     inputs:
-      script: 'ls -R ${{parameters.tmpFolder}}'
+      script: |
+        ls -R ${{parameters.tmpFolder}}
+        cat ${{parameters.tmpFolder}}/T*.tmp
 
 - task: SqlAzureDacpacDeployment@1
   displayName: Run initial Sql sheet
