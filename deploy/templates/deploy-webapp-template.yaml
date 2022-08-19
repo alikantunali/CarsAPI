@@ -1,5 +1,6 @@
 parameters:
   svcname: ''
+  appName: ''
   AppArtifactFolder: '$(Pipeline.Workspace)/package_build/sourceZips/'
 
 
@@ -13,9 +14,9 @@ steps:
       script: 'ls -R ${{parameters.AppArtifactFolder}}'
 
 - task: AzureWebApp@1
-  displayName: Deploy Web Api on $(AppOutputs.WebAppName.value)
+  displayName: Deploy Web Api on ${{parameters.appName}}
   inputs:
-    azureSubscription: '${{parameters.svcname}}'    
+    azureSubscription: ${{parameters.svcname}}
     appType: 'webApp'
-    appName: $(AppOutputs.WebAppName.value)
+    appName: ${{parameters.appName}}
     package: '${{parameters.AppArtifactFolder}}/*.zip'

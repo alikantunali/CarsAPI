@@ -304,7 +304,7 @@
         "type": "string",
         "value": "[variables('databaseName')]"
       },
-      "WebAppName": {
+      "webAppName": {
         "type": "string",
         "value": "[variables('webSiteName')]"
       }

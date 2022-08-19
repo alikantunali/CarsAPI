@@ -86,7 +86,8 @@ stages:
             artifact: 'sourceZips'
           - template: ./deploy/templates/deploy-webapp-template.yaml
             parameters:
-              svcname: $(Azure.ServiceConnection.Name)   
+              svcname: $(Azure.ServiceConnection.Name)
+              appService: $(AppOutputs.webAppName.value)
             
   
 

@@ -31,6 +31,9 @@ steps:
 #        ls -R ${{parameters.tmpFolder}}
 #        cat ${{parameters.tmpFolder}}/T*.tmp
 
+- task: SqlAzureDacpacDeployment@1
+  inputs:
+    azureSubscription
   
 #- task: SqlAzureDacpacDeployment@1
 #  inputs:
