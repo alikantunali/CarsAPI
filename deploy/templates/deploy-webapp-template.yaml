@@ -14,9 +14,9 @@ steps:
       script: 'ls -R ${{parameters.AppArtifactFolder}}'
 
 - task: AzureWebApp@1
-  displayName: Deploy Web Api on ${{parameters.appName}}
+  displayName: Deploy Web Api on ${{parameters.appService}}
   inputs:
     azureSubscription: ${{parameters.svcname}}
     appType: 'webApp'
     appName: ${{parameters.appService}}
-    package: '${{parameters.AppArtifactFolder}}/*.zip'
+    package: '${{parameters.AppArtifactFolder}}/CarsAPI.zip'
