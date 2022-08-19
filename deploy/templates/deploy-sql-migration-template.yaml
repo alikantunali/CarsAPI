@@ -34,8 +34,8 @@ steps:
   inputs:
     azureSubscription: '${{parameters.servicename}}'
     AuthenticationType: 'server'
-    ServerName: '$(AppOutputs.sqlServerName.value)'
-#    DatabaseName: 'carsdb'
+    ServerName: $(AppOutputs.sqlServerName.value)
+    DatabaseName: carsdb
     SqlUsername: $(CarsApiSQLAdminUsername)
     SqlPassword: $(CarsApiSQLAdminPassword)
     deployType: 'SqlTask'
