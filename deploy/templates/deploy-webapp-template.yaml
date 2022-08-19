@@ -1,6 +1,6 @@
 parameters:
   svcname: ''
-  appName: ''
+  appService: ''
   AppArtifactFolder: '$(Pipeline.Workspace)/package_build/sourceZips/'
 
 
@@ -18,5 +18,5 @@ steps:
   inputs:
     azureSubscription: ${{parameters.svcname}}
     appType: 'webApp'
-    appName: ${{parameters.appName}}
+    appName: ${{parameters.appService}}
     package: '${{parameters.AppArtifactFolder}}/*.zip'
