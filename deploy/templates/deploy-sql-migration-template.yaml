@@ -41,5 +41,5 @@ steps:
     SqlUsername: $(CarsApiSQLAdminUsername)
     SqlPassword: $(CarsApiSQLAdminPassword)
     deployType: 'SqlTask'
-    SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
+    SqlFile: ${{parameters.sqlArtifactFolder}}/initial.sql
     IpDetectionMethod: 'AutoDetect'
