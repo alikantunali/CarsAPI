@@ -296,11 +296,11 @@
       }      
     ],
     "outputs": {
-      "SqlServerName": {
+      "sqlServerName": {
         "type": "string",
         "value": "[concat (variables('sqlServerName'),'.database.windows.net')]"
       },
-      "SqlDatabaseName": {
+      "sqlDatabaseName": {
         "type": "string",
         "value": "[variables('databaseName')]"
       },
