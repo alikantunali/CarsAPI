@@ -1,6 +1,6 @@
 parameters:
   svcname: ''
-  appService: ''
+  appService:
   AppArtifactFolder: '$(Pipeline.Workspace)/package_build/sourceZips/'
 
 
