@@ -30,7 +30,7 @@ steps:
     DatabaseName: '${{parameters.databaseName}}'
     SqlUsername: $(CarsApiSQLAdminUsername)
     SqlPassword: $(CarsApiSQLAdminPassword)
-    deployType: 'SqlTask'
+    deployType: 'Dacpac'    
     SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
     IpDetectionMethod: 'AutoDetect'
 
