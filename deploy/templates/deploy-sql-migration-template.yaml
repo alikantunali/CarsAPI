@@ -21,18 +21,18 @@ steps:
     SecretsFilter: 'CarsApiSQLAdminUsername,CarsApiSQLAdminPassword'
     RunAsPreJob: false
 
-#- task: SqlAzureDacpacDeployment@1.
-#  displayName: Run initial SQL script
-#  inputs:
-#    azureSubscription: '${{parameters.servicename}}'
-#    AuthenticationType: 'server'
-#    ServerName: '$(AppOutputs.sqlServerName.value)'
-#    DatabaseName: '${{parameters.DatabaseName}}'
-#    SqlUsername: '$(CarsApiSQLAdminUsername})'
-#    SqlPassword: '$(CarsApiSQLAdminPassword)'
-#    deployType: 'SqlTask'
-#    SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
-#    IpDetectionMethod: 'AutoDetect'
+- task: SqlAzureDacpacDeployment@1.
+  displayName: Run initial SQL script
+  inputs:
+    azureSubscription: '${{parameters.servicename}}'
+    AuthenticationType: 'server'
+    ServerName: '$(AppOutputs.sqlServerName.value)'
+    DatabaseName: '${{parameters.DatabaseName}}'
+    SqlUsername: '$(CarsApiSQLAdminUsername})'
+    SqlPassword: '$(CarsApiSQLAdminPassword)'
+    deployType: 'SqlTask'
+    SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
+    IpDetectionMethod: 'AutoDetect'
 
 #- task: SqlAzureDacpacDeployment@1
 #  displayName: Run initial SQL script
