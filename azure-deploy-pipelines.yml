@@ -80,7 +80,7 @@ stages:
           #    serviceName: $(Azure.ServiceConnection.Name)
           #    databaseName: $(SQL.Database.Name)
           #    keyVaultName: '$(Resource.Prefix)-$(Keyvault.Name)'
-          dependsOn:
+          
           - download: package_build
             displayName: Download App Zips
             artifact: 'sourceZips'
