@@ -34,12 +34,11 @@ steps:
 - task: SqlAzureDacpacDeployment@1
   displayName: Run initial Sql sheet
   inputs:
-    azureSubscription: '${{parameters.servicename}}'
-    AuthenticationType: 'server'
-    ServerName: $(AppOutputs.sqlServerName.value)
-    DatabaseName: carsdb
-    SqlUsername: $(CarsApiSQLAdminUsername)
-    SqlPassword: $(CarsApiSQLAdminPassword)
-    deployType: 'SqlTask'
-    SqlFile: ${{parameters.sqlArtifactFolder}}/initial.sql
-    IpDetectionMethod: 'AutoDetect'
+    TaskType: 'sqlQuery'
+    SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
+    ExecuteInTransaction: true
+    ServerName: '$(AppOutputs.sqlServerName.value)'
+    DatabaseName: '${{parameters.databaseName}}'
+    AuthScheme: 'sqlServerAuthentication'
+    SqlUsername: '$(CarsApiSQLAdminUsername)'
+    SqlPassword: '$(CarsApiSQLAdminPassword)'
