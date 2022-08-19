@@ -21,7 +21,7 @@ steps:
     SecretsFilter: 'CarsApiSQLAdminUsername,CarsApiSQLAdminPassword'
     RunAsPreJob: false
 
-- task: SqlAzureDacpacDeployment@1.
+- task: SqlAzureDacpacDeployment@1
   displayName: Run initial SQL script
   inputs:
     azureSubscription: '${{parameters.servicename}}'
