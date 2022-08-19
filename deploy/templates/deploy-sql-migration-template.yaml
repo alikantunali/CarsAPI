@@ -34,6 +34,7 @@ steps:
 - task: SqlAzureDacpacDeployment@1
   displayName: Run initial Sql sheet
   inputs:
+    connectedServiceName: '${{parameters.serviceName}}'
     TaskType: 'sqlQuery'
     SqlFile: '${{parameters.sqlArtifactFolder}}/initial.sql'
     ExecuteInTransaction: true
