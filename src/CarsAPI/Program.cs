@@ -70,7 +70,7 @@ var app = builder.Build();
 
 // only runs swagger in development environment.
 //MIDDLEWARE SECTION. in the request pipeline  pipeline can include below :DIAGNOSTICS, AUTHENTICATION, ROUTING, ENDPOINT
-if (app.Environment.IsDevelopment())        
+//if (app.Environment.IsDevelopment())        
     app.UseSwagger();
 
 
